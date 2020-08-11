@@ -4,53 +4,49 @@ import styled from 'styled-components';
 import Button from './Button';
 
 const DefaultHeader = styled.nav`
-  border-bottom: 0.05rem solid #ddd;
-  box-shadow: 0 0 0.25rem #ddd;
-  
-  align-items: center;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
+  ${({ theme: { palette, spacing } }) => `
+    align-items: center;
+    border-bottom: 0.05rem solid ${palette.cloud};
+    box-shadow: 0 0 ${spacing.xsmall} ${palette.cloud};
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    width: 100%;
+  `}`;
 
-  padding: 1rem 1.5rem;
-  width: 100%;
-`;
 
 const HeaderTitle = styled.span.attrs({ className: 'noselect' })`
-  border-radius: 0.2rem;
-  border: 1px solid #888;
+  ${({ theme: { palette, spacing, typography } }) => `
+    border-radius: 0.2rem;
+    border: 0.05rem solid ${palette.grey};
 
-  font-family: 'Roboto';
-  font-size: 1.5rem;
-  font-weight: 300;
-  text-shadow: 0 0 0.15rem #aaa;
-  
-  margin: -0.3rem 0;
-  padding: 0.5rem;
+    font-size: ${typography.large};
+    font-weight: ${typography.light};
+    text-shadow: 0 0 0.15rem ${palette.cloudDarker};
+    margin: -0.3rem 0;
+    padding: ${spacing.small};
+    transition: background-color 0.1s, color 0.1s, text-shadow 0.1s;
 
-  transition: background-color 0.1s, color 0.1s, text-shadow 0.1s;
-
-  :hover {
-    background-color: #222;
-
-    color: #ddd;
-    text-shadow: 0 0 0.15rem #ddd;
-
-    cursor: pointer;
-  }
-`;
+    :hover {
+      background-color: ${palette.regular};
+      color: ${palette.cloud};
+      text-shadow: 0 0 0.15rem ${palette.cloud};
+      cursor: pointer;
+    }
+  `}`;
 
 const HeaderActions = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 9.5rem;
+	display: flex;
+	justify-content: space-between;
+	width: 9.5rem;
 `;
 
 function Header() {
   return <DefaultHeader>
     <HeaderTitle>SHARIST</HeaderTitle>
     <HeaderActions>
-      <Button>Sign up</Button>
+      <Button isPrimary>Sign up</Button>
       <Button>Log in</Button>
     </HeaderActions >
   </DefaultHeader >;
