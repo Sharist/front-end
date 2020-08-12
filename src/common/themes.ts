@@ -2,11 +2,14 @@ export const SharistTheme = {
   palette: {
     cloud: "#ddd",
     cloudDarker: "#aaa",
+    cloudLighter: "#eee",
     grey: "#888",
     greyDarker: "#555",
     purple: "#6f4a8e",
     purpleLighter: "#7b549c",
     regular: "#222",
+    teal: "#198C8C",
+    tealLigher: "#5EAEAE",
   },
 
   spacing: {

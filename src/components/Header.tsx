@@ -1,19 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import breakpoints from '../common/breakpoints';
 import Button from './Button';
 
-const DefaultHeader = styled.nav`
-  ${({ theme: { palette, spacing } }) => `
-    align-items: center;
-    border-bottom: 0.05rem solid ${palette.cloud};
-    box-shadow: 0 0 ${spacing.xsmall} ${palette.cloud};
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 1.5rem;
-    width: 100%;
-  `}`;
+const HeaderWrapper = styled.nav`
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  max-width: 1200px;
+  padding: 1rem 2rem;
+  transition: padding 1s;
+  width: 100%;
+
+  @media screen and (max-width: ${breakpoints.mobile}) {
+    padding: 1rem;
+  }
+`;
 
 
 const HeaderTitle = styled.span.attrs({ className: 'noselect' })`
@@ -43,13 +47,13 @@ const HeaderActions = styled.div`
 `;
 
 function Header() {
-  return <DefaultHeader>
+  return <HeaderWrapper>
     <HeaderTitle>SHARIST</HeaderTitle>
     <HeaderActions>
       <Button isPrimary>Sign up</Button>
       <Button>Log in</Button>
     </HeaderActions >
-  </DefaultHeader >;
+  </HeaderWrapper >;
 }
 
 export default Header;
