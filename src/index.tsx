@@ -2,18 +2,21 @@ import './index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router } from '@reach/router';
 import { ThemeProvider } from 'styled-components';
 
 import { SharistTheme } from './common/themes';
-import Home from './pages/home/Home';
+import Home from './pages/Home';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={SharistTheme}>
-      <Home />
+      <Router>
+        <Home path='/' />
+      </Router>
     </ThemeProvider>
-  </React.StrictMode >,
+  </React.StrictMode>,
   document.getElementById('root')
 );
 

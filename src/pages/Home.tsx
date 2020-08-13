@@ -1,7 +1,10 @@
 import React from 'react';
+import { navigate, RouteComponentProps } from '@reach/router';
 import styled, { css } from 'styled-components';
-import Header from '../../components/Header';
-import Layout from '../../components/Layout';
+
+import Button from '../components/Button';
+import Header from '../components/Header';
+import Layout from '../components/Layout';
 
 const Hero = styled.div<{ large: boolean }>`
   ${({ large, theme: { palette, spacing } }) => css`
@@ -37,7 +40,7 @@ const HeroTitle = styled.div`
   `}
 `;
 
-function Home() {
+function Home(props: RouteComponentProps) {
   return (
     <>
       <Header />
@@ -45,6 +48,7 @@ function Home() {
         <Hero large>
           <HeroTitle>Welcome to Sharist!</HeroTitle>
           <p>Share your locations with your friends</p>
+          <Button onClick={() => navigate('shared-list')}>Go to Shared Map</Button>
         </Hero>
       </Layout>
     </>
