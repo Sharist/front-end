@@ -1,4 +1,10 @@
 export const SharistTheme = {
+  breakpoints: {
+    regular: "1200px",
+    tablet: "800px",
+    mobile: "600px",
+  },
+
   palette: {
     cloud: "#ddd",
     cloudDarker: "#aaa",

@@ -1,27 +1,26 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import breakpoints from '../common/breakpoints';
 import Button from './Button';
+import { navigate, useLocation } from '@reach/router';
 
 const HeaderWrapper = styled.nav`
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  margin: auto;
-  max-width: 1200px;
-  padding: 1rem 2rem;
-  transition: padding 1s;
-  width: 100%;
+  ${({ theme: { breakpoints, spacing } }) => css`
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    padding: ${spacing.medium} ${spacing.xlarge};
+    transition: padding 1s;
+    width: 100%;
 
-  @media screen and (max-width: ${breakpoints.mobile}) {
-    padding: 1rem;
-  }
+    @media screen and (max-width: ${breakpoints.mobile}) {
+      padding: ${spacing.medium};
+    }
+  `}
 `;
 
-
 const HeaderTitle = styled.span.attrs({ className: 'noselect' })`
-  ${({ theme: { palette, spacing, typography } }) => `
+  ${({ theme: { palette, spacing, typography } }) => css`
     border-radius: 0.2rem;
     border: 0.05rem solid ${palette.grey};
 
@@ -38,22 +37,27 @@ const HeaderTitle = styled.span.attrs({ className: 'noselect' })`
       text-shadow: 0 0 0.15rem ${palette.cloud};
       cursor: pointer;
     }
-  `}`;
+  `}
+`;
 
 const HeaderActions = styled.div`
-	display: flex;
-	justify-content: space-between;
-	width: 9.5rem;
+  display: flex;
+  justify-content: space-between;
+  width: 9.5rem;
 `;
 
 function Header() {
-  return <HeaderWrapper>
-    <HeaderTitle>SHARIST</HeaderTitle>
-    <HeaderActions>
-      <Button isPrimary>Sign up</Button>
-      <Button>Log in</Button>
-    </HeaderActions >
-  </HeaderWrapper >;
+  const location = useLocation();
+
+  return (
+    <HeaderWrapper>
+      <HeaderTitle onClick={() => location.pathname !== '/' && navigate('/')}>SHARIST</HeaderTitle>
+      <HeaderActions>
+        <Button isPrimary>Sign up</Button>
+        <Button>Log in</Button>
+      </HeaderActions>
+    </HeaderWrapper>
+  );
 }
 
 export default Header;
