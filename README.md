@@ -1,5 +1,7 @@
 # Sharist Front End
 
+Welcome! You can view the current `master` branch deployment at https://sharist.netlify.app/.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
