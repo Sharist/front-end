@@ -54,7 +54,7 @@ Here are a few useful snippets that will make developing easier. To add these sn
   },
   "Styled component with theme": {
     "prefix": "styled theme",
-    "body": ["styled.$1`", "  ${({ theme: { $2 } }) => `", "    ", "  `}`;"],
+    "body": ["styled.$1`", "  ${({ theme: { $2 } }) => css`", "    ", "  `}`;"],
     "description": "Add snippets to destructure `theme` prop. You will need to import `css` from `styled-components`."
   }
 }
