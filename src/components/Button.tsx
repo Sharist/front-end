@@ -2,15 +2,16 @@ import React, { ReactChild } from 'react';
 import styled, { css } from 'styled-components';
 
 const DefaultButton = styled.button<{ isPrimary: boolean }>`
-  ${({ theme: { palette }, isPrimary }) => css`
+  ${({ theme: { palette, typography }, isPrimary }) => css`
     background: ${isPrimary ? palette.purple : palette.cloudLighter};
     border-radius: 0.2rem;
     border: 0.05rem solid ${isPrimary ? palette.purple : palette.cloud};
     box-shadow: 0 0 0 transparent;
     color: ${isPrimary ? 'white' : palette.regular};
     cursor: pointer;
+    font-size: ${typography.regular};
     font-weight: 500;
-    padding: 0.5rem 0.8rem;
+    padding: 0.7rem 1rem;
     text-shadow: 0 0 0 transparent;
     transition: border 0.1s, box-shadow 0.1s, transform 0.1s, text-shadow 0.1s;
 

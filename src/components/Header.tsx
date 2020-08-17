@@ -23,27 +23,27 @@ const HeaderTitle = styled.span.attrs({ className: 'noselect' })`
   ${({ theme: { palette, spacing, typography } }) => css`
     border-radius: 0.2rem;
     border: 0.05rem solid ${palette.grey};
-
-    font-size: ${typography.large};
+    font-size: ${typography.xlarge};
     font-weight: ${typography.light};
-    text-shadow: 0 0 0.15rem ${palette.cloudDarker};
-    margin: -0.3rem 0;
+    margin: -calc(${spacing.small} * 2 + ${spacing.medium} * 2}) 0;
     padding: ${spacing.small};
+    text-shadow: 0 0 0.15rem ${palette.cloudDarker};
     transition: background-color 0.1s, color 0.1s, text-shadow 0.1s;
 
     :hover {
       background-color: ${palette.regular};
       color: ${palette.cloud};
-      text-shadow: 0 0 0.15rem ${palette.cloud};
       cursor: pointer;
+      text-shadow: 0 0 0.15rem ${palette.cloud};
     }
   `}
 `;
 
 const HeaderActions = styled.div`
+  align-items: center;
   display: flex;
   justify-content: space-between;
-  width: 9.5rem;
+  width: 12rem;
 `;
 
 function Header() {

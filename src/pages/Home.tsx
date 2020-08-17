@@ -40,7 +40,7 @@ const HeroTitle = styled.div`
   `}
 `;
 
-function Home(props: RouteComponentProps) {
+function Home(_: RouteComponentProps) {
   return (
     <>
       <Header />

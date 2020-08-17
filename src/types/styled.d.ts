@@ -1,8 +1,8 @@
-import "styled-components";
+import 'styled-components';
 
-import { SharistTheme } from "../common/themes";
+import { SharistTheme } from '../common/themes';
 
-declare module "styled-components" {
+declare module 'styled-components' {
   type Theme = typeof SharistTheme;
   export interface DefaultTheme extends Theme {}
 }
