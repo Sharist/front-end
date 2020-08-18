@@ -6,21 +6,26 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+}
+
+body,
+#root {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  min-width: 480px;
+  height: 100%;
+}
+
 body,
 button,
 input,
 textarea {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-
-  font-size: 0.9rem;
-}
-body {
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  min-width: 480px;
 }
 
 code {

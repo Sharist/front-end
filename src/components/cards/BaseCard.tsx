@@ -2,7 +2,7 @@ import React, { ReactChild } from 'react';
 import styled, { css } from 'styled-components';
 
 const CardWrapper = styled.div`
-  ${({ theme: { palette, spacing, typography } }) => css`
+  ${({ theme: { palette, spacing } }) => css`
     background-color: white;
     border-radius: 0.5rem;
     border: 0.05rem solid ${palette.cloud};

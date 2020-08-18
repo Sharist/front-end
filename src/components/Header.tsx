@@ -4,17 +4,21 @@ import styled, { css } from 'styled-components';
 import Button from './Button';
 import { navigate, useLocation } from '@reach/router';
 
-const HeaderWrapper = styled.nav`
+export const HEADER_HEIGHT = 5;
+
+const HeaderWrapper = styled.div`
   ${({ theme: { breakpoints, spacing } }) => css`
+    align-items: center;
     display: flex;
+    height: ${HEADER_HEIGHT}rem;
     justify-content: space-between;
     margin: auto;
-    padding: ${spacing.medium} ${spacing.xlarge};
+    padding: ${spacing.small} ${spacing.medium};
     transition: padding 1s;
     width: 100%;
 
     @media screen and (max-width: ${breakpoints.mobile}) {
-      padding: ${spacing.medium};
+      padding: ${spacing.small};
     }
   `}
 `;
@@ -22,28 +26,20 @@ const HeaderWrapper = styled.nav`
 const HeaderTitle = styled.span.attrs({ className: 'noselect' })`
   ${({ theme: { palette, spacing, typography } }) => css`
     border-radius: 0.2rem;
-    border: 0.05rem solid ${palette.grey};
+    cursor: pointer;
     font-size: ${typography.xlarge};
     font-weight: ${typography.light};
-    margin: -calc(${spacing.small} * 2 + ${spacing.medium} * 2}) 0;
     padding: ${spacing.small};
     text-shadow: 0 0 0.15rem ${palette.cloudDarker};
     transition: background-color 0.1s, color 0.1s, text-shadow 0.1s;
-
-    :hover {
-      background-color: ${palette.regular};
-      color: ${palette.cloud};
-      cursor: pointer;
-      text-shadow: 0 0 0.15rem ${palette.cloud};
-    }
   `}
 `;
 
 const HeaderActions = styled.div`
   align-items: center;
   display: flex;
-  justify-content: space-between;
-  width: 11rem;
+  justify-content: space-around;
+  width: 12.5rem;
 `;
 
 function Header() {

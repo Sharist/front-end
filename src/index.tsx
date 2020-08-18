@@ -8,14 +8,14 @@ import { ThemeProvider } from 'styled-components';
 import { SharistTheme } from './common/themes';
 import Home from './pages/Home';
 import * as serviceWorker from './serviceWorker';
-import SharedList from './pages/SharedLists';
+import Plan from './pages/Plan';
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={SharistTheme}>
       <Router>
         <Home path='/' />
-        <SharedList path='shared-list' />
+        <Plan path='plan' />
       </Router>
     </ThemeProvider>
   </React.StrictMode>,
