@@ -43,7 +43,7 @@ const HeaderActions = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  width: 12rem;
+  width: 11rem;
 `;
 
 function Header() {

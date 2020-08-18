@@ -28,11 +28,11 @@ const spacing = {
 };
 
 const typography = {
-  /** 0.75rem */ small: '0.75rem',
-  /**    1rem */ regular: '1rem',
-  /** 1.25rem */ medium: '1.25rem',
-  /**  1.5rem */ large: '1.5rem',
-  /** 1.75rem */ xlarge: '1.75rem',
+  /**  0.8rem */ small: '0.8rem',
+  /**  0.9rem */ regular: '0.9rem',
+  /** 1.15rem */ medium: '1.15rem',
+  /** 1.35rem */ large: '1.35rem',
+  /**  1.7rem */ xlarge: '1.8rem',
   /**    3rem */ giant: '3rem',
 
   /**     300 */ light: '300',

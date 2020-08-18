@@ -12,11 +12,11 @@ const Hero = styled.div<{ large: boolean }>`
     background-color: ${palette.teal};
     border-radius: 0.3rem;
     color: ${palette.cloudLighter};
-    text-shadow: 0 0 0.2rem ${palette.cloudLighter};
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: ${spacing.xlarge};
+    text-shadow: 0 0 0.2rem ${palette.cloudLighter};
     width: 100%;
 
     & > :first-child {

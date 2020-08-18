@@ -1,7 +1,14 @@
 import React from 'react';
+import styled, { css } from 'styled-components';
 
 import BaseCard from './BaseCard';
-import styled, { css } from 'styled-components';
+import Text from '../Text';
+import { SharistTheme } from '../../common/themes';
+
+const Card = styled(BaseCard)`
+  align-items: center;
+  display: flex;
+`;
 
 const CardImage = styled.img`
   ${({ theme: { palette } }) => css`
@@ -13,12 +20,14 @@ const CardImage = styled.img`
 `;
 
 const CardContent = styled.div`
-  ${({ theme: { spacing } }) => css`
+  ${({ theme: { spacing, typography } }) => css`
     display: flex;
     flex-direction: column;
+    line-height: ${typography.medium};
     margin-left: ${spacing.medium};
+    height: calc(${typography.medium} * 4);
 
-    & * {
+    & > * {
       margin: ${spacing.xsmall};
     }
   `}
@@ -43,13 +52,17 @@ function PeopleCard({
   name,
 }: Props) {
   return (
-    <BaseCard>
+    <Card>
       <CardImage src={imageUrl} />
       <CardContent>
         <Name>{name}</Name>
-        {description && <p>{description}</p>}
+        {description && (
+          <Text maxLine={2} lineHeight={SharistTheme.typography.medium}>
+            {description}
+          </Text>
+        )}
       </CardContent>
-    </BaseCard>
+    </Card>
   );
 }
 

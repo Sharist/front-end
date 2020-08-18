@@ -5,41 +5,26 @@ import styled, { css } from 'styled-components';
 import PeopleCard from '../components/cards/PeopleCard';
 import Header from '../components/Header';
 import Layout from '../components/Layout';
+import Map from '../components/Map';
 
 const Wrapper = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
   width: 100%;
 `;
 
-const MapFrame = styled.iframe.attrs({
-  title: 'Map of shared locations',
-  src:
-    'https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d43038.38783249317!2d-122.33261266137696!3d47.608648892571665!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1597302855325!5m2!1sen!2sus',
-  scrolling: 'no',
-})`
-  ${({ theme: { breakpoints, palette } }) => css`
-    border-radius: 0.5rem;
-    border: 0.05rem solid ${palette.cloudDarker};
-    box-shadow: 0 0 0.2rem ${palette.cloudDarker};
-    height: 35rem;
-    transition: height 1s;
-    width: 100%;
-
-    @media screen and (max-width: ${breakpoints.tablet}) {
-      height: 25rem;
-    }
-    @media screen and (max-width: ${breakpoints.mobile}) {
-      height: 20rem;
-    }
-  `}
-`;
-
-const People = styled.div`
-  ${({ theme: { spacing } }) => css`
+const Section = styled.div`
+  ${({ theme: { breakpoints, spacing } }) => css`
     display: flex;
     flex-direction: column;
-    padding: ${spacing.medium};
+    max-width: 1500px;
+    padding: ${spacing.large};
+    transition: padding 0.5s;
+
+    @media screen and (max-width: ${breakpoints.mobile}) {
+      padding: ${spacing.medium};
+    }
   `}
 `;
 
@@ -47,26 +32,24 @@ const Title = styled.p`
   ${({ theme: { spacing, typography } }) => css`
     font-size: ${typography.giant};
     font-weight: ${typography.light};
-    margin-bottom: ${spacing.small};
+    margin: ${spacing.small} 0;
   `}
 `;
 
-const PeopleList = styled.div`
+const List = styled.div`
   ${({ theme: { breakpoints, spacing } }) => css`
+    border-radius: 0.5rem;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    width: 100%;
 
     & > * {
       margin: ${spacing.small};
-      width: calc(33% - ${spacing.small} * 2);
-
-      @media screen and (max-width: ${breakpoints.regular}) {
-        width: calc(50% - ${spacing.small} * 2);
-      }
+      max-width: 23rem;
 
       @media screen and (max-width: ${breakpoints.tablet}) {
-        width: calc(100% - ${spacing.small} * 2);
+        max-width: 100%;
+        width: 100%;
       }
     }
   `}
@@ -78,30 +61,27 @@ function SharedLists(_: RouteComponentProps) {
       <Header />
       <Layout>
         <Wrapper>
-          <MapFrame />
-          <People>
+          <Map />
+          <Section id='people-list'>
             <Title>People</Title>
-            <PeopleList>
+            <List>
               <PeopleCard
                 name='Hermione Granger'
-                description='A Muggle-born Gryffindor, who becomes best friends with Harry Potter and Ron Weasley. After Harry and Ron save her from a mountain troll in the girls restroom, she becomes best friends with them'
+                description='A Muggle-born Gryffindor, who becomes best friends with Harry Potter and Ron Weasley.'
               />
-              <PeopleCard
-                name='Katniss Everdeen'
-                description='Katniss and her family come from District 12, a coal-mining district that is the poorest and least populated district in the dystopian fictional autocratic nation of Panem.'
-              />
+              <PeopleCard name='Katniss Everdeen' description='Katniss from District 12.' />
               <PeopleCard
                 imageUrl='https://www.w3schools.com/howto/img_avatar.png'
                 name='Harry Potter'
-                description='A boy who lives in the fictional town of Little Whinging, Surrey with his aunt, uncle, and cousin – the Dursleys – and discovers at the age of eleven that he is a wizard, though he lives in the ordinary world of non-magical people known as Muggles.'
+                description='A boy who lives in the fictional town of Little Whinging, Surrey with his aunt, uncle, and cousin.'
               />
               <PeopleCard
                 imageUrl='https://www.w3schools.com/howto/img_avatar.png'
                 name='Sam Fisher'
-                description='Former employee of Third Echelon, a top-secret black bag operation sub-branch within the National Security Agency (NSA) and a former member of its subsequent "Splinter Cell" program.'
+                description='Former employee of Third Echelon.'
               />
-            </PeopleList>
-          </People>
+            </List>
+          </Section>
         </Wrapper>
       </Layout>
     </>
