@@ -24,7 +24,7 @@ const HeaderWrapper = styled.div`
 `;
 
 const HeaderTitle = styled.span.attrs({ className: 'noselect' })`
-  ${({ theme: { palette, spacing, typography } }) => css`
+  ${({ theme: { breakpoints, palette, spacing, typography } }) => css`
     border-radius: 0.2rem;
     cursor: pointer;
     font-size: ${typography.X_LARGE};
@@ -32,14 +32,25 @@ const HeaderTitle = styled.span.attrs({ className: 'noselect' })`
     padding: ${spacing.SMALL};
     text-shadow: 0 0 0.15rem ${palette.CLOUD_DARKER};
     transition: background-color 0.1s, color 0.1s, text-shadow 0.1s;
+
+    @media screen and (max-width: ${breakpoints.MOBILE}) {
+      padding: ${spacing.X_SMALL};
+    }
   `}
 `;
 
 const HeaderActions = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: space-around;
-  width: 12.5rem;
+  ${({ theme: { breakpoints, typography } }) => css`
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    width: 12.5rem;
+
+    @media screen and (max-width: ${breakpoints.MOBILE}) {
+      font-size: ${typography.REGULAR};
+      width: 11rem;
+    }
+  `}
 `;
 
 function Header() {
