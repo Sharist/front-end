@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { ReactChild, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { ReactChild } from 'react';
-import Header, { HEADER_HEIGHT } from './Header';
 
 import { pxToRem } from '../common/dimensions';
+import Header, { HEADER_HEIGHT } from './Header';
 
 type BaseLayoutProps = {
   fullHeight: boolean;
@@ -34,7 +32,7 @@ const BaseLayout = styled.div<BaseLayoutProps>`
 
       height: ${fullHeight ? height + 'rem' : 'unset'};
 
-      @media screen and (max-width: ${breakpoints.mobile}) {
+      @media screen and (max-width: ${breakpoints.MOBILE}) {
         padding: ${noPadding ? '0' : '0 1rem'};
       }
     `;

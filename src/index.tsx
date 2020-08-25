@@ -1,13 +1,12 @@
-import './index.css';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from '@reach/router';
 import { ThemeProvider } from 'styled-components';
 
+import './index.css';
 import { SharistTheme } from './common/themes';
-import Home from './pages/Home';
 import * as serviceWorker from './serviceWorker';
+import Home from './pages/Home';
 import Plan from './pages/Plan';
 
 ReactDOM.render(

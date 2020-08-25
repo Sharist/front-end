@@ -1,8 +1,8 @@
 import React from 'react';
+import { navigate, useLocation } from '@reach/router';
 import styled, { css } from 'styled-components';
 
 import Button from './Button';
-import { navigate, useLocation } from '@reach/router';
 
 export const HEADER_HEIGHT = 5;
 
@@ -13,12 +13,12 @@ const HeaderWrapper = styled.div`
     height: ${HEADER_HEIGHT}rem;
     justify-content: space-between;
     margin: auto;
-    padding: ${spacing.small} ${spacing.medium};
+    padding: ${spacing.SMALL} ${spacing.MEDIUM};
     transition: padding 1s;
     width: 100%;
 
-    @media screen and (max-width: ${breakpoints.mobile}) {
-      padding: ${spacing.small};
+    @media screen and (max-width: ${breakpoints.MOBILE}) {
+      padding: ${spacing.SMALL};
     }
   `}
 `;
@@ -27,10 +27,10 @@ const HeaderTitle = styled.span.attrs({ className: 'noselect' })`
   ${({ theme: { palette, spacing, typography } }) => css`
     border-radius: 0.2rem;
     cursor: pointer;
-    font-size: ${typography.xlarge};
-    font-weight: ${typography.light};
-    padding: ${spacing.small};
-    text-shadow: 0 0 0.15rem ${palette.cloudDarker};
+    font-size: ${typography.X_LARGE};
+    font-weight: ${typography.LIGHT};
+    padding: ${spacing.SMALL};
+    text-shadow: 0 0 0.15rem ${palette.CLOUD_DARKER};
     transition: background-color 0.1s, color 0.1s, text-shadow 0.1s;
   `}
 `;

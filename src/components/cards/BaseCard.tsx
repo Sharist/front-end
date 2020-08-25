@@ -5,19 +5,19 @@ const CardWrapper = styled.div`
   ${({ theme: { palette, spacing } }) => css`
     background-color: white;
     border-radius: 0.5rem;
-    border: 0.05rem solid ${palette.cloud};
-    box-shadow: 0 0.1rem 0.2rem ${palette.cloudLighter};
+    border: 0.05rem solid ${palette.CLOUD};
+    box-shadow: 0 0.1rem 0.2rem ${palette.CLOUD_LIGHTER};
     cursor: pointer;
     display: flex;
-    padding: ${spacing.large};
+    padding: ${spacing.LARGE};
 
     &:hover {
-      box-shadow: 0 0.25rem 0.3rem ${palette.cloudLighter};
+      box-shadow: 0 0.25rem 0.3rem ${palette.CLOUD_LIGHTER};
       transform: translateY(-0.05rem);
     }
 
     &:active {
-      box-shadow: 0 0.1rem 0.2rem ${palette.cloud};
+      box-shadow: 0 0.1rem 0.2rem ${palette.CLOUD};
       transform: translateY(0.05rem);
     }
   `}

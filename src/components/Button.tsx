@@ -3,11 +3,11 @@ import styled, { css } from 'styled-components';
 
 const DefaultButton = styled.button<{ isPrimary: boolean }>`
   ${({ theme: { palette }, isPrimary }) => css`
-    background: ${isPrimary ? palette.purple : palette.cloudLighter};
+    background: ${isPrimary ? palette.PURPLE : palette.CLOUD_LIGHTER};
     border-radius: 0.2rem;
-    border: 0.05rem solid ${isPrimary ? palette.purple : palette.cloud};
+    border: 0.05rem solid ${isPrimary ? palette.PURPLE : palette.CLOUD};
     box-shadow: 0 0 0 transparent;
-    color: ${isPrimary ? 'white' : palette.regular};
+    color: ${isPrimary ? 'white' : palette.REGULAR};
     cursor: pointer;
     font-size: 1em;
     font-weight: 400;
@@ -16,16 +16,16 @@ const DefaultButton = styled.button<{ isPrimary: boolean }>`
     transition: border 0.1s, box-shadow 0.1s, transform 0.1s, text-shadow 0.1s;
 
     &:hover {
-      background: ${isPrimary ? palette.purpleLighter : palette.cloudLighter};
-      border: 0.05rem solid ${isPrimary ? palette.purpleLighter : palette.cloud};
-      box-shadow: 0 0 0.3rem ${isPrimary ? palette.purpleLighter : palette.cloud};
+      background: ${isPrimary ? palette.PURPLE_LIGHTER : palette.CLOUD_LIGHTER};
+      border: 0.05rem solid ${isPrimary ? palette.PURPLE_LIGHTER : palette.CLOUD};
+      box-shadow: 0 0 0.3rem ${isPrimary ? palette.PURPLE_LIGHTER : palette.CLOUD};
       text-shadow: 0 0 0 transparent;
     }
 
     &:active {
-      background: ${isPrimary ? palette.purple : palette.cloudLighter};
-      border: 0.05rem solid ${isPrimary ? palette.purple : palette.cloud};
-      box-shadow: 0 0.02rem 0.15rem ${isPrimary ? palette.purple : palette.cloud};
+      background: ${isPrimary ? palette.PURPLE : palette.CLOUD_LIGHTER};
+      border: 0.05rem solid ${isPrimary ? palette.PURPLE : palette.CLOUD};
+      box-shadow: 0 0.02rem 0.15rem ${isPrimary ? palette.PURPLE : palette.CLOUD};
       outline: none;
       transform: translateY(0.05rem);
     }

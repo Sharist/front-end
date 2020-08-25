@@ -13,7 +13,7 @@ const Card = styled(BaseCard)`
 const CardImage = styled.img`
   ${({ theme: { palette } }) => css`
     border-radius: 50%;
-    border: 0.05rem solid ${palette.cloud};
+    border: 0.05rem solid ${palette.CLOUD};
     height: 4rem;
     width: 4rem;
   `}
@@ -23,20 +23,20 @@ const CardContent = styled.div`
   ${({ theme: { spacing, typography } }) => css`
     display: flex;
     flex-direction: column;
-    line-height: ${typography.medium};
-    margin-left: ${spacing.medium};
-    height: calc(${typography.medium} * 4);
+    line-height: ${typography.MEDIUM};
+    margin-left: ${spacing.MEDIUM};
+    height: calc(${typography.MEDIUM} * 4);
 
     & > * {
-      margin: ${spacing.xsmall};
+      margin: ${spacing.X_SMALL};
     }
   `}
 `;
 
 const Name = styled.p`
   ${({ theme: { typography } }) => css`
-    font-size: ${typography.medium};
-    font-weight: ${typography.bold};
+    font-size: ${typography.MEDIUM};
+    font-weight: ${typography.BOLD};
   `}
 `;
 
@@ -57,7 +57,7 @@ function PeopleCard({
       <CardContent>
         <Name>{name}</Name>
         {description && (
-          <Text maxLine={2} lineHeight={SharistTheme.typography.medium}>
+          <Text maxLine={2} lineHeight={SharistTheme.typography.MEDIUM}>
             {description}
           </Text>
         )}

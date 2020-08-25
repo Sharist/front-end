@@ -31,7 +31,7 @@ function Text({ children, className, lineHeight, maxLine = 0 }: Props) {
   return (
     <TruncatableText
       className={className}
-      lineHeight={lineHeight || SharistTheme.typography.regular}
+      lineHeight={lineHeight || SharistTheme.typography.REGULAR}
       maxLine={maxLine}
     >
       {children}

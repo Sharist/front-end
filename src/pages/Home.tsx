@@ -8,14 +8,14 @@ import LayoutContainer from '../components/LayoutContainer';
 const Hero = styled.div<{ large: boolean }>`
   ${({ large, theme: { palette, spacing } }) => css`
     align-items: center;
-    background-color: ${palette.teal};
+    background-color: ${palette.TEAL};
     border-radius: 0.3rem;
-    color: ${palette.cloudLighter};
+    color: ${palette.CLOUD_LIGHTER};
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: ${spacing.xlarge};
-    text-shadow: 0 0 0.2rem ${palette.cloudLighter};
+    padding: ${spacing.X_LARGE};
+    text-shadow: 0 0 0.2rem ${palette.CLOUD_LIGHTER};
     width: 100%;
 
     & > :first-child {
@@ -30,11 +30,11 @@ const Hero = styled.div<{ large: boolean }>`
 
 const HeroTitle = styled.div`
   ${({ theme: { breakpoints, typography } }) => css`
-    font-size: calc(${typography.large} * 2);
+    font-size: calc(${typography.LARGE} * 2);
     font-weight: 300;
 
-    @media screen and (max-width: ${breakpoints.mobile}) {
-      font-size: calc(${typography.large} * 1.5);
+    @media screen and (max-width: ${breakpoints.MOBILE}) {
+      font-size: calc(${typography.LARGE} * 1.5);
     }
   `}
 `;
