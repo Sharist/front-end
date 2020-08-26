@@ -1,5 +1,5 @@
 import React from 'react';
-import { navigate, useLocation } from '@reach/router';
+import { navigate, useLocation, Link } from '@reach/router';
 import styled, { css } from 'styled-components';
 
 import Button from './Button';
@@ -23,13 +23,36 @@ const HeaderWrapper = styled.div`
   `}
 `;
 
+const HeaderTitle = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 21rem;
+  `}
+`;
+
+const SiteMapLink = styled(Link)`
+  ${({ theme: { palette, typography } }) => css`
+    color: ${palette.BLACK};
+    font-size: ${typography.MEDIUM};
+    margin: 0.5rem;
+    text-decoration: none;
+
+    &:visited {
+      color: ${palette.BLACK};
+    }
+  `}
+`;
+
 const Logo = styled.span.attrs({ className: 'noselect' })`
   ${({ theme: { breakpoints, palette, spacing, typography } }) => css`
     border-radius: 0.2rem;
+    border: 0.05rem solid black;
     cursor: pointer;
     font-size: ${typography.X_LARGE};
     font-weight: ${typography.LIGHT};
-    padding: ${spacing.SMALL};
+    padding: 0.5rem;
     text-shadow: 0 0 0.15rem ${palette.CLOUD_DARKER};
     transition: background-color 0.1s, color 0.1s, text-shadow 0.1s;
 
@@ -56,9 +79,19 @@ const HeaderActions = styled.div`
 function Header() {
   const location = useLocation();
 
+  function handleLogoClick() {
+    location.pathname !== '/' && navigate('/');
+  }
+
   return (
     <HeaderWrapper>
-      <Logo onClick={() => location.pathname !== '/' && navigate('/')}>SHARIST</Logo>
+      <HeaderTitle>
+        <Logo onClick={handleLogoClick}>SHARIST</Logo>
+        <div>
+          <SiteMapLink to=''>About</SiteMapLink>
+          <SiteMapLink to=''>Product</SiteMapLink>
+        </div>
+      </HeaderTitle>
       <HeaderActions>
         <Button isPrimary>Sign up</Button>
         <Button>Log in</Button>

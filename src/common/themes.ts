@@ -5,6 +5,7 @@ export enum Breakpoints {
 }
 
 export enum Palette {
+  BLACK = '#000',
   CLOUD = '#ddd',
   CLOUD_DARKER = '#aaa',
   CLOUD_LIGHTER = '#eee',
