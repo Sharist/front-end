@@ -23,7 +23,7 @@ const HeaderWrapper = styled.div`
   `}
 `;
 
-const HeaderTitle = styled.span.attrs({ className: 'noselect' })`
+const Logo = styled.span.attrs({ className: 'noselect' })`
   ${({ theme: { breakpoints, palette, spacing, typography } }) => css`
     border-radius: 0.2rem;
     cursor: pointer;
@@ -58,7 +58,7 @@ function Header() {
 
   return (
     <HeaderWrapper>
-      <HeaderTitle onClick={() => location.pathname !== '/' && navigate('/')}>SHARIST</HeaderTitle>
+      <Logo onClick={() => location.pathname !== '/' && navigate('/')}>SHARIST</Logo>
       <HeaderActions>
         <Button isPrimary>Sign up</Button>
         <Button>Log in</Button>

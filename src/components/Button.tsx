@@ -9,7 +9,6 @@ const DefaultButton = styled.button<{ isPrimary: boolean }>`
     box-shadow: 0 0 0 transparent;
     color: ${isPrimary ? 'white' : palette.REGULAR};
     cursor: pointer;
-    font-size: 1em;
     font-weight: 400;
     padding: 0.7rem 1rem;
     text-shadow: 0 0 0 transparent;
@@ -38,13 +37,14 @@ const DefaultButton = styled.button<{ isPrimary: boolean }>`
 
 type Props = {
   children: ReactChild;
+  className?: string;
   isPrimary?: boolean;
   onClick?: () => void;
 };
 
-function Button({ children, isPrimary = false, onClick }: Props) {
+function Button({ children, className, isPrimary = false, onClick }: Props) {
   return (
-    <DefaultButton onClick={onClick} isPrimary={isPrimary}>
+    <DefaultButton className={className} onClick={onClick} isPrimary={isPrimary}>
       {children}
     </DefaultButton>
   );

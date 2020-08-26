@@ -29,10 +29,10 @@ export enum Spacing {
 
 export enum Typography {
   SMALL = '0.8rem',
-  REGULAR = '0.9rem',
-  MEDIUM = '1.15rem',
-  LARGE = '1.35rem',
-  X_LARGE = '1.8rem',
+  REGULAR = '1rem',
+  MEDIUM = '1.2rem',
+  LARGE = '1.5rem',
+  X_LARGE = '2rem',
   GIANT = '3rem',
 
   LIGHT = '300',

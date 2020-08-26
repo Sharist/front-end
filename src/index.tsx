@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { IconContext } from 'react-icons';
 import { Router } from '@reach/router';
 import { ThemeProvider } from 'styled-components';
 
@@ -11,12 +12,14 @@ import Plan from './pages/Plan';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={SharistTheme}>
-      <Router>
-        <Home path='/' />
-        <Plan path='plan' />
-      </Router>
-    </ThemeProvider>
+    <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
+      <ThemeProvider theme={SharistTheme}>
+        <Router>
+          <Home path='/' />
+          <Plan path='plan' />
+        </Router>
+      </ThemeProvider>
+    </IconContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
