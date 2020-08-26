@@ -40,3 +40,9 @@ code {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
+
+.icons {
+  vertical-align: middle;
+  font-size: 2rem;
+  margin: 0.5rem;
+}

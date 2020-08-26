@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { IoMdClose, IoIosMenu } from 'react-icons/io';
 import { navigate, useLocation, Link } from '@reach/router';
 import styled, { css } from 'styled-components';
 
+import { Breakpoint } from '../common/themes';
 import Button from './Button';
+import HideAbove from './helpers/HideAbove';
+import HideBelow from './helpers/HideBelow';
 
 export const HEADER_HEIGHT_REM = 5;
 
@@ -24,11 +28,15 @@ const HeaderWrapper = styled.div`
 `;
 
 const HeaderTitle = styled.div`
-  ${({ theme }) => css`
+  ${({ theme: { breakpoints } }) => css`
     display: flex;
     align-items: center;
     justify-content: space-around;
     width: 20rem;
+
+    @media screen and (max-width: ${breakpoints.MOBILE}) {
+      width: unset;
+    }
   `}
 `;
 
@@ -69,16 +77,49 @@ const Logo = styled.span.attrs({ className: 'noselect' })`
 `;
 
 const HeaderActions = styled.div`
-  ${({ theme: { breakpoints, typography } }) => css`
+  ${({ theme: { breakpoints } }) => css`
     align-items: center;
     display: flex;
     justify-content: space-around;
     width: 12.5rem;
 
     @media screen and (max-width: ${breakpoints.MOBILE}) {
-      font-size: ${typography.REGULAR};
-      width: 11rem;
+      font-size: 2rem;
+      padding: '0.5rem';
+      width: unset;
     }
+  `}
+`;
+
+const MobileMenuShadow = styled.div<{ visible: boolean }>`
+  ${({ visible, theme: { palette } }) => css`
+    background-color: ${palette.GREY_DARKER};
+    bottom: 0;
+    left: 0;
+    opacity: ${visible ? 0.3 : 0};
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: opacity 500ms;
+    z-index: ${visible ? 999 : -1000};
+  `}
+`;
+
+const MobileMenu = styled.div<{ visible: boolean }>`
+  ${({ visible, theme: { palette } }) => css`
+    background-color: white;
+    bottom: 0;
+    box-shadow: 0 0 2rem ${visible ? palette.GREY_DARKER : 'transparent'};
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    left: 20%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transform: ${visible ? 'translateX(0)' : 'translateX(100%)'};
+    transition: transform 500ms, box-shadow ease-out 500ms;
+    z-index: 1000;
   `}
 `;
 
@@ -89,20 +130,45 @@ function Header() {
     location.pathname !== '/' && navigate('/');
   }
 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  function handleMobileShadowClick() {
+    setMobileMenuOpen(false);
+  }
+
   return (
-    <HeaderWrapper>
-      <HeaderTitle>
-        <Logo onClick={handleLogoClick}>SHARIST</Logo>
-        <div>
-          <SiteMapLink to=''>About</SiteMapLink>
-          <SiteMapLink to=''>Product</SiteMapLink>
-        </div>
-      </HeaderTitle>
-      <HeaderActions>
-        <Button isPrimary>Sign up</Button>
-        <Button>Log in</Button>
-      </HeaderActions>
-    </HeaderWrapper>
+    <>
+      <HideAbove breakpoint={Breakpoint.MOBILE}>
+        <MobileMenuShadow
+          onClick={handleMobileShadowClick}
+          visible={mobileMenuOpen}
+        ></MobileMenuShadow>
+      </HideAbove>
+
+      <HeaderWrapper>
+        <HeaderTitle>
+          <Logo onClick={handleLogoClick}>SHARIST</Logo>
+          <HideBelow breakpoint={Breakpoint.MOBILE}>
+            <SiteMapLink to=''>About</SiteMapLink>
+            <SiteMapLink to=''>Product</SiteMapLink>
+          </HideBelow>
+        </HeaderTitle>
+
+        <HeaderActions>
+          <HideBelow breakpoint={Breakpoint.MOBILE}>
+            <Button isPrimary>Sign up</Button>
+            <Button>Log in</Button>
+          </HideBelow>
+
+          <HideAbove breakpoint={Breakpoint.MOBILE}>
+            <IoIosMenu onClick={() => setMobileMenuOpen(true)} />
+            <MobileMenu visible={mobileMenuOpen}>
+              <IoMdClose onClick={() => setMobileMenuOpen(false)}></IoMdClose>
+            </MobileMenu>
+          </HideAbove>
+        </HeaderActions>
+      </HeaderWrapper>
+    </>
   );
 }
 

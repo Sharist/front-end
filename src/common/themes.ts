@@ -1,4 +1,4 @@
-export enum Breakpoints {
+export enum Breakpoint {
   MOBILE = '600px',
   TABLET = '800px',
   REGULAR = '1200px',
@@ -28,7 +28,7 @@ export enum Typography {
 }
 
 export const SharistTheme = {
-  breakpoints: Breakpoints,
+  breakpoints: Breakpoint,
   palette: Palette,
   typography: Typography,
 };
