@@ -20,15 +20,15 @@ const CardImage = styled.img`
 `;
 
 const CardContent = styled.div`
-  ${({ theme: { spacing, typography } }) => css`
+  ${({ theme: { typography } }) => css`
     display: flex;
     flex-direction: column;
     line-height: ${typography.MEDIUM};
-    margin-left: ${spacing.MEDIUM};
+    margin-left: 1rem;
     height: calc(${typography.MEDIUM} * 4);
 
     & > * {
-      margin: ${spacing.X_SMALL};
+      margin: 0.25rem;
     }
   `}
 `;
@@ -36,7 +36,7 @@ const CardContent = styled.div`
 const Name = styled.p`
   ${({ theme: { typography } }) => css`
     font-size: ${typography.MEDIUM};
-    font-weight: ${typography.BOLD};
+    font-weight: bold;
   `}
 `;
 

@@ -2,16 +2,18 @@ import React from 'react';
 import { navigate, RouteComponentProps } from '@reach/router';
 import styled, { css } from 'styled-components';
 
+import { HEADER_HEIGHT_REM } from '../components/Header';
 import Button from '../components/Button';
 import LayoutContainer from '../components/LayoutContainer';
 
 const Landing = styled.div`
-  ${({ theme: { breakpoints, typography } }) => css`
+  ${({ theme: { breakpoints } }) => css`
     align-items: center;
     align-self: center;
     display: flex;
     flex-direction: column;
     height: 20rem;
+    margin-top: -${HEADER_HEIGHT_REM}rem;
     justify-content: space-between;
     width: 100%;
 
@@ -34,7 +36,7 @@ const Greet = styled.div`
   ${({ theme: { breakpoints, typography } }) => css`
     font-family: 'Roboto Slab';
     font-size: ${typography.GIANT};
-    font-weight: ${typography.BOLD};
+    font-weight: bold;
 
     @media screen and (max-width: ${breakpoints.MOBILE}) {
       font-size: ${typography.X_LARGE};
@@ -55,7 +57,7 @@ const Pitch = styled.div`
 const LandingButton = styled(Button)`
   ${({ theme: { breakpoints, typography } }) => css`
     font-size: ${typography.MEDIUM};
-    font-weight: ${typography.BOLD};
+    font-weight: bold;
     padding: 0.7rem 2rem;
 
     @media screen and (max-width: ${breakpoints.MOBILE}) {

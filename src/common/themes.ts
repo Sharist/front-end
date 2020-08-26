@@ -1,7 +1,7 @@
 export enum Breakpoints {
-  /**  600px */ MOBILE = '600px',
-  /**  800px */ TABLET = '800px',
-  /** 1200px */ REGULAR = '1200px',
+  MOBILE = '600px',
+  TABLET = '800px',
+  REGULAR = '1200px',
 }
 
 export enum Palette {
@@ -18,16 +18,6 @@ export enum Palette {
   TEAL_LIGHTER = '#5EAEAE',
 }
 
-export enum Spacing {
-  NANO = '0.05em',
-  MICRO = '0.15em',
-  X_SMALL = '0.25em',
-  SMALL = '0.5em',
-  MEDIUM = '1em',
-  LARGE = '1.5em',
-  X_LARGE = '2em',
-}
-
 export enum Typography {
   SMALL = '0.8rem',
   REGULAR = '1rem',
@@ -35,14 +25,10 @@ export enum Typography {
   LARGE = '1.5rem',
   X_LARGE = '2rem',
   GIANT = '3rem',
-
-  LIGHT = '300',
-  BOLD = '700',
 }
 
 export const SharistTheme = {
   breakpoints: Breakpoints,
   palette: Palette,
-  spacing: Spacing,
   typography: Typography,
 };

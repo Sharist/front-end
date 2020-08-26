@@ -2,7 +2,7 @@ import React, { ReactChild, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 
 import { pxToRem } from '../common/dimensions';
-import Header, { HEADER_HEIGHT } from './Header';
+import Header, { HEADER_HEIGHT_REM } from './Header';
 
 type BaseLayoutProps = {
   fullHeight: boolean;
@@ -21,7 +21,7 @@ const BaseLayout = styled.div<BaseLayoutProps>`
   }) => {
     const marginVertical = 1;
     const marginOffset = noMargin ? 0 : 2 * marginVertical;
-    const heightOffset = HEADER_HEIGHT + marginOffset;
+    const heightOffset = HEADER_HEIGHT_REM + marginOffset;
     const height = pxToRem(windowHeight) - heightOffset;
 
     return css`
