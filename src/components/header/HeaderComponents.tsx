@@ -77,7 +77,6 @@ export const HeaderActions = styled.div`
     width: 12.5rem;
 
     @media screen and (max-width: ${breakpoints.MOBILE}) {
-      cursor: pointer;
       font-size: 2rem;
       padding: 0.25rem;
       width: unset;
