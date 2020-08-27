@@ -12,7 +12,7 @@ import Plan from './pages/Plan';
 
 ReactDOM.render(
   <React.StrictMode>
-    <IconContext.Provider value={{ className: 'icons' }}>
+    <IconContext.Provider value={{ className: 'icons noselect' }}>
       <ThemeProvider theme={SharistTheme}>
         <Router>
           <Home path='/' />

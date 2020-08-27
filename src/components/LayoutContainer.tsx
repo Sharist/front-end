@@ -2,7 +2,7 @@ import React, { ReactChild, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 
 import { pxToRem } from '../common/dimensions';
-import Header, { HEADER_HEIGHT_REM } from './Header';
+import Header, { HEADER_HEIGHT_REM } from './header/Header';
 
 type BaseLayoutProps = {
   fullHeight: boolean;

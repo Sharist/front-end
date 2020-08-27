@@ -2,7 +2,7 @@ import React from 'react';
 import { navigate, RouteComponentProps } from '@reach/router';
 import styled, { css } from 'styled-components';
 
-import { HEADER_HEIGHT_REM } from '../components/Header';
+import { HEADER_HEIGHT_REM } from '../components/header/Header';
 import Button from '../components/Button';
 import LayoutContainer from '../components/LayoutContainer';
 
