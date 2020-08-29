@@ -1,10 +1,11 @@
 import React from 'react';
-import { navigate, RouteComponentProps } from '@reach/router';
+import { RouteComponentProps } from '@reach/router';
 import styled, { css } from 'styled-components';
 
 import { HEADER_HEIGHT_REM } from '../components/header/Header';
 import Button from '../components/Button';
 import LayoutContainer from '../components/LayoutContainer';
+import routes from '../routes';
 
 const Landing = styled.div`
   ${({ theme: { breakpoints } }) => css`
@@ -75,7 +76,7 @@ function Home(_: RouteComponentProps) {
           One tool to collaborate with your <br />
           friends for your next travel plan.
         </Pitch>
-        <LandingButton onClick={() => navigate('/plan')}>Let's go!</LandingButton>
+        <LandingButton onClick={routes.plan.navigator}>Let's go!</LandingButton>
       </Landing>
     </LayoutContainer>
   );

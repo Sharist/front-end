@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { RouteComponentProps, useLocation, navigate } from '@reach/router';
 import { IoIosArrowRoundForward } from 'react-icons/io';
+import { RouteComponentProps } from '@reach/router';
 
 import Button from '../../components/Button';
 import LayoutContainer from '../../components/LayoutContainer';
 import Logo from '../../components/header/Logo';
+import routes from '../../routes';
 import styled, { css } from 'styled-components';
 import TextInput from '../../components/forms/TextInput';
 
@@ -13,8 +14,6 @@ const AuthWrapper = styled.div`
     align-items: center;
     align-self: center;
     border-radius: 0.5rem;
-    border: 0.05rem solid ${palette.CLOUD};
-    box-shadow: 0 0 0.3rem ${palette.CLOUD};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,20 +36,11 @@ const AuthWrapper = styled.div`
 `;
 
 const NextButton = styled(Button)`
-  ${({ theme: { palette } }) => css`
-    align-self: flex-end;
-    display: flex;
-    align-items: center;
-    padding-left: 0.3rem;
-    padding-bottom: 0rem;
-
-    &:hover,
-    &:focus,
-    &:active {
-      border-bottom: 0.05rem solid ${palette.CLOUD_DARKER};
-      box-shadow: 0 0.15rem 0.15rem -0.15rem ${palette.CLOUD};
-    }
-  `}
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  padding-left: 0.3rem;
+  padding-bottom: 0rem;
 `;
 
 const LogoWrapper = styled.div`
@@ -62,19 +52,12 @@ const LogoWrapper = styled.div`
 function Auth(_: RouteComponentProps) {
   const [email, setEmail] = useState<string>('');
 
-  const location = useLocation();
-  function handleNavigationClick(path: string) {
-    if (location.pathname !== path) {
-      navigate(path);
-    }
-  }
-
   return (
     <LayoutContainer center fullHeight noHeader noMargin>
       <AuthWrapper>
         <LogoWrapper>
-          <Logo onClick={() => handleNavigationClick('/')} />
-          <p>Please verify your email</p>
+          <Logo onClick={routes.home.navigator} />
+          <p>Please verify your email.</p>
         </LogoWrapper>
         <TextInput
           label='Email'
@@ -84,8 +67,10 @@ function Auth(_: RouteComponentProps) {
           type='email'
           value={email}
         ></TextInput>
+
         <NextButton transparent>
-          NEXT <IoIosArrowRoundForward />
+          NEXT
+          <IoIosArrowRoundForward />
         </NextButton>
       </AuthWrapper>
     </LayoutContainer>

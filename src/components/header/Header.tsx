@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { IoIosMenu } from 'react-icons/io';
-import { navigate, useLocation } from '@reach/router';
 import styled from 'styled-components';
 
 import { Breakpoint } from '../../common/themes';
@@ -10,6 +9,7 @@ import HideAbove from '../helpers/HideAbove';
 import HideBelow from '../helpers/HideBelow';
 import Logo from './Logo';
 import MobileMenu from './MobileMenu';
+import routes from '../../routes';
 
 export const HEADER_HEIGHT_REM = 5;
 
@@ -25,20 +25,12 @@ const HeaderWrapper = styled.div`
 `;
 
 function Header() {
-  const location = useLocation();
-
-  function handleNavigationClick(path: string) {
-    if (location.pathname !== path) {
-      navigate(path);
-    }
-  }
-
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <HeaderWrapper>
       <HeaderTitle>
-        <Logo onClick={() => handleNavigationClick('/')} />
+        <Logo onClick={routes.home.navigator} />
         <HideBelow breakpoint={Breakpoint.MOBILE}>
           <SiteMapLink to=''>About</SiteMapLink>
           <SiteMapLink to=''>Product</SiteMapLink>
@@ -47,10 +39,10 @@ function Header() {
 
       <HeaderActions>
         <HideBelow breakpoint={Breakpoint.MOBILE}>
-          <Button onClick={() => handleNavigationClick('/auth')} isPrimary>
+          <Button onClick={routes.signUp.navigator} isPrimary>
             Sign up
           </Button>
-          <Button onClick={() => handleNavigationClick('/auth')}>Log in</Button>
+          <Button onClick={routes.logIn.navigator}>Log in</Button>
         </HideBelow>
 
         <HideAbove breakpoint={Breakpoint.MOBILE}>

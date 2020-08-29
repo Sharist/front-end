@@ -3,6 +3,8 @@ import { IoMdClose } from 'react-icons/io';
 import { Link } from '@reach/router';
 import styled, { css } from 'styled-components';
 
+import routes from '../../routes';
+
 const MobileMenuShadow = styled.div<{ visible: boolean }>`
   ${({ visible, theme: { palette } }) => css`
     background-color: ${palette.GREY_DARKER};
@@ -95,13 +97,13 @@ function MobileMenu({ onDismiss, visible }: Props) {
         </MobileMenuSection>
 
         <MobileMenuSection>
-          <MobileSiteMapLink to=''>Sign up</MobileSiteMapLink>
-          <MobileSiteMapLink to=''>Log in</MobileSiteMapLink>
+          <MobileSiteMapLink to={routes.signUp.path}>Sign up</MobileSiteMapLink>
+          <MobileSiteMapLink to={routes.logIn.path}>Log in</MobileSiteMapLink>
         </MobileMenuSection>
 
         <MobileMenuSection>
-          <MobileSiteMapLink to='/'>Home</MobileSiteMapLink>
-          <MobileSiteMapLink to='/plan'>Plan</MobileSiteMapLink>
+          <MobileSiteMapLink to={routes.home.path}>Home</MobileSiteMapLink>
+          <MobileSiteMapLink to={routes.plan.path}>Plan</MobileSiteMapLink>
         </MobileMenuSection>
 
         <MobileMenuSection>

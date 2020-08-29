@@ -7,18 +7,16 @@ import { ThemeProvider } from 'styled-components';
 import './index.css';
 import { SharistTheme } from './common/themes';
 import * as serviceWorker from './serviceWorker';
-import Home from './pages/Home';
-import Auth from './pages/auth/Auth';
-import Plan from './pages/Plan';
+import routes from './routes';
 
 ReactDOM.render(
   <React.StrictMode>
     <IconContext.Provider value={{ className: 'icons noselect' }}>
       <ThemeProvider theme={SharistTheme}>
         <Router>
-          <Home path='/' />
-          <Plan path='/plan' />
-          <Auth path='/auth' />
+          {Object.entries(routes).map(([name, { pageComponent: PageComponent, path }]) => (
+            <PageComponent key={name} path={path} />
+          ))}
         </Router>
       </ThemeProvider>
     </IconContext.Provider>
