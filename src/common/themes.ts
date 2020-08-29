@@ -16,6 +16,8 @@ export enum Palette {
   REGULAR = '#222',
   TEAL = '#198C8C',
   TEAL_LIGHTER = '#5EAEAE',
+  TRANSPARENT = 'transparent',
+  WHITE = '#fff',
 }
 
 export enum Typography {

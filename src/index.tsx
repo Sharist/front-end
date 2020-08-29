@@ -8,6 +8,7 @@ import './index.css';
 import { SharistTheme } from './common/themes';
 import * as serviceWorker from './serviceWorker';
 import Home from './pages/Home';
+import Auth from './pages/auth/Auth';
 import Plan from './pages/Plan';
 
 ReactDOM.render(
@@ -16,7 +17,8 @@ ReactDOM.render(
       <ThemeProvider theme={SharistTheme}>
         <Router>
           <Home path='/' />
-          <Plan path='plan' />
+          <Plan path='/plan' />
+          <Auth path='/auth' />
         </Router>
       </ThemeProvider>
     </IconContext.Provider>

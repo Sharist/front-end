@@ -15,7 +15,6 @@ const Landing = styled.div`
     height: 20rem;
     margin-top: -${HEADER_HEIGHT_REM}rem;
     justify-content: space-between;
-    width: 100%;
 
     @media screen and (max-width: ${breakpoints.MOBILE}) {
       height: 13rem;
@@ -68,7 +67,7 @@ const LandingButton = styled(Button)`
 
 function Home(_: RouteComponentProps) {
   return (
-    <LayoutContainer fullHeight>
+    <LayoutContainer center fullHeight>
       <Landing>
         <Slogan>Collaborate. Fun. Grow</Slogan>
         <Greet>Welcome to Sharist!</Greet>
