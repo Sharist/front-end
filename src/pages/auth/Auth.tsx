@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import { RouteComponentProps } from '@reach/router';
 
@@ -10,7 +10,7 @@ import styled, { css } from 'styled-components';
 import TextInput from '../../components/forms/TextInput';
 
 const AuthWrapper = styled.div`
-  ${({ theme: { breakpoints, palette } }) => css`
+  ${({ theme: { breakpoints } }) => css`
     align-items: center;
     align-self: center;
     border-radius: 0.5rem;
@@ -23,55 +23,61 @@ const AuthWrapper = styled.div`
 
     @media screen and (max-width: ${breakpoints.MOBILE}) {
       align-self: flex-start;
-      border: none;
       box-shadow: none;
-      padding: 2rem;
       margin-top: 3rem;
-    }
-
-    & > * {
-      margin-bottom: 3rem;
+      padding: 2rem;
     }
   `}
 `;
 
 const NextButton = styled(Button)`
+  align-items: center;
   align-self: flex-end;
   display: flex;
-  align-items: center;
-  padding-left: 0.3rem;
+  margin-top: 3rem;
   padding-bottom: 0rem;
+  padding-left: 0.3rem;
 `;
 
-const LogoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const LogoSubtitle = styled.p`
+  margin-bottom: 3rem;
 `;
+
+type VerifyEmailProps = {
+  email: string;
+  setEmail: Dispatch<SetStateAction<string>>;
+};
+
+function VeirfyEmailPrompt({ email, setEmail }: VerifyEmailProps) {
+  return (
+    <>
+      <LogoSubtitle>Please verify your email.</LogoSubtitle>
+      <TextInput
+        label='Email'
+        placeholder='youremail@example.com'
+        onChange={(e) => setEmail(e.target.value)}
+        spellCheck={false}
+        type='email'
+        value={email}
+      ></TextInput>
+
+      <NextButton transparent>
+        NEXT
+        <IoIosArrowRoundForward />
+      </NextButton>
+    </>
+  );
+}
 
 function Auth(_: RouteComponentProps) {
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState('');
 
   return (
     <LayoutContainer center fullHeight noHeader noMargin>
       <AuthWrapper>
-        <LogoWrapper>
-          <Logo onClick={routes.home.navigator} />
-          <p>Please verify your email.</p>
-        </LogoWrapper>
-        <TextInput
-          label='Email'
-          placeholder='youremail@example.com'
-          onChange={(e) => setEmail(e.target.value)}
-          spellCheck={false}
-          type='email'
-          value={email}
-        ></TextInput>
+        <Logo onClick={routes.home.navigator} />
 
-        <NextButton transparent>
-          NEXT
-          <IoIosArrowRoundForward />
-        </NextButton>
+        <VeirfyEmailPrompt email={email} setEmail={setEmail} />
       </AuthWrapper>
     </LayoutContainer>
   );
