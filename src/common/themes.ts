@@ -12,7 +12,7 @@ export enum Palette {
   GREY = '#888',
   GREY_DARKER = '#555',
   PURPLE = '#6f4a8e',
-  PURPLE_LIGHTER = '#7b549c',
+  PURPLE_LIGHTER = '#aa8dc2',
   REGULAR = '#222',
   TEAL = '#198C8C',
   TEAL_LIGHTER = '#5EAEAE',

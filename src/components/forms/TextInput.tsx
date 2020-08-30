@@ -43,6 +43,7 @@ type Props = {
   disabled?: boolean;
   label?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
   spellCheck?: boolean;
   type?: string;
@@ -53,6 +54,7 @@ function TextInput({
   disabled = false,
   label,
   onChange,
+  onKeyPress,
   placeholder = '',
   spellCheck = true,
   type,
@@ -76,11 +78,12 @@ function TextInput({
         disabled={disabled}
         name={name}
         onBlur={() => setFocused(false)}
-        onFocus={() => setFocused(true)}
         onChange={onChange}
+        onFocus={() => setFocused(true)}
+        onKeyPress={onKeyPress}
         placeholder={placeholder}
-        spellCheck={spellCheck}
         ref={inputRef}
+        spellCheck={spellCheck}
         type={type}
         value={value}
       />
