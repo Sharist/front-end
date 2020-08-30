@@ -10,68 +10,79 @@ import styled, { css } from 'styled-components';
 import TextInput from '../../components/forms/TextInput';
 
 const AuthWrapper = styled.div`
-  ${({ theme: { breakpoints, palette } }) => css`
+  ${({ theme: { breakpoints } }) => css`
     align-items: center;
     align-self: center;
-    border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    max-width: 35rem;
-    padding: 3.5rem 5rem;
+    height: 26.5rem;
+    max-width: 25rem;
     width: 100%;
 
     @media screen and (max-width: ${breakpoints.MOBILE}) {
       align-self: flex-start;
-      border: none;
-      box-shadow: none;
-      padding: 2rem;
       margin-top: 3rem;
-    }
-
-    & > * {
-      margin-bottom: 3rem;
     }
   `}
 `;
 
 const NextButton = styled(Button)`
   align-self: flex-end;
-  display: flex;
-  align-items: center;
-  padding-left: 0.3rem;
-  padding-bottom: 0rem;
+  margin-top: 3rem;
 `;
 
-const LogoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const LogoSubtitle = styled.p<{ awaitingServer?: boolean }>`
+  ${({ awaitingServer, theme: { palette } }) => css`
+    margin-bottom: 3rem;
+    text-align: center;
+    color: ${awaitingServer ? palette.CLOUD_DARKER : palette.BLACK};
+  `}
 `;
 
 function Auth(_: RouteComponentProps) {
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState('');
+  const [awaitingServer, setAwaitingServer] = useState(false);
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
+
+  function handleNextClick() {
+    console.log('test');
+    setAwaitingServer(true);
+
+    // TODO(samling): Acutally submit to server and act depending on response.
+    setTimeout(() => setEmailSubmitted(true), 1000);
+  }
 
   return (
     <LayoutContainer center fullHeight noHeader noMargin>
       <AuthWrapper>
-        <LogoWrapper>
-          <Logo onClick={routes.home.navigator} />
-          <p>Please verify your email.</p>
-        </LogoWrapper>
-        <TextInput
-          label='Email'
-          placeholder='youremail@example.com'
-          onChange={(e) => setEmail(e.target.value)}
-          spellCheck={false}
-          type='email'
-          value={email}
-        ></TextInput>
+        <Logo onClick={routes.home.navigator} />
 
-        <NextButton transparent>
-          NEXT
-          <IoIosArrowRoundForward />
-        </NextButton>
+        {emailSubmitted ? (
+          <LogoSubtitle>Please check your email for instructions.</LogoSubtitle>
+        ) : (
+          <>
+            <LogoSubtitle awaitingServer={awaitingServer}>Please verify your email.</LogoSubtitle>
+            <TextInput
+              label='Email'
+              placeholder='youremail@example.com'
+              disabled={awaitingServer}
+              onChange={(e) => setEmail(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleNextClick();
+                }
+              }}
+              spellCheck={false}
+              type='email'
+              value={email}
+            ></TextInput>
+
+            <NextButton disabled={awaitingServer} transparent onClick={handleNextClick}>
+              NEXT
+              <IoIosArrowRoundForward />
+            </NextButton>
+          </>
+        )}
       </AuthWrapper>
     </LayoutContainer>
   );

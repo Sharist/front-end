@@ -2,34 +2,32 @@ import React, { ReactChild } from 'react';
 import styled, { css } from 'styled-components';
 
 const BaseButton = styled.button`
-  ${({ theme: { palette } }) =>
+  ${({ disabled, theme: { palette } }) =>
     css`
+      align-items: center;
       background-color: ${palette.CLOUD_LIGHTER};
       border-radius: 0.2rem;
       border: 0.05rem solid ${palette.CLOUD};
       box-shadow: 0 0 0 transparent;
-      color: palette.REGULAR;
-      cursor: pointer;
+      color: ${disabled ? palette.GREY : palette.REGULAR};
+      cursor: ${disabled ? 'default' : 'pointer'};
       display: flex;
-      align-items: center;
       font-weight: 400;
       padding: 0.6rem 1rem;
       text-shadow: 0 0 0 transparent;
       transition: border 0.1s, box-shadow 0.1s, text-shadow 0.1s;
 
       &:hover {
-        background: ${palette.CLOUD_LIGHTER};
         border: 0.05rem solid ${palette.CLOUD};
-        box-shadow: 0 0 0.3rem ${palette.CLOUD};
+        box-shadow: ${disabled ? `0 0 0 ${palette.TRANSPARENT}` : `0 0 0.3rem ${palette.CLOUD}`};
         text-shadow: 0 0 0 transparent;
       }
 
       &:active {
-        background: ${palette.CLOUD_LIGHTER};
         border: 0.05rem solid ${palette.CLOUD};
         box-shadow: 0 0.02rem 0.15rem ${palette.CLOUD};
         outline: none;
-        transform: translateY(0.05rem);
+        transform: ${disabled ? 'none' : 'translateY(0.05rem)'};
       }
 
       &:focus {
@@ -39,19 +37,19 @@ const BaseButton = styled.button`
 `;
 
 const PrimaryButton = styled(BaseButton)`
-  ${({ theme: { palette } }) => css`
-    background-color: ${palette.PURPLE};
-    border-color: ${palette.PURPLE};
-    color: ${palette.WHITE};
+  ${({ disabled, theme: { palette } }) => css`
+    background-color: ${disabled ? palette.PURPLE_LIGHTER : palette.PURPLE};
+    border-color: ${disabled ? palette.PURPLE_LIGHTER : palette.PURPLE};
+    color: ${disabled ? palette.CLOUD_LIGHTER : palette.WHITE};
 
     &:hover {
-      background-color: ${palette.PURPLE_LIGHTER};
       border-color: ${palette.PURPLE_LIGHTER};
-      box-shadow: 0 0 0.3rem ${palette.PURPLE_LIGHTER};
+      box-shadow: ${disabled
+        ? `0 0 0 ${palette.TRANSPARENT}`
+        : `0 0 0.3rem ${palette.PURPLE_LIGHTER}`};
     }
 
     &:active {
-      background-color: ${palette.PURPLE};
       border-color: ${palette.PURPLE};
       box-shadow: 0 0.02rem 0.15rem ${palette.PURPLE};
     }
@@ -59,27 +57,18 @@ const PrimaryButton = styled(BaseButton)`
 `;
 
 const TransparentButton = styled(BaseButton)`
-  ${({ theme: { palette } }) => css`
+  ${({ disabled, theme: { palette } }) => css`
     background-color: ${palette.TRANSPARENT};
-    border-color: ${palette.TRANSPARENT};
-    color: ${palette.GREY_DARKER};
+    border: none;
+    box-shadow: 0 0 0 ${palette.TRANSPARENT};
+    color: ${disabled ? palette.CLOUD_DARKER : palette.GREY_DARKER};
     padding: 0;
-    border-radius: 0;
 
     &:hover,
     &:focus {
-      background-color: ${palette.TRANSPARENT};
-      border-color: ${palette.TRANSPARENT};
+      border: none;
       box-shadow: 0 0 0 ${palette.TRANSPARENT};
-      text-shadow: 0 0 0.1rem ${palette.CLOUD_DARKER};
-    }
-
-    &:active {
-      background-color: ${palette.TRANSPARENT};
-      border-color: ${palette.TRANSPARENT};
-      box-shadow: 0 0 0 ${palette.TRANSPARENT};
-      text-shadow: 0 0 0.1rem ${palette.CLOUD_DARKER};
-      transform: translateY(0.05rem);
+      text-shadow: 0 0 0.1rem ${disabled ? palette.TRANSPARENT : palette.CLOUD_DARKER};
     }
   `}
 `;
@@ -87,6 +76,7 @@ const TransparentButton = styled(BaseButton)`
 type Props = {
   children: ReactChild | ReactChild[];
   className?: string;
+  disabled?: boolean;
   /** Set background to primary color. If `transparent` is set, this prop is ignored. */
   isPrimary?: boolean;
   onClick?: () => void;
@@ -94,7 +84,14 @@ type Props = {
   transparent?: boolean;
 };
 
-function Button({ children, className, isPrimary = false, onClick, transparent = false }: Props) {
+function Button({
+  children,
+  className,
+  disabled = false,
+  isPrimary = false,
+  onClick,
+  transparent = false,
+}: Props) {
   let ButtonComponent = BaseButton;
   if (transparent) {
     ButtonComponent = TransparentButton;
@@ -102,8 +99,16 @@ function Button({ children, className, isPrimary = false, onClick, transparent =
     ButtonComponent = PrimaryButton;
   }
 
+  function onClickWrapper() {
+    if (disabled) {
+      return;
+    }
+
+    onClick?.();
+  }
+
   return (
-    <ButtonComponent className={className} onClick={onClick}>
+    <ButtonComponent disabled={disabled} className={className} onClick={onClickWrapper}>
       {children}
     </ButtonComponent>
   );
