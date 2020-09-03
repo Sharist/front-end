@@ -1,6 +1,7 @@
 import { navigate } from '@reach/router';
 
 import Auth from './pages/auth/Auth';
+import VerifyEmail from './pages/auth/VerifyEmail';
 import Home from './pages/Home';
 import Plan from './pages/Plan';
 
@@ -29,6 +30,12 @@ const routes = {
     pageComponent: Auth,
     path: '/login',
     navigator: () => navigate('/login'),
+  },
+  verifyEmail: {
+    pageComponent: VerifyEmail,
+    path: '/verify-email/:oneTimeToken',
+    // We don't want things to navigate to this route
+    navigator: () => navigate('/'),
   },
 };
 
