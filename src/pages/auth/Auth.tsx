@@ -9,7 +9,7 @@ import routes from '../../routes';
 import styled, { css } from 'styled-components';
 import TextInput from '../../components/forms/TextInput';
 
-const AuthWrapper = styled.div`
+export const AuthWrapper = styled.div`
   ${({ theme: { breakpoints } }) => css`
     align-items: center;
     align-self: center;
@@ -31,7 +31,7 @@ const NextButton = styled(Button)`
   margin-top: 3rem;
 `;
 
-const LogoSubtitle = styled.p<{ awaitingServer?: boolean }>`
+export const LogoSubtitle = styled.p<{ awaitingServer?: boolean }>`
   ${({ awaitingServer, theme: { palette } }) => css`
     margin-bottom: 3rem;
     text-align: center;
@@ -45,7 +45,6 @@ function Auth(_: RouteComponentProps) {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
 
   function handleNextClick() {
-    console.log('test');
     setAwaitingServer(true);
 
     // TODO(samling): Acutally submit to server and act depending on response.
