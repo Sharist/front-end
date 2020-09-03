@@ -54,7 +54,7 @@ const Pitch = styled.div`
   `}
 `;
 
-const LandingButton = styled(Button)`
+const LandingButton = styled(Button).attrs({ isPrimary: true })`
   ${({ theme: { breakpoints, typography } }) => css`
     font-size: ${typography.MEDIUM};
     font-weight: bold;

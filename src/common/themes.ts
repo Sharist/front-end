@@ -5,19 +5,28 @@ export enum Breakpoint {
 }
 
 export enum Palette {
+  /** Basics */
   BLACK = '#000',
-  CLOUD = '#ddd',
-  CLOUD_DARKER = '#aaa',
-  CLOUD_LIGHTER = '#eee',
   GREY = '#888',
   GREY_DARKER = '#555',
-  PURPLE = '#6f4a8e',
-  PURPLE_LIGHTER = '#aa8dc2',
-  REGULAR = '#222',
-  TEAL = '#198C8C',
-  TEAL_LIGHTER = '#5EAEAE',
-  TRANSPARENT = 'transparent',
-  WHITE = '#fff',
+  TRANSPARENT = 'TRANSPARENT',
+  WHITE = '#FFF',
+
+  /** Themed */
+  AMBER = '#EFBE75',
+  AMBER_DARKER = '#A78551',
+  AMBER_LIGHTER = '#F3D19E',
+  CLOUD = '#EAEAEA',
+  CLOUD_DARKER = '#A3A3A3',
+  CLOUD_LIGHTER = '#F0F0F0',
+  GREEN = '#9EC05F',
+  ORANGE = '#E36B1D',
+  ORANGE_DARKER = '#9E4B14',
+  ORANGE_LIGHTER = '#EB9860',
+  REGULAR = '#373737',
+  TORQUOISE = '#9BD2BF',
+  TORQUOISE_DARKER = '#6C9385',
+  TORQUOISE_LIGHTER = '#B9DFD2',
 }
 
 export enum Typography {
