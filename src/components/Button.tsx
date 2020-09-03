@@ -5,7 +5,7 @@ const BaseButton = styled.button`
   ${({ disabled, theme: { palette } }) =>
     css`
       align-items: center;
-      background-color: ${palette.CLOUD_LIGHTER};
+      background-color: ${palette.CLOUD};
       border-radius: 0.2rem;
       border: 0.05rem solid ${palette.CLOUD};
       box-shadow: 0 0 0 transparent;
@@ -19,13 +19,15 @@ const BaseButton = styled.button`
 
       &:hover {
         border: 0.05rem solid ${palette.CLOUD};
-        box-shadow: ${disabled ? `0 0 0 ${palette.TRANSPARENT}` : `0 0 0.3rem ${palette.CLOUD}`};
+        box-shadow: ${disabled
+          ? `0 0 0 ${palette.TRANSPARENT}`
+          : `0 0 0.3rem ${palette.CLOUD_DARKER}`};
         text-shadow: 0 0 0 transparent;
       }
 
       &:active {
         border: 0.05rem solid ${palette.CLOUD};
-        box-shadow: 0 0.02rem 0.15rem ${palette.CLOUD};
+        box-shadow: 0 0.02rem 0.15rem ${palette.CLOUD_DARKER};
         outline: none;
         transform: ${disabled ? 'none' : 'translateY(0.05rem)'};
       }
@@ -38,20 +40,21 @@ const BaseButton = styled.button`
 
 const PrimaryButton = styled(BaseButton)`
   ${({ disabled, theme: { palette } }) => css`
-    background-color: ${disabled ? palette.PURPLE_LIGHTER : palette.PURPLE};
-    border-color: ${disabled ? palette.PURPLE_LIGHTER : palette.PURPLE};
+    background-color: ${disabled ? palette.ORANGE_LIGHTER : palette.ORANGE};
+    border-color: ${disabled ? palette.ORANGE_LIGHTER : palette.ORANGE};
     color: ${disabled ? palette.CLOUD_LIGHTER : palette.WHITE};
+    text-shadow: 0 0 0.01rem ${palette.GREY_DARKER};
 
     &:hover {
-      border-color: ${palette.PURPLE_LIGHTER};
+      border-color: ${palette.ORANGE_LIGHTER};
       box-shadow: ${disabled
         ? `0 0 0 ${palette.TRANSPARENT}`
-        : `0 0 0.3rem ${palette.PURPLE_LIGHTER}`};
+        : `0 0 0.3rem ${palette.ORANGE_LIGHTER}`};
     }
 
     &:active {
-      border-color: ${palette.PURPLE};
-      box-shadow: 0 0.02rem 0.15rem ${palette.PURPLE};
+      border-color: ${palette.ORANGE};
+      box-shadow: 0 0.02rem 0.15rem ${palette.ORANGE};
     }
   `}
 `;
