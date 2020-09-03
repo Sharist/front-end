@@ -3,7 +3,7 @@ import { IoIosMenu } from 'react-icons/io';
 import styled from 'styled-components';
 
 import { Breakpoint } from '../../common/themes';
-import { HeaderTitle, HeaderActions, SiteMapLink } from './HeaderComponents';
+import { HeaderActions } from './HeaderComponents';
 import Button from '../Button';
 import HideAbove from '../helpers/HideAbove';
 import HideBelow from '../helpers/HideBelow';
@@ -29,13 +29,7 @@ function Header() {
 
   return (
     <HeaderWrapper>
-      <HeaderTitle>
-        <Logo onClick={routes.home.navigator} />
-        <HideBelow breakpoint={Breakpoint.MOBILE}>
-          <SiteMapLink to=''>About</SiteMapLink>
-          <SiteMapLink to=''>Product</SiteMapLink>
-        </HideBelow>
-      </HeaderTitle>
+      <Logo onClick={routes.home.navigator} />
 
       <HeaderActions>
         <HideBelow breakpoint={Breakpoint.MOBILE}>

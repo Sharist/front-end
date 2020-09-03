@@ -72,7 +72,7 @@ function LayoutContainer({
     return function cleanup() {
       window.removeEventListener('resize', handleWindowResize);
     };
-  }, [windowHeight]);
+  });
 
   return (
     <>

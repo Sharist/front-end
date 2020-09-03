@@ -1,24 +1,60 @@
+import React from 'react';
 import styled, { css } from 'styled-components';
 
-const Logo = styled.span.attrs({ className: 'noselect' })`
-  ${({ theme: { breakpoints, palette, typography } }) => css`
-    border-radius: 0.2rem;
-    cursor: pointer;
-    font-size: ${typography.X_LARGE};
-    font-weight: 300;
-    text-transform: uppercase;
-    padding: 0.5rem;
-    text-shadow: 0 0 0.15rem ${palette.CLOUD_DARKER};
-    transition: background-color 0.1s, color 0.1s, text-shadow 0.1s;
+import SharistLogo from '../../resources/images/sharist-logo.svg';
 
-    &::after {
-      content: 'Sharist';
-    }
+const LogoText = styled.span`
+  font-weight: 300;
+
+  &::after {
+    content: 'Sharist';
+  }
+`;
+
+const LogoIcon = styled.img.attrs({ src: SharistLogo })`
+  ${({ theme: { breakpoints } }) => css`
+    height: 2.5rem;
 
     @media screen and (max-width: ${breakpoints.MOBILE}) {
-      padding: 0.25rem;
+      height: 2rem;
     }
   `}
 `;
+
+const LogoWrapper = styled.div.attrs({ className: 'noselect' })`
+  ${({ theme: { breakpoints } }) => css`
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-size: 2.25rem;
+    padding: 0.5rem;
+
+    & > * {
+      margin: 0 0.25rem;
+    }
+
+    @media screen and (max-width: ${breakpoints.MOBILE}) {
+      font-size: 1.75rem;
+      padding: 0.25rem;
+
+      & > * {
+        margin: 0 0.2rem;
+      }
+    }
+  `}
+`;
+
+type LogoProps = {
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+};
+
+function Logo({ onClick }: LogoProps) {
+  return (
+    <LogoWrapper onClick={onClick}>
+      <LogoIcon />
+      <LogoText />
+    </LogoWrapper>
+  );
+}
 
 export default Logo;
