@@ -18,8 +18,8 @@ const routes = {
   },
   logIn: {
     pageComponent: Auth,
-    path: '/signup',
-    navigator: () => navigate('/signup'),
+    path: '/login',
+    navigator: () => navigate('/login'),
   },
   plan: {
     pageComponent: Plan,
@@ -28,8 +28,8 @@ const routes = {
   },
   signUp: {
     pageComponent: Auth,
-    path: '/login',
-    navigator: () => navigate('/login'),
+    path: '/signup',
+    navigator: () => navigate('/signup'),
   },
   verifyEmail: {
     pageComponent: VerifyEmail,
