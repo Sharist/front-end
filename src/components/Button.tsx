@@ -1,5 +1,6 @@
 import React, { ReactChild } from 'react';
 import styled, { css } from 'styled-components';
+import Spinner from './Spinner';
 
 const BaseButton = styled.button`
   ${({ disabled, theme: { palette } }) =>
@@ -13,6 +14,7 @@ const BaseButton = styled.button`
       cursor: ${disabled ? 'default' : 'pointer'};
       display: flex;
       font-weight: 400;
+      justify-content: center;
       padding: 0.6rem 1rem;
       text-shadow: 0 0 0 transparent;
       transition: border 0.1s, box-shadow 0.1s, text-shadow 0.1s;
@@ -53,8 +55,10 @@ const PrimaryButton = styled(BaseButton)`
     }
 
     &:active {
-      border-color: ${palette.ORANGE};
-      box-shadow: 0 0.02rem 0.15rem ${palette.ORANGE};
+      border-color: ${disabled ? palette.ORANGE_LIGHTER : palette.ORANGE};
+      box-shadow: ${disabled
+        ? `0 0 0 ${palette.TRANSPARENT}`
+        : `0 0.02rem 0.15rem ${palette.ORANGE}`};
     }
   `}
 `;
@@ -76,10 +80,22 @@ const TransparentButton = styled(BaseButton)`
   `}
 `;
 
+const ButtonContent = styled.span<{ isHidden: boolean }>`
+  ${({ isHidden }) => css`
+    opacity: ${isHidden ? 0 : 1};
+  `}
+`;
+
+const SpinnerContainer = styled.span`
+  position: absolute;
+`;
+
 type Props = {
   children: ReactChild | ReactChild[];
   className?: string;
   disabled?: boolean;
+  /** Button will be disabled and a spinner will show up replacing the text. Overrides `disabled` setting. */
+  isLoading?: boolean;
   /** Set background to primary color. If `transparent` is set, this prop is ignored. */
   isPrimary?: boolean;
   onClick?: () => void;
@@ -91,10 +107,13 @@ function Button({
   children,
   className,
   disabled = false,
+  isLoading = false,
   isPrimary = false,
   onClick,
   transparent = false,
 }: Props) {
+  const shouldDisableButton = disabled || isLoading;
+
   let ButtonComponent = BaseButton;
   if (transparent) {
     ButtonComponent = TransparentButton;
@@ -103,7 +122,7 @@ function Button({
   }
 
   function onClickWrapper() {
-    if (disabled) {
+    if (shouldDisableButton) {
       return;
     }
 
@@ -111,8 +130,13 @@ function Button({
   }
 
   return (
-    <ButtonComponent disabled={disabled} className={className} onClick={onClickWrapper}>
-      {children}
+    <ButtonComponent disabled={shouldDisableButton} className={className} onClick={onClickWrapper}>
+      <ButtonContent isHidden={isLoading}>{children}</ButtonContent>
+      {isLoading && (
+        <SpinnerContainer>
+          <Spinner />
+        </SpinnerContainer>
+      )}
     </ButtonComponent>
   );
 }
