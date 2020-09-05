@@ -76,7 +76,7 @@ function Auth(_: RouteComponentProps) {
               value={email}
             ></TextInput>
 
-            <NextButton disabled={awaitingServer} transparent onClick={handleNextClick}>
+            <NextButton isLoading={awaitingServer} transparent onClick={handleNextClick}>
               NEXT
               <IoIosArrowRoundForward />
             </NextButton>
