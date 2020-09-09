@@ -20,7 +20,7 @@ function attachAuth(config?: AxiosRequestConfig) {
   const csrf = getCookie("csrf_token");
   const configHeaders = config?.headers;
 
-  if (csrf && configHeaders) {
+  if (csrf) {
     const headers = { ...configHeaders, "x-csrf-token": csrf };
 
     return { ...config, headers };
