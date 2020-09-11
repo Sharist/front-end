@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import { RouteComponentProps } from '@reach/router';
 
+import { post } from '../../common/http';
 import Button from '../../components/Button';
 import LayoutContainer from '../../components/LayoutContainer';
 import Logo from '../../components/header/Logo';
@@ -39,16 +40,18 @@ export const LogoSubtitle = styled.p<{ awaitingServer?: boolean }>`
   `}
 `;
 
-function Auth(_: RouteComponentProps) {
+function Auth({ path }: RouteComponentProps) {
   const [email, setEmail] = useState('');
   const [awaitingServer, setAwaitingServer] = useState(false);
   const [emailSubmitted, setEmailSubmitted] = useState(false);
 
-  function handleNextClick() {
+  async function handleNextClick() {
     setAwaitingServer(true);
 
-    // TODO(samling): Acutally submit to server and act depending on response.
-    setTimeout(() => setEmailSubmitted(true), 1000);
+    const endpoint = path === '/signup' ? 'signup' : 'signin-request';
+
+    await post(endpoint, { email });
+    setEmailSubmitted(true);
   }
 
   return (
