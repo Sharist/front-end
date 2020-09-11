@@ -33,7 +33,7 @@ const routes = {
   },
   verifyEmail: {
     pageComponent: VerifyEmail,
-    path: '/verify-email/:oneTimeToken',
+    path: '/verify-email/token/:oneTimeToken',
     // We don't want things to navigate to this route
     navigator: () => navigate('/'),
   },
