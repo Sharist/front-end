@@ -2,24 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 
 import { AuthWrapper, LogoSubtitle } from './Auth';
-import { get } from '../../common/http';
+import { get, parseQueryString } from '../../common/http';
 import LayoutContainer from '../../components/LayoutContainer';
 import Logo from '../../components/header/Logo';
 import routes from '../../routes';
 
-type Props = {
-  oneTimeToken?: string;
-} & RouteComponentProps;
-
-function VerifyEmail({ oneTimeToken }: Props) {
+function VerifyEmail({ location }: RouteComponentProps) {
   const [isVerifyingToken, setIsVerifyingToken] = useState(true);
-
   const [isTokenValid, setIsTokenValid] = useState(false);
+
+  const { token } = parseQueryString(location?.search);
 
   useEffect(() => {
     async function verify() {
       try {
-        const response = await get(`signin?token=${oneTimeToken}`);
+        if (!token) {
+          throw new Error('Token not provided');
+        }
+
+        const response = await get(`signin?token=${token}`);
         setIsVerifyingToken(false);
         setIsTokenValid(response.status === 200);
 
@@ -32,7 +33,7 @@ function VerifyEmail({ oneTimeToken }: Props) {
     }
 
     verify();
-  }, [oneTimeToken]);
+  }, [token]);
 
   const statusMessage = isTokenValid
     ? 'Thank you, your email was verified!'

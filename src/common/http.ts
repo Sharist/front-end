@@ -1,9 +1,10 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import qs from 'querystring';
 
-const host =
+const apiHost =
   process.env.NODE_ENV === 'production'
     ? 'https://api.sharist.com'
-    : 'https://localhost.api.sharist.com';
+    : 'https://api.sharist.localhost';
 
 function getCookie(name: string): string | null {
   const matches = document.cookie.match(
@@ -36,7 +37,7 @@ function resolveUrl(endpoint: string): string {
     return endpoint;
   }
 
-  return new URL(endpoint, host).toString();
+  return new URL(endpoint, apiHost).toString();
 }
 
 export function get(endpoint: string, config?: AxiosRequestConfig) {
@@ -53,4 +54,15 @@ export function patch(endpoint: string, data?: any, config?: AxiosRequestConfig)
 
 export function del(endpoint: string, config?: AxiosRequestConfig) {
   return axios.delete(resolveUrl(endpoint), setupConfig(config));
+}
+
+/**
+ * Parse query string. Can be retrieved from `location?.search` from router prop.
+ *
+ * @param search Search string, in the format of `?query1=value1&query2=value2`
+ */
+export function parseQueryString(search: string = ''): ReturnType<typeof qs.parse> {
+  const searchString = search.startsWith('?') ? search.substr(1) : search;
+
+  return qs.parse(searchString);
 }
