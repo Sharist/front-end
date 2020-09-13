@@ -5,24 +5,27 @@ import { Router } from '@reach/router';
 import { ThemeProvider } from 'styled-components';
 
 import './index.css';
-import { MapContextProvider } from './components/IMap';
+import { ApplicationContextProvider } from './components/contexts/ApplicationContext';
+import { MapContextProvider } from './components/contexts/MapContext';
 import { SharistTheme } from './common/themes';
 import * as serviceWorker from './serviceWorker';
 import routes from './routes';
 
 ReactDOM.render(
   <React.StrictMode>
-    <IconContext.Provider value={{ className: 'icons noselect' }}>
-      <ThemeProvider theme={SharistTheme}>
-        <MapContextProvider>
-          <Router>
-            {Object.entries(routes).map(([name, { pageComponent: PageComponent, path }]) => (
-              <PageComponent key={name} path={path} />
-            ))}
-          </Router>
-        </MapContextProvider>
-      </ThemeProvider>
-    </IconContext.Provider>
+    <ThemeProvider theme={SharistTheme}>
+      <IconContext.Provider value={{ className: 'icons noselect' }}>
+        <ApplicationContextProvider>
+          <MapContextProvider>
+            <Router>
+              {Object.entries(routes).map(([name, { pageComponent: PageComponent, path }]) => (
+                <PageComponent key={name} path={path} />
+              ))}
+            </Router>
+          </MapContextProvider>
+        </ApplicationContextProvider>
+      </IconContext.Provider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

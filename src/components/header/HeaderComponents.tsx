@@ -26,7 +26,6 @@ export const HeaderActions = styled.div`
     align-items: center;
     display: flex;
     justify-content: space-around;
-    width: 12.5rem;
 
     @media screen and (max-width: ${breakpoints.MOBILE}) {
       font-size: 2rem;

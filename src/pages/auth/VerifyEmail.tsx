@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 
 import { AuthWrapper, LogoSubtitle } from './Auth';
 import { get, parseQueryString } from '../../common/http';
+import ApplicationContext from '../../components/contexts/ApplicationContext';
 import LayoutContainer from '../../components/LayoutContainer';
 import Logo from '../../components/header/Logo';
 import routes from '../../routes';
@@ -11,6 +12,7 @@ function VerifyEmail({ location }: RouteComponentProps) {
   const [isVerifyingToken, setIsVerifyingToken] = useState(true);
   const [isTokenValid, setIsTokenValid] = useState(false);
 
+  const { refreshStates } = useContext(ApplicationContext);
   const { token } = parseQueryString(location?.search);
 
   useEffect(() => {
@@ -24,6 +26,7 @@ function VerifyEmail({ location }: RouteComponentProps) {
         setIsVerifyingToken(false);
         setIsTokenValid(response.status === 200);
 
+        refreshStates('isSignedIn');
         // Navigate to home on successful signin
         setTimeout(routes.home.navigator, 5000);
       } catch (err) {
@@ -33,7 +36,7 @@ function VerifyEmail({ location }: RouteComponentProps) {
     }
 
     verify();
-  }, [token]);
+  }, [token, refreshStates]);
 
   const statusMessage = isTokenValid
     ? 'Thank you, your email was verified!'

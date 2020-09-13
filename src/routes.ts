@@ -1,9 +1,10 @@
 import { navigate } from '@reach/router';
 
 import Auth from './pages/auth/Auth';
-import VerifyEmail from './pages/auth/VerifyEmail';
 import Home from './pages/Home';
 import Plan from './pages/Plan';
+import SignOut from './pages/auth/SignOut';
+import VerifyEmail from './pages/auth/VerifyEmail';
 
 /**
  * Add to this object when you add a new route.
@@ -25,6 +26,11 @@ const routes = {
     pageComponent: Plan,
     path: '/plan',
     navigator: () => navigate('/plan'),
+  },
+  signOut: {
+    pageComponent: SignOut,
+    path: '/signout',
+    navigator: () => navigate('/signout'),
   },
   signUp: {
     pageComponent: Auth,

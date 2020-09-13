@@ -6,14 +6,6 @@ const apiHost =
     ? 'https://api.sharist.com'
     : 'https://api.sharist.localhost';
 
-function getCookie(name: string): string | null {
-  const matches = document.cookie.match(
-    new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + '=([^;]*)')
-  );
-
-  return matches ? decodeURIComponent(matches[1]) : null;
-}
-
 function setupConfig(config: AxiosRequestConfig = {}) {
   const csrf = getCookie('csrf_token');
   config.withCredentials = true;
@@ -30,6 +22,14 @@ function setupConfig(config: AxiosRequestConfig = {}) {
   }
 
   return config;
+}
+
+export function getCookie(name: string): string | null {
+  const matches = document.cookie.match(
+    new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + '=([^;]*)')
+  );
+
+  return matches ? decodeURIComponent(matches[1]) : null;
 }
 
 function resolveUrl(endpoint: string): string {

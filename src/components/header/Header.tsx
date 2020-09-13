@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { IoIosMenu } from 'react-icons/io';
 import styled from 'styled-components';
 
@@ -10,6 +10,7 @@ import HideBelow from '../helpers/HideBelow';
 import Logo from './Logo';
 import MobileMenu from './MobileMenu';
 import routes from '../../routes';
+import ApplicationContext from '../contexts/ApplicationContext';
 
 export const HEADER_HEIGHT_REM = 5;
 
@@ -24,20 +25,37 @@ const HeaderWrapper = styled.div`
   width: 100%;
 `;
 
+const HeaderActionButton = styled(Button)`
+  margin: 0 0.5rem;
+`;
+
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const {
+    states: { isSignedIn },
+  } = useContext(ApplicationContext);
+
+  const headerActionContents = isSignedIn ? (
+    <>
+      <HeaderActionButton onClick={routes.signOut.navigator}>Signout</HeaderActionButton>
+      <HeaderActionButton isPrimary onClick={routes.plan.navigator}>
+        Plan
+      </HeaderActionButton>
+    </>
+  ) : (
+    <>
+      <HeaderActionButton onClick={routes.signUp.navigator} isPrimary>
+        Sign up
+      </HeaderActionButton>
+      <HeaderActionButton onClick={routes.logIn.navigator}>Log in</HeaderActionButton>
+    </>
+  );
 
   return (
     <HeaderWrapper>
       <Logo onClick={routes.home.navigator} />
-
       <HeaderActions>
-        <HideBelow breakpoint={Breakpoint.MOBILE}>
-          <Button onClick={routes.signUp.navigator} isPrimary>
-            Sign up
-          </Button>
-          <Button onClick={routes.logIn.navigator}>Log in</Button>
-        </HideBelow>
+        <HideBelow breakpoint={Breakpoint.MOBILE}>{headerActionContents}</HideBelow>
 
         <HideAbove breakpoint={Breakpoint.MOBILE}>
           <IoIosMenu onClick={() => setMobileMenuOpen(true)} />
