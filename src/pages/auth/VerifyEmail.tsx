@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 
 import { AuthWrapper, LogoSubtitle } from './Auth';
 import { get, parseQueryString } from '../../common/http';
-import ApplicationContext from '../../components/contexts/ApplicationContext';
+import { useAuthentication } from '../../common/hooks/useAuthentication';
 import LayoutContainer from '../../components/LayoutContainer';
 import Logo from '../../components/header/Logo';
 import routes from '../../routes';
@@ -11,8 +11,10 @@ import routes from '../../routes';
 function VerifyEmail({ location }: RouteComponentProps) {
   const [isVerifyingToken, setIsVerifyingToken] = useState(true);
   const [isTokenValid, setIsTokenValid] = useState(false);
+  const { refreshSignedInStatus } = useAuthentication();
 
-  const { refreshStates } = useContext(ApplicationContext);
+  const refreshSignedInStatusMemo = useCallback(refreshSignedInStatus, []);
+
   const { token } = parseQueryString(location?.search);
 
   useEffect(() => {
@@ -25,8 +27,8 @@ function VerifyEmail({ location }: RouteComponentProps) {
         const response = await get(`signin?token=${token}`);
         setIsVerifyingToken(false);
         setIsTokenValid(response.status === 200);
+        await refreshSignedInStatusMemo();
 
-        refreshStates('isSignedIn');
         // Navigate to home on successful signin
         setTimeout(routes.home.navigator, 5000);
       } catch (err) {
@@ -36,7 +38,7 @@ function VerifyEmail({ location }: RouteComponentProps) {
     }
 
     verify();
-  }, [token, refreshStates]);
+  }, [token, refreshSignedInStatusMemo]);
 
   const statusMessage = isTokenValid
     ? 'Thank you, your email was verified!'

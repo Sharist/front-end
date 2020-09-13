@@ -17,7 +17,6 @@ function setupConfig(config: AxiosRequestConfig = {}) {
 
   // Attach CSRF token if available
   if (csrf) {
-    console.log(`csrf is ${csrf}`);
     config.headers = { ...config.headers, 'x-csrf-token': csrf };
   }
 
