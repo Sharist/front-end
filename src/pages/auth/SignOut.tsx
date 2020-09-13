@@ -1,25 +1,28 @@
 import { RouteComponentProps } from '@reach/router';
-import { useContext, useEffect } from 'react';
+import { useAuthentication } from '../../common/hooks/useAuthentication';
+import { useCallback, useEffect } from 'react';
 
 import { post } from '../../common/http';
-import ApplicationContext from '../../components/contexts/ApplicationContext';
 import routes from '../../routes';
 
 function SignOut(_: RouteComponentProps) {
-  const { refreshStates } = useContext(ApplicationContext);
+  const { refreshSignedInStatus } = useAuthentication();
+  const refreshSignedInStatusMemo = useCallback(refreshSignedInStatus, []);
+
   useEffect(() => {
     async function signOut() {
       try {
         await post('signout');
-        await refreshStates('isSignedIn');
       } catch (e) {
+        // No need to handle
       } finally {
+        await refreshSignedInStatusMemo();
         routes.home.navigator();
       }
     }
 
     signOut();
-  });
+  }, [refreshSignedInStatusMemo]);
 
   return null;
 }
