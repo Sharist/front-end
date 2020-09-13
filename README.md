@@ -4,14 +4,21 @@ Welcome! You can view the current `master` branch deployment at https://sharist.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Setup
+
+The `npm start` script will run the front end server on [localhost:8000](localhost:8000), but the script is configured to automatically open your browser and navigate to https://sharits.localhost.
+
+While working with [localhost:8000](localhost:8000) is fine for front-end only development , we recommend you follow the steps [here to setup reverse proxy](https://github.com/Sharist/miscellaneous/blob/master/docs/reverse-proxy.md) and local SSL certificates. This is needed to test with the [backend](https://github.com/Sharist/backend).
+
 ## Available Scripts
 
 In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
+Runs the app in the development mode.
+
+Opens https://sharist.localhost to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
