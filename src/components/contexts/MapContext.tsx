@@ -23,6 +23,7 @@ function MapContextProvider({ children }: { children?: ReactChild }) {
       const div = document.createElement('div');
       div.style.width = '100%';
       div.style.height = '100%';
+      div.style.display = 'none';
 
       const script = document.createElement('script');
       script.setAttribute('type', 'text/javascript');

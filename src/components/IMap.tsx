@@ -17,6 +17,7 @@ function IMap() {
         if (mapContext.mapInstance) {
           mapContainer.append(mapContext.mapInstance.getDiv());
         } else {
+          // debugger;
           mapContext.initMap();
         }
       }
@@ -26,10 +27,13 @@ function IMap() {
 
   // Get user geolocation on mount
   useEffect(() => {
-    if (mapContext.mapInstance && !mapContext.extraData.initialized && navigator.geolocation) {
+    const { mapInstance, extraData } = mapContext;
+
+    if (mapInstance && !extraData.initialized && navigator.geolocation) {
+      mapInstance.getDiv().style.display = '';
       navigator.geolocation.getCurrentPosition(({ coords }) => {
-        mapContext.mapInstance?.setCenter({ lat: coords.latitude, lng: coords.longitude });
-        mapContext.extraData.initialized = true;
+        mapInstance.setCenter({ lat: coords.latitude, lng: coords.longitude });
+        extraData.initialized = true;
       });
     }
   }, [mapContext]);
