@@ -1,12 +1,12 @@
 import { RouteComponentProps } from '@reach/router';
-import { useAuthentication } from '../../common/hooks/useAuthentication';
 import { useCallback, useEffect } from 'react';
 
 import { post } from '../../common/http';
+import { useAuthentication } from '../../common/hooks/useAuthentication';
 import routes from '../../routes';
 
 function SignOut(_: RouteComponentProps) {
-  const { refreshSignedInStatus } = useAuthentication();
+  const { refreshSignedInStatus } = useAuthentication({ requestLogin: false });
   const refreshSignedInStatusMemo = useCallback(refreshSignedInStatus, []);
 
   useEffect(() => {

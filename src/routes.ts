@@ -6,43 +6,45 @@ import Plan from './pages/Plan';
 import SignOut from './pages/auth/SignOut';
 import VerifyEmail from './pages/auth/VerifyEmail';
 
+declare module Route {
+  interface RouteSpec {
+    pageComponent: (props: any) => JSX.Element | null;
+    path: string;
+    navigator: () => Promise<void>;
+  }
+
+  interface RouteMap {
+    [key: string]: RouteSpec;
+  }
+}
+
+function routeSpecOf(
+  pageComponent: (props: any) => JSX.Element | null,
+  path: string
+): Route.RouteSpec {
+  return {
+    pageComponent,
+    path,
+    navigator: (redirectTo?: Route.RouteSpec) => {
+      return navigate(
+        redirectTo?.path ? `${path}?redirect=${encodeURIComponent(redirectTo.path)}` : path
+      );
+    },
+  };
+}
+
 /**
  * Add to this object when you add a new route.
  *
  * Sort by alphabetical order.
  */
-const routes = {
-  home: {
-    pageComponent: Home,
-    path: '/',
-    navigator: () => navigate('/'),
-  },
-  logIn: {
-    pageComponent: Auth,
-    path: '/login',
-    navigator: () => navigate('/login'),
-  },
-  plan: {
-    pageComponent: Plan,
-    path: '/plan',
-    navigator: () => navigate('/plan'),
-  },
-  signOut: {
-    pageComponent: SignOut,
-    path: '/signout',
-    navigator: () => navigate('/signout'),
-  },
-  signUp: {
-    pageComponent: Auth,
-    path: '/signup',
-    navigator: () => navigate('/signup'),
-  },
-  verifyEmail: {
-    pageComponent: VerifyEmail,
-    path: '/verify-email',
-    // We don't want things to navigate to this route
-    navigator: () => navigate('/'),
-  },
+const routes: Route.RouteMap = {
+  home: routeSpecOf(Home, '/'),
+  logIn: routeSpecOf(Auth, '/login'),
+  plan: routeSpecOf(Plan, '/plan'),
+  signOut: routeSpecOf(SignOut, 'singout'),
+  signUp: routeSpecOf(Auth, 'signup'),
+  verifyEmail: routeSpecOf(VerifyEmail, 'verify-email'),
 };
 
 export default routes;

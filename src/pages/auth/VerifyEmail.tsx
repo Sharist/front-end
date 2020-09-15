@@ -11,8 +11,8 @@ import routes from '../../routes';
 function VerifyEmail({ location }: RouteComponentProps) {
   const [isVerifyingToken, setIsVerifyingToken] = useState(true);
   const [isTokenValid, setIsTokenValid] = useState(false);
-  const { refreshSignedInStatus } = useAuthentication();
 
+  const { refreshSignedInStatus } = useAuthentication({ requestLogin: false });
   const refreshSignedInStatusMemo = useCallback(refreshSignedInStatus, []);
 
   const { token } = parseQueryString(location?.search);
@@ -30,7 +30,7 @@ function VerifyEmail({ location }: RouteComponentProps) {
         await refreshSignedInStatusMemo();
 
         // Navigate to home on successful signin
-        setTimeout(routes.home.navigator, 5000);
+        setTimeout(routes.home.navigator, 3500);
       } catch (err) {
         setIsVerifyingToken(false);
         setIsTokenValid(false);
