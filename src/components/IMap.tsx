@@ -17,7 +17,6 @@ function IMap() {
         if (mapContext.mapInstance) {
           mapContainer.append(mapContext.mapInstance.getDiv());
         } else {
-          // debugger;
           mapContext.initMap();
         }
       }
