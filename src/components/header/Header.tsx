@@ -32,7 +32,7 @@ const HeaderActionButton = styled(Button)`
 
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { signedIn } = useAuthentication();
+  const { signedIn } = useAuthentication({ requestLogin: false });
 
   const headerActionContents = signedIn ? (
     <>

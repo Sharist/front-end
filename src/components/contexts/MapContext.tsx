@@ -1,9 +1,12 @@
 import React, { ReactChild, useState } from 'react';
 
 type MapContextType = {
+  /** Initialize Google Map */
   initMap: () => void;
+  /** Google Maps object instance */
   mapInstance?: google.maps.Map<HTMLDivElement>;
   extraData: {
+    /** Indicates that the map has been initialized. */
     initialized: boolean;
   };
 };

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { get, getCookie } from '../http';
+import routes from '../../routes';
 
 const SIGNED_IN_STATUS_KEY = 'is-signed-in';
 
@@ -39,6 +40,18 @@ function updateSignedInStatus(status: boolean) {
   }
 }
 
+export type UseAuthConfig = {
+  /**
+   * If `true`, `useAuthentication` hook will redirect the user to the login page.
+   * Defaults to `true`.
+   */
+  requestLogin: boolean;
+};
+
+const defaultConfig: UseAuthConfig = {
+  requestLogin: true,
+};
+
 /**
  * Hook for checking if the current user is signed in.
  *
@@ -47,8 +60,10 @@ function updateSignedInStatus(status: boolean) {
  *  - `refreshSignedInStatus`: Function making API call to backend to get latest status.
  *    Function returns a promise that resolves when refresh is complete.
  */
-export function useAuthentication() {
+export function useAuthentication(config: UseAuthConfig = defaultConfig) {
   const [signedIn, setSignedIn] = useState(checkCachedSignedInStatus());
+
+  const { requestLogin } = config;
 
   /**
    * Query backend to see if the current user is logged in.
@@ -69,6 +84,8 @@ export function useAuthentication() {
   useEffect(() => {
     if (signedIn === null) {
       refreshSignedInStatus();
+    } else if (!signedIn && requestLogin) {
+      routes.logIn.navigator();
     }
   }, [signedIn]);
 
