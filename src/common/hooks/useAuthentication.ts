@@ -87,7 +87,7 @@ export function useAuthentication(config: UseAuthConfig = defaultConfig) {
     } else if (!signedIn && requestLogin) {
       routes.logIn.navigator();
     }
-  }, [signedIn]);
+  }, [signedIn, requestLogin]);
 
   return {
     signedIn,

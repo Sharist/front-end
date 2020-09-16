@@ -30,7 +30,7 @@ function VerifyEmail({ location }: RouteComponentProps) {
         await refreshSignedInStatusMemo();
 
         // Navigate to home on successful signin
-        setTimeout(routes.home.navigator, 3500);
+        routes.plan.navigator();
       } catch (err) {
         setIsVerifyingToken(false);
         setIsTokenValid(false);
@@ -40,9 +40,7 @@ function VerifyEmail({ location }: RouteComponentProps) {
     verify();
   }, [token, refreshSignedInStatusMemo]);
 
-  const statusMessage = isTokenValid
-    ? 'Thank you, your email was verified!'
-    : "We couldn't recognize the link. Please try again.";
+  const statusMessage = !isTokenValid && "We couldn't recognize the link. Please try again.";
 
   return (
     <LayoutContainer center fullHeight noHeader noMargin>
