@@ -2,7 +2,7 @@ import { ComponentType } from 'react';
 import { navigate, RouteComponentProps } from '@reach/router';
 
 import Auth from './pages/auth/Auth';
-import Home from './pages/Home';
+import Home from './pages/home/Home';
 import Plan from './pages/Plan';
 import SignOut from './pages/auth/SignOut';
 import VerifyEmail from './pages/auth/VerifyEmail';
