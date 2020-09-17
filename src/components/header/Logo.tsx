@@ -1,17 +1,23 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
+import { Palette } from '../../common/themes';
 import SharistLogo from '../../resources/images/sharist-logo.svg';
+import SharistLogoWhite from '../../resources/images/sharist-logo-white.svg';
 
-const LogoText = styled.span`
-  font-weight: 300;
+const LogoText = styled.span<{ fontColor: Palette }>`
+  ${({ fontColor, theme: { palette } }) => css`
+    color: ${fontColor};
+    font-weight: 300;
+    text-shadow: 0 0 0.15rem ${fontColor === palette.REGULAR ? 'none' : palette.GREY_DARKER};
 
-  &::after {
-    content: 'Sharist';
-  }
+    &::after {
+      content: 'Sharist';
+    }
+  `}
 `;
 
-const LogoIcon = styled.img.attrs({ src: SharistLogo })`
+const LogoIcon = styled.img`
   ${({ theme: { breakpoints } }) => css`
     height: 2.5rem;
 
@@ -44,15 +50,24 @@ const LogoWrapper = styled.div.attrs({ className: 'noselect' })`
   `}
 `;
 
+export enum LogoType {
+  REGULAR,
+  MONO_WHITE,
+}
+
 type LogoProps = {
+  logoType?: LogoType;
   onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
 };
 
-function Logo({ onClick }: LogoProps) {
+function Logo({ logoType = LogoType.REGULAR, onClick }: LogoProps) {
+  const logo = logoType === LogoType.MONO_WHITE ? SharistLogoWhite : SharistLogo;
+  const color = logoType === LogoType.MONO_WHITE ? Palette.CLOUD_LIGHTER : Palette.REGULAR;
+
   return (
     <LogoWrapper onClick={onClick}>
-      <LogoIcon />
-      <LogoText />
+      <LogoIcon src={logo} />
+      <LogoText fontColor={color} />
     </LogoWrapper>
   );
 }
