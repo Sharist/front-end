@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { RouteComponentProps } from '@reach/router';
+import styled from 'styled-components';
 
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import Landing from './Landing';
 import LayoutContainer from '../../components/LayoutContainer';
 import routes from '../../routes';
-import styled from 'styled-components';
 
 const MultiSection = styled.div`
   height: 100%;

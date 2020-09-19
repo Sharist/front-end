@@ -95,10 +95,10 @@ function Header({ className, isLanding = false }: Props) {
   );
 
   const logoType = isLanding && translucentHeader ? LogoType.MONO_WHITE : LogoType.REGULAR;
-  const UseWrapper = isLanding ? FloatingHeader : HeaderWrapper;
+  const UseHeaderWrapper = isLanding ? FloatingHeader : HeaderWrapper;
 
   return (
-    <UseWrapper className={className}>
+    <UseHeaderWrapper className={className}>
       <Logo logoType={logoType} onClick={home.navigator} />
       <HeaderActions>
         <HideBelow breakpoint={Breakpoint.MOBILE}>{headerActions}</HideBelow>
@@ -114,7 +114,7 @@ function Header({ className, isLanding = false }: Props) {
           ></MobileMenu>
         </HideAbove>
       </HeaderActions>
-    </UseWrapper>
+    </UseHeaderWrapper>
   );
 }
 
