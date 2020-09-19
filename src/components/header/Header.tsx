@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoIosMenu } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
 import { Breakpoint, Palette } from '../../common/themes';
 import { HeaderActions } from './HeaderComponents';
+import { remToPx } from '../../common/dimensions';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import Button from '../Button';
 import HideAbove from '../helpers/HideAbove';
@@ -25,14 +26,21 @@ const HeaderWrapper = styled.div`
   width: 100%;
 `;
 
-const HeaderActionButton = styled(Button).attrs((prop: { isLanding: boolean }) => ({
-  ...prop,
-  transparent: prop.isLanding,
-}))`
-  ${({ isLanding, theme: { palette } }) => css`
-    margin: 0 0.5rem;
-    width: ${isLanding ? '4rem' : '6rem'};
-    color: ${isLanding ? palette.WHITE : '!unset'};
+const FloatingHeader = styled(HeaderWrapper)`
+  background-color: transparent;
+  position: fixed;
+  top: 0;
+`;
+
+const HeaderActionButton = styled(Button)`
+  width: 6rem;
+  margin: 0 0.5rem;
+`;
+
+const LandingMainSectionActionButton = styled(HeaderActionButton).attrs({ transparent: true })`
+  ${({ theme: { palette } }) => css`
+    width: 4rem;
+    color: ${palette.WHITE};
   `}
 `;
 
@@ -49,35 +57,51 @@ type Props = {
 
 function Header({ className, isLanding = false }: Props) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [translucentHeader, setTranslucentHeader] = useState(isLanding);
   const { signedIn } = useAuthentication({ requestLogin: false });
 
-  const headerActionContents = signedIn ? (
+  useEffect(() => {
+    function scrollListener() {
+      const isPastFirstSection = window.scrollY > window.innerHeight - remToPx(HEADER_HEIGHT_REM);
+      setTranslucentHeader(!isPastFirstSection && isLanding);
+    }
+
+    // Customization for the landing page
+    if (isLanding) {
+      window.addEventListener('scroll', scrollListener);
+      return function cleanUp() {
+        window.removeEventListener('scroll', scrollListener);
+      };
+    }
+  }, [isLanding]);
+
+  const { signOut, plan, signUp, logIn, home } = routes;
+
+  const ButtonType = translucentHeader ? LandingMainSectionActionButton : HeaderActionButton;
+  const headerActions = signedIn ? (
     <>
-      <HeaderActionButton isLanding={isLanding} onClick={routes.signOut.navigator}>
-        Sign out
-      </HeaderActionButton>
-      <HeaderActionButton isPrimary isLanding={isLanding} onClick={routes.plan.navigator}>
+      <ButtonType onClick={signOut.navigator}>Sign out</ButtonType>
+      <ButtonType isPrimary onClick={plan.navigator}>
         Plan
-      </HeaderActionButton>
+      </ButtonType>
     </>
   ) : (
     <>
-      <HeaderActionButton isPrimary isLanding={isLanding} onClick={routes.signUp.navigator}>
+      <ButtonType isPrimary onClick={signUp.navigator}>
         Sign up
-      </HeaderActionButton>
-      <HeaderActionButton isLanding={isLanding} onClick={routes.logIn.navigator}>
-        Log in
-      </HeaderActionButton>
+      </ButtonType>
+      <ButtonType onClick={logIn.navigator}>Log in</ButtonType>
     </>
   );
 
-  const logoType = isLanding ? LogoType.MONO_WHITE : LogoType.REGULAR;
+  const logoType = isLanding && translucentHeader ? LogoType.MONO_WHITE : LogoType.REGULAR;
+  const UseWrapper = isLanding ? FloatingHeader : HeaderWrapper;
 
   return (
-    <HeaderWrapper className={className}>
-      <Logo logoType={logoType} onClick={routes.home.navigator} />
+    <UseWrapper className={className}>
+      <Logo logoType={logoType} onClick={home.navigator} />
       <HeaderActions>
-        <HideBelow breakpoint={Breakpoint.MOBILE}>{headerActionContents}</HideBelow>
+        <HideBelow breakpoint={Breakpoint.MOBILE}>{headerActions}</HideBelow>
 
         <HideAbove breakpoint={Breakpoint.MOBILE}>
           <MobileMenuHamburgerIcon
@@ -90,7 +114,7 @@ function Header({ className, isLanding = false }: Props) {
           ></MobileMenu>
         </HideAbove>
       </HeaderActions>
-    </HeaderWrapper>
+    </UseWrapper>
   );
 }
 
