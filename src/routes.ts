@@ -35,9 +35,9 @@ const routes: RouteMap = {
   home: routeSpecOf(Home, '/'),
   logIn: routeSpecOf(Auth, '/login'),
   plan: routeSpecOf(Plan, '/plan'),
-  signOut: routeSpecOf(SignOut, 'singout'),
-  signUp: routeSpecOf(Auth, 'signup'),
-  verifyEmail: routeSpecOf(VerifyEmail, 'verify-email'),
+  signOut: routeSpecOf(SignOut, '/signout'),
+  signUp: routeSpecOf(Auth, '/signup'),
+  verifyEmail: routeSpecOf(VerifyEmail, '/verify-email'),
 };
 
 export default routes;

@@ -4,12 +4,6 @@ import styled, { css } from 'styled-components';
 import { pxToRem } from '../common/dimensions';
 import Header, { HEADER_HEIGHT_REM } from './header/Header';
 
-const FloatingHeader = styled(Header)`
-  background-color: transparent;
-  position: fixed;
-  top: 0;
-`;
-
 type BaseLayoutProps = {
   center: boolean;
   floatingHeader: boolean;
@@ -86,11 +80,10 @@ function LayoutContainer({
       window.removeEventListener('resize', handleWindowResize);
     };
   });
-  const UseHeader = floatingHeader ? FloatingHeader : Header;
 
   return (
     <>
-      {!noHeader && <UseHeader isLanding={isLanding} />}
+      {!noHeader && <Header isLanding={isLanding} />}
       <BaseLayout
         center={center}
         floatingHeader={floatingHeader}

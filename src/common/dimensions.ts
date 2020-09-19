@@ -14,14 +14,21 @@ export function getRootPxPerRem(): number {
 }
 
 /**
- * Convert pixels, either number or with unit, to rem.
- *
- * Optionally converts to string and append with `rem`.
+ * Convert pixels, either number or with unit, to rems.
  *
  * @param pixels Number of pixels
- * @param withUnit Whether to append `rem` unit or not
  */
 export function pxToRem(pixels: number | string): number {
-  const pxNum = typeof pixels === 'string' ? parseInt(pixels) : pixels;
+  const pxNum = parseInt(pixels.toString());
   return pxNum / getRootPxPerRem();
+}
+
+/**
+ * Convert rems, either number or with unit, to pixels.
+ *
+ * @param pixels Number of pixels
+ */
+export function remToPx(rems: number | string): number {
+  const remNum = parseInt(rems.toString());
+  return remNum * getRootPxPerRem();
 }
