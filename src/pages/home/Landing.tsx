@@ -6,7 +6,7 @@ import LandingBackground from '../../resources/images/home/landing-background-1.
 const LandingWrapper = styled.div<{ loaded: boolean }>`
   ${({ loaded, theme: { palette } }) => css`
     align-items: center;
-    background-color: ${loaded ? '' : palette.CLOUD};
+    background-color: ${loaded ? '' : palette.ASH};
     display: flex;
     height: 100%;
     justify-content: center;

@@ -62,7 +62,7 @@ type LogoProps = {
 
 function Logo({ logoType = LogoType.REGULAR, onClick }: LogoProps) {
   const logo = logoType === LogoType.MONO_WHITE ? SharistLogoWhite : SharistLogo;
-  const color = logoType === LogoType.MONO_WHITE ? Palette.CLOUD_LIGHTER : Palette.REGULAR;
+  const color = logoType === LogoType.MONO_WHITE ? Palette.ASH_LIGHTER : Palette.REGULAR;
 
   return (
     <LogoWrapper onClick={onClick}>
