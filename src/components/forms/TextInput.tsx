@@ -14,7 +14,7 @@ const InputLabel = styled.label<{ isInputFocused: boolean }>`
 const Input = styled.input`
   ${({ theme: { palette } }) => css`
     border: none;
-    border-bottom: 0.05rem solid ${palette.CLOUD};
+    border-bottom: 0.05rem solid ${palette.ASH};
     padding: 0.5rem 0.25rem;
     transition: border-bottom 200ms, box-shadow 200ms;
     width: 100%;

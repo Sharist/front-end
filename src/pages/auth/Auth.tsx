@@ -36,7 +36,7 @@ export const LogoSubtitle = styled.p<{ awaitingServer?: boolean }>`
   ${({ awaitingServer, theme: { palette } }) => css`
     margin-bottom: 3rem;
     text-align: center;
-    color: ${awaitingServer ? palette.CLOUD_DARKER : palette.BLACK};
+    color: ${awaitingServer ? palette.ASH_DARKER : palette.BLACK};
   `}
 `;
 

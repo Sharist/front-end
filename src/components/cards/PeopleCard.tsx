@@ -13,7 +13,7 @@ const Card = styled(BaseCard)`
 const CardImage = styled.img`
   ${({ theme: { palette } }) => css`
     border-radius: 50%;
-    border: 0.05rem solid ${palette.CLOUD};
+    border: 0.05rem solid ${palette.ASH};
     height: 4rem;
     width: 4rem;
   `}

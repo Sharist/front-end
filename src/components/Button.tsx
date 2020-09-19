@@ -7,9 +7,9 @@ const BaseButton = styled.button`
   ${({ disabled, theme: { palette } }) =>
     css`
       align-items: center;
-      background-color: ${palette.CLOUD};
+      background-color: ${palette.ASH};
       border-radius: 0.2rem;
-      border: 0.05rem solid ${palette.CLOUD};
+      border: 0.05rem solid ${palette.ASH};
       box-shadow: 0 0 0 transparent;
       color: ${disabled ? palette.GREY : palette.REGULAR};
       cursor: ${disabled ? 'default' : 'pointer'};
@@ -21,16 +21,16 @@ const BaseButton = styled.button`
       transition: border 0.1s, box-shadow 0.1s, text-shadow 0.1s;
 
       &:hover {
-        border: 0.05rem solid ${palette.CLOUD};
+        border: ${disabled ? '' : `0.05rem solid ${palette.ASH}`};
         box-shadow: ${disabled
           ? `0 0 0 ${palette.TRANSPARENT}`
-          : `0 0 0.3rem ${palette.CLOUD_DARKER}`};
+          : `0 0 0.3rem ${palette.ASH_DARKER}`};
         text-shadow: 0 0 0 transparent;
       }
 
       &:active {
-        border: 0.05rem solid ${palette.CLOUD};
-        box-shadow: 0 0.02rem 0.15rem ${palette.CLOUD_DARKER};
+        border: ${disabled ? '' : `0.05rem solid ${palette.ASH}`};
+        box-shadow: ${disabled ? '' : `0 0.02rem 0.15rem ${palette.ASH_DARKER}`};
         outline: none;
         transform: ${disabled ? 'none' : 'translateY(0.05rem)'};
       }
@@ -43,23 +43,21 @@ const BaseButton = styled.button`
 
 const PrimaryButton = styled(BaseButton)`
   ${({ disabled, theme: { palette } }) => css`
-    background-color: ${disabled ? palette.ORANGE_LIGHTER : palette.ORANGE};
-    border-color: ${disabled ? palette.ORANGE_LIGHTER : palette.ORANGE};
-    color: ${disabled ? palette.CLOUD_LIGHTER : palette.WHITE};
+    background-color: ${disabled ? palette.SUN_LIGHTER : palette.SUN};
+    border-color: ${disabled ? palette.SUN_LIGHTER : palette.SUN};
+    color: ${disabled ? palette.ASH_LIGHTER : palette.WHITE};
     text-shadow: 0 0 0.01rem ${palette.GREY_DARKER};
 
     &:hover {
-      border-color: ${palette.ORANGE_LIGHTER};
+      border-color: ${palette.SUN_LIGHTER};
       box-shadow: ${disabled
         ? `0 0 0 ${palette.TRANSPARENT}`
-        : `0 0 0.3rem ${palette.ORANGE_LIGHTER}`};
+        : `0 0 0.3rem ${palette.SUN_LIGHTER}`};
     }
 
     &:active {
-      border-color: ${disabled ? palette.ORANGE_LIGHTER : palette.ORANGE};
-      box-shadow: ${disabled
-        ? `0 0 0 ${palette.TRANSPARENT}`
-        : `0 0.02rem 0.15rem ${palette.ORANGE}`};
+      border-color: ${disabled ? palette.SUN_LIGHTER : palette.SUN};
+      box-shadow: ${disabled ? `0 0 0 ${palette.TRANSPARENT}` : `0 0.02rem 0.15rem ${palette.SUN}`};
     }
   `}
 `;
@@ -69,14 +67,14 @@ const TransparentButton = styled(BaseButton)`
     background-color: ${palette.TRANSPARENT};
     border: none;
     box-shadow: 0 0 0 ${palette.TRANSPARENT};
-    color: ${disabled ? palette.CLOUD_DARKER : palette.GREY_DARKER};
+    color: ${disabled ? palette.ASH_DARKER : palette.GREY_DARKER};
     padding: 0;
 
     &:hover,
     &:focus {
       border: none;
       box-shadow: 0 0 0 ${palette.TRANSPARENT};
-      text-shadow: 0 0 0.1rem ${disabled ? palette.TRANSPARENT : palette.CLOUD_DARKER};
+      text-shadow: 0 0 0.1rem ${disabled ? palette.TRANSPARENT : palette.ASH_DARKER};
     }
   `}
 `;

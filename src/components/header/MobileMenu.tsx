@@ -41,7 +41,7 @@ const MobileMenuPane = styled.div<{ visible: boolean }>`
 const MobileMenuSection = styled.div`
   ${({ theme: { palette } }) => css`
     align-items: flex-end;
-    border-bottom: 0.05rem solid ${palette.CLOUD_LIGHTER};
+    border-bottom: 0.05rem solid ${palette.ASH_LIGHTER};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -72,7 +72,7 @@ const MobileSiteMapLink = styled(Link)`
     transition: background-color 150ms;
 
     &:active {
-      background-color: ${palette.CLOUD_LIGHTER};
+      background-color: ${palette.ASH_LIGHTER};
     }
 
     &:visited {
