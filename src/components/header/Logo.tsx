@@ -9,7 +9,7 @@ const LogoText = styled.span<{ fontColor: Palette }>`
   ${({ fontColor, theme: { palette } }) => css`
     color: ${fontColor};
     font-weight: 300;
-    text-shadow: 0 0 0.15rem ${fontColor === palette.REGULAR ? 'none' : palette.GREY_DARKER};
+    text-shadow: 0 0 0.15rem ${fontColor === palette.REGULAR ? 'none' : palette.GREY};
 
     &::after {
       content: 'Sharist';
