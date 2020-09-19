@@ -3,16 +3,20 @@ import styled, { css } from 'styled-components';
 
 import LandingBackground from '../../resources/images/home/landing-background-1.jpg';
 
-const LandingWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  width: 100%;
+const LandingWrapper = styled.div<{ loaded: boolean }>`
+  ${({ loaded, theme: { palette } }) => css`
+    align-items: center;
+    background-color: ${loaded ? '' : palette.CLOUD};
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    transition: background-color 750ms;
+    width: 100%;
+  `}
 `;
 
-const Background = styled.img<{ imageLoaded: boolean }>`
-  ${({ imageLoaded }) => css`
+const Background = styled.img<{ loaded: boolean }>`
+  ${({ loaded: imageLoaded }) => css`
     height: 100%;
     object-fit: cover;
     object-position: 50% 75%;
@@ -33,6 +37,7 @@ const Prompt = styled.div.attrs({ className: 'noselect' })`
     font-family: 'Roboto Slab';
     justify-content: center;
     text-shadow: 0 0 1rem ${palette.BLACK};
+    z-index: -10;
   `}
 `;
 
@@ -41,7 +46,6 @@ const Title = styled.div<{ loaded: boolean }>`
     font-size: 2.75rem;
     margin: 0.5rem;
     opacity: ${loaded ? 1 : 0};
-    text-align: center;
     transition: opacity 750ms 400ms;
 
     @media screen and (max-width: ${breakpoints.MOBILE}) {
@@ -70,16 +74,16 @@ function Landing() {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <LandingWrapper>
+    <LandingWrapper loaded={imageLoaded}>
       <Prompt>
         <Title loaded={imageLoaded}>Welcome to Sharist</Title>
         <Subtitle loaded={imageLoaded}>Adventurers in collaboration</Subtitle>
       </Prompt>
 
       <Background
+        loaded={imageLoaded}
         onLoad={() => setImageLoaded(true)}
         src={LandingBackground}
-        imageLoaded={imageLoaded}
       />
     </LandingWrapper>
   );

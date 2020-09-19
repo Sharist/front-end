@@ -105,7 +105,7 @@ function Header({ className, isLanding = false }: Props) {
 
         <HideAbove breakpoint={Breakpoint.MOBILE}>
           <MobileMenuHamburgerIcon
-            color={isLanding ? Palette.WHITE : Palette.REGULAR}
+            color={isLanding ? Palette.CLOUD : Palette.REGULAR}
             onClick={() => setMobileMenuOpen(true)}
           />
           <MobileMenu
