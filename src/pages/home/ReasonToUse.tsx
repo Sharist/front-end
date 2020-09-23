@@ -11,6 +11,7 @@ const ReasonToUseWrapper = styled.div`
     align-items: center;
     display: flex;
     font-family: 'Roboto slab';
+    justify-content: center;
     margin: 20rem auto;
     max-height: 100%;
     padding: 1rem;
