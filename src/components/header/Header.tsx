@@ -109,6 +109,8 @@ function Header({ className, isLanding = false }: Props) {
           <MobileMenuHamburgerIcon
             color={isLanding && translucentHeader ? Palette.ASH : Palette.REGULAR}
             onClick={() => setMobileMenuOpen(true)}
+            stroke={Palette.GREY}
+            strokeWidth={1}
           />
           <MobileMenu
             onDismiss={() => setMobileMenuOpen(false)}
