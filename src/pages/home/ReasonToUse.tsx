@@ -18,9 +18,9 @@ const ReasonToUseWrapper = styled.div`
     width: 80%;
 
     @media screen and (max-width: ${breakpoints.TABLET}) {
-      align-items: flex-start;
+      align-items: center;
       flex-direction: column;
-      margin: 5rem 1.5rem;
+      margin: 5rem auto;
       width: 100%;
     }
   `}
@@ -45,18 +45,19 @@ const DescriptionSection = styled.div`
 const DescriptionTitle = styled.h1`
   ${({ theme: { breakpoints } }) => css`
     font-size: 2.5rem;
-    line-height: 1.2;
-    margin-top: 0;
+    margin: 0 0 3rem 0;
 
     @media screen and (max-width: ${breakpoints.TABLET}) {
-      font-size: 2rem;
+      font-size: 1.8rem;
+      margin: 0;
     }
   `}
 `;
 
 const DescriptionText = styled.div`
   ${({ theme: { breakpoints } }) => css`
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+    text-align: justify;
 
     @media screen and (max-width: ${breakpoints.TABLET}) {
       font-size: 1.1rem;
@@ -65,7 +66,6 @@ const DescriptionText = styled.div`
 `;
 
 const Image = styled.img`
-  display: block;
   height: auto;
   margin: 1rem;
   max-width: 20rem;

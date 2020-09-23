@@ -29,8 +29,7 @@ const Title = styled.h1`
     margin: 3rem 1.5rem;
 
     @media screen and (max-width: ${breakpoints.TABLET}) {
-      align-self: flex-start;
-      font-size: 2rem;
+      font-size: 1.8rem;
     }
   `}
 `;
@@ -54,7 +53,7 @@ const Card = styled.div`
     flex-basis: 0;
     flex-direction: column;
     flex-grow: 1;
-    margin: 1rem;
+    margin: 2rem;
 
     @media screen and (max-width: ${breakpoints.TABLET}) {
       align-items: center;
@@ -72,6 +71,7 @@ const CardImage = styled.img`
 const CardText = styled.p`
   font-size: 1.1rem;
   margin-top: 2rem;
+  text-align: justify;
 `;
 
 function HowToUse() {
