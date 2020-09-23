@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Breakpoint } from '../../common/themes';
-import HideAbove from '../../components/helpers/HideAbove';
-import HideBelow from '../../components/helpers/HideBelow';
+
+import Pikachu from '../../resources/images/to-delete/pikachu-for-no-reason.png';
 
 const ReasonToUseWrapper = styled.div`
   ${({ /*loaded,*/ theme: { breakpoints } }) => css`
@@ -13,15 +13,9 @@ const ReasonToUseWrapper = styled.div`
     max-height: 100%;
     width: 100%;
     justify-content: center;
-    & > * {
-      margin: 3rem;
-    }
 
     @media screen and (max-width: ${breakpoints.TABLET}) {
-      & > * {
-        margin: 1rem;
-      }
-      flex-direction: column;
+      flex-direction: column-reverse;
     }
   `}
 `;
@@ -32,6 +26,7 @@ const DescriptionSection = styled.div`
   flex-shrink: 200;
   font-family: 'Roboto slab';
   max-width: 30rem;
+  margin: 1.5rem;
   justify-content: space-between;
 `;
 
@@ -59,34 +54,24 @@ const DescriptionText = styled.div`
 const Image = styled.img`
   ${({ /*loaded,*/ theme: { breakpoints } }) => css`
     display: block;
-    background-color: grey;
-
-    width: 20rem;
-    height: 20rem;
-    max-height: 20rem;
+    height: auto;
+    margin: 1rem;
     max-width: 20rem;
-
-    @media screen and (max-width: ${breakpoints.TABLET}) {
-      max-width: 100%;
-    }
+    width: 80%;
   `}
 `;
 
 function ReasonToUse() {
   return (
     <ReasonToUseWrapper>
-      <HideAbove breakpoint={Breakpoint.TABLET}>
-        <Image />
-      </HideAbove>
       <DescriptionSection>
         <DescriptionTitle>Reasons to use Sharist</DescriptionTitle>
         <DescriptionText>
           Sharist allows you to collaborate with your friends and plan your upcoming trip together.{' '}
         </DescriptionText>
       </DescriptionSection>
-      <HideBelow breakpoint={Breakpoint.TABLET}>
-        <Image />
-      </HideBelow>
+
+      <Image src={Pikachu} />
     </ReasonToUseWrapper>
   );
 }
