@@ -15,32 +15,34 @@ import routes from '../../routes';
 
 export const HEADER_HEIGHT_REM = 5;
 
-const HeaderWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  height: ${HEADER_HEIGHT_REM}rem;
-  justify-content: space-between;
-  margin: auto;
-  padding: 0.5rem 1rem;
-  transition: padding 1s;
-  width: 100%;
+const HeaderWrapper = styled.div<{ translucent: boolean }>`
+  ${({ translucent, theme: { palette } }) => css`
+    align-items: center;
+    background-color: ${translucent ? palette.TRANSPARENT : palette.WHITE};
+    display: flex;
+    height: ${HEADER_HEIGHT_REM}rem;
+    justify-content: space-between;
+    margin: auto;
+    padding: 0.5rem 1rem;
+    transition: padding 1s, background-color 300ms;
+    width: 100%;
+  `}
 `;
 
 const FloatingHeader = styled(HeaderWrapper)`
-  background-color: transparent;
   position: fixed;
   top: 0;
 `;
 
 const HeaderActionButton = styled(Button)`
-  width: 6rem;
   margin: 0 0.5rem;
+  width: 6rem;
 `;
 
 const LandingMainSectionActionButton = styled(HeaderActionButton).attrs({ transparent: true })`
   ${({ theme: { palette } }) => css`
-    width: 4rem;
     color: ${palette.WHITE};
+    width: 4rem;
   `}
 `;
 
@@ -98,14 +100,14 @@ function Header({ className, isLanding = false }: Props) {
   const UseHeaderWrapper = isLanding ? FloatingHeader : HeaderWrapper;
 
   return (
-    <UseHeaderWrapper className={className}>
+    <UseHeaderWrapper translucent={translucentHeader} className={className}>
       <Logo logoType={logoType} onClick={home.navigator} />
       <HeaderActions>
         <HideBelow breakpoint={Breakpoint.MOBILE}>{headerActions}</HideBelow>
 
         <HideAbove breakpoint={Breakpoint.MOBILE}>
           <MobileMenuHamburgerIcon
-            color={isLanding ? Palette.ASH : Palette.REGULAR}
+            color={isLanding && translucentHeader ? Palette.ASH : Palette.REGULAR}
             onClick={() => setMobileMenuOpen(true)}
           />
           <MobileMenu

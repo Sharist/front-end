@@ -13,6 +13,7 @@ const MobileMenuShadow = styled.div<{ visible: boolean }>`
     opacity: ${visible ? 0.3 : 0};
     position: fixed;
     right: 0;
+    transform: ${visible ? '0' : 'translateX(1000px)'};
     top: 0;
     transition: opacity 500ms, z-index 0ms ${visible ? '0ms' : '500ms'};
     z-index: ${visible ? 999 : -1000};
