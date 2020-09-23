@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import Landing from './Landing';
+import ReasonToUse from './ReasonToUse';
 import LayoutContainer from '../../components/LayoutContainer';
 import routes from '../../routes';
 
@@ -23,6 +24,7 @@ function Home(_: RouteComponentProps) {
     <LayoutContainer center floatingHeader fullHeight isLanding noMargin noPadding>
       <MultiSection>
         <Landing />
+        <ReasonToUse />
       </MultiSection>
     </LayoutContainer>
   );

@@ -9,6 +9,11 @@ type Props = {
 
 const HideBelow = styled.div<Props>`
   all: inherit;
+  width: unset;
+  height: unset;
+  padding: 0;
+  margin: 0;
+
   @media screen and (max-width: ${(p) => p.breakpoint}) {
     display: none;
   }
