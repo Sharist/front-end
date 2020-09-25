@@ -57,14 +57,17 @@ export enum LogoType {
 
 type LogoProps = {
   logoType?: LogoType;
-  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+  noText?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 };
 
-function Logo({ logoType = LogoType.REGULAR, onClick }: LogoProps) {
+function Logo({ logoType = LogoType.REGULAR, noText = false, onClick }: LogoProps) {
   const logo = logoType === LogoType.MONO_WHITE ? SharistLogoWhite : SharistLogo;
   const color = logoType === LogoType.MONO_WHITE ? Palette.ASH_LIGHTER : Palette.REGULAR;
 
-  return (
+  return noText ? (
+    <LogoIcon src={logo} />
+  ) : (
     <LogoWrapper onClick={onClick}>
       <LogoIcon src={logo} />
       <LogoText fontColor={color} />

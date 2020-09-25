@@ -3,7 +3,7 @@ import { navigate, RouteComponentProps } from '@reach/router';
 
 import Auth from './pages/auth/Auth';
 import Home from './pages/home/Home';
-import Plan from './pages/Plan';
+import PlanEdit from './pages/plan/PlanEdit';
 import SignOut from './pages/auth/SignOut';
 import VerifyEmail from './pages/auth/VerifyEmail';
 
@@ -34,7 +34,7 @@ function routeSpecOf(pageComponent: ComponentType<RouteComponentProps>, path: st
 const routes: RouteMap = {
   home: routeSpecOf(Home, '/'),
   logIn: routeSpecOf(Auth, '/login'),
-  plan: routeSpecOf(Plan, '/plan'),
+  planEdit: routeSpecOf(PlanEdit, '/plan/edit'),
   signOut: routeSpecOf(SignOut, '/signout'),
   signUp: routeSpecOf(Auth, '/signup'),
   verifyEmail: routeSpecOf(VerifyEmail, '/verify-email'),
