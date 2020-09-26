@@ -1,12 +1,12 @@
 import React from 'react';
 import { RouteComponentProps } from '@reach/router';
+import styled from 'styled-components';
 
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import IMap from '../../components/IMap';
 import LayoutContainer from '../../components/LayoutContainer';
-import Search from '../../components/Search';
-import styled from 'styled-components';
 import Logo from '../../components/header/Logo';
+import Search from '../../components/search/Search';
 
 const PlanContent = styled.div`
   display: flex;
@@ -14,13 +14,15 @@ const PlanContent = styled.div`
   height: 100%;
 `;
 
-const PlanList = styled.div`
+const Locations = styled.div`
   box-shadow: 0 0 0.5rem grey;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   height: 100%;
+  position: relative;
   width: 30rem;
+  z-index: 1;
 `;
 
 const SearchHeader = styled.div`
@@ -46,12 +48,13 @@ function Plan(_: RouteComponentProps) {
   return (
     <LayoutContainer fullHeight noHeader noMargin noPadding>
       <PlanContent>
-        <PlanList>
+        <Locations>
           <SearchHeader>
             <Logo noText />
             <Search placeholder='Search cities, attractions, or keywords' />
           </SearchHeader>
-        </PlanList>
+        </Locations>
+
         <IMap />
       </PlanContent>
     </LayoutContainer>

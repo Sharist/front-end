@@ -27,7 +27,6 @@ const HeaderWrapper = styled.div<{ translucent: boolean }>`
     position: relative;
     transition: padding 1s, background-color 300ms;
     width: 100%;
-    z-index: 100;
   `}
 `;
 
