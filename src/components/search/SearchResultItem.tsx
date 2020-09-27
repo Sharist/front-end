@@ -8,6 +8,7 @@ const Wrapper = styled.div`
     cursor: pointer;
     display: flex;
     padding: 1rem 1.5rem;
+    transition: background-color 250ms;
 
     &:hover {
       background-color: ${palette.ASH_LIGHTER};
@@ -43,20 +44,19 @@ const Annotation = styled.p`
 `;
 
 export interface SearchResult {
-  text: string;
   annotation?: string;
   icon?: IconType;
-  onSelect?: () => void;
   ranking?: number;
+  text: string;
 }
 
 type SearchResultItemProps = {
   searchResult: SearchResult;
+  onSelect?: () => void;
 };
 
-function SearchResultItem({ searchResult }: SearchResultItemProps) {
-  const { text, annotation, icon, onSelect } = searchResult;
-  const IconElement = icon;
+function SearchResultItem({ onSelect, searchResult }: SearchResultItemProps) {
+  const { text, annotation, icon: IconElement } = searchResult;
 
   return (
     <Wrapper onClick={onSelect}>

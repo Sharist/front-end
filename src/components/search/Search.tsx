@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { GiBalloons } from 'react-icons/gi';
-import { IoIosPin, IoIosRestaurant } from 'react-icons/io';
+import React, { ChangeEvent, useState } from 'react';
 import styled, { css } from 'styled-components';
 
+import { debounce } from '../../common/timing';
 import { SearchResult } from './SearchResultItem';
 import SuggestionsDropdown from './SuggestionsDropdown';
 
@@ -27,42 +26,57 @@ const SearchBox = styled.input`
 `;
 
 export interface SearchDatasource {
+  initialDataset?: SearchResult[];
   onSearch: (text: string) => Promise<SearchResult[]>;
 }
 
 type Props = {
   className?: string;
-  dataSource?: SearchDatasource;
+  dataSource: SearchDatasource;
   placeholder?: string;
-  shouldDebounce?: boolean;
+  onSelectResult?: (searchResult: SearchResult) => void;
 };
 
-function Search({ className, dataSource, placeholder, shouldDebounce = true }: Props) {
-  const [results, setResults] = useState<SearchResult[]>([]);
+const handleSearchInputDebounced = debounce(
+  (
+    value: string,
+    onSearch: (text: string) => Promise<SearchResult[]>,
+    setResults: (value: SearchResult[]) => void
+  ) => onSearch(value).then(setResults),
+  300
+);
 
-  function handleSearchBoxFocus() {
-    setResults([
-      { text: 'Chicago', annotation: 'Illinois, USA', icon: IoIosPin },
-      { text: 'Amsterdam', annotation: 'Netherlands', icon: IoIosPin },
-      { text: 'The Pink Door', annotation: 'Seattle, WA, USA', icon: IoIosRestaurant },
-      {
-        text: 'San Francisco Museum of Modern Art',
-        annotation: 'San Francisco, CA, USA',
-        icon: GiBalloons,
-      },
-      { text: 'Tokyo', annotation: 'Japan', icon: IoIosPin },
-    ]);
+function Search({ className, dataSource, onSelectResult, placeholder }: Props) {
+  const { initialDataset = [], onSearch } = dataSource;
+
+  const [value, setValue] = useState('');
+  const [results, setResults] = useState<SearchResult[]>(initialDataset);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  function handleResultSelected(searchResult: SearchResult) {
+    setValue(searchResult.text);
+    setDropdownVisible(false);
+    onSelectResult?.(searchResult);
+  }
+
+  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+    const { value } = e.target;
+    setValue(value);
+    handleSearchInputDebounced(value, onSearch, setResults);
   }
 
   return (
     <SearchWrapper className={className}>
       <SearchBox
-        onFocus={handleSearchBoxFocus}
-        onBlur={() => setResults([])}
+        onChange={handleInputChange}
+        onFocus={() => setDropdownVisible(true)}
         placeholder={placeholder}
         spellCheck={false}
+        value={value}
       />
-      <SuggestionsDropdown searchResults={results} />
+      {dropdownVisible && (
+        <SuggestionsDropdown onSelectResult={handleResultSelected} searchResults={results} />
+      )}
     </SearchWrapper>
   );
 }

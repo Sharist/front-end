@@ -1,7 +1,8 @@
-import React, { ReactChild, useState, useEffect } from 'react';
+import React, { ReactChild } from 'react';
 import styled, { css } from 'styled-components';
 
 import { pxToRem } from '../common/dimensions';
+import { useDimensions } from '../common/hooks/useDimensions';
 import Header, { HEADER_HEIGHT_REM } from './header/Header';
 
 type BaseLayoutProps = {
@@ -11,7 +12,7 @@ type BaseLayoutProps = {
   noHeader: boolean;
   noMargin: boolean;
   noPadding: boolean;
-  windowHeight?: number;
+  viewportHeight: number;
 };
 
 const BaseLayout = styled.div<BaseLayoutProps>`
@@ -22,14 +23,14 @@ const BaseLayout = styled.div<BaseLayoutProps>`
     noHeader,
     noMargin,
     noPadding,
-    windowHeight = window.innerHeight,
+    viewportHeight,
     theme: { breakpoints },
   }) => {
     const marginVertical = 1;
     const marginOffset = noMargin || floatingHeader ? 0 : 2 * marginVertical;
     const headerOffset = noHeader || floatingHeader ? 0 : HEADER_HEIGHT_REM;
     const heightOffset = headerOffset + marginOffset;
-    const height = pxToRem(windowHeight) - heightOffset;
+    const height = pxToRem(viewportHeight) - heightOffset;
 
     return css`
       background: transparent;
@@ -68,18 +69,7 @@ function LayoutContainer({
   noMargin = false,
   noPadding = false,
 }: LayoutContainerProps) {
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-
-  function handleWindowResize() {
-    setWindowHeight(window.innerHeight);
-  }
-
-  window.addEventListener('resize', handleWindowResize);
-  useEffect(() => {
-    return function cleanup() {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  });
+  const { height } = useDimensions({ debounceTimeout: 0 });
 
   return (
     <>
@@ -91,7 +81,7 @@ function LayoutContainer({
         noHeader={noHeader}
         noMargin={noMargin}
         noPadding={noPadding}
-        windowHeight={windowHeight}
+        viewportHeight={height}
       >
         {children}
       </BaseLayout>

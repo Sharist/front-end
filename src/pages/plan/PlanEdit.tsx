@@ -1,12 +1,15 @@
 import React from 'react';
+import { GiBalloons } from 'react-icons/gi';
+import { IoIosPin, IoIosRestaurant } from 'react-icons/io';
 import { RouteComponentProps } from '@reach/router';
 import styled from 'styled-components';
 
+import { SearchResult } from '../../components/search/SearchResultItem';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import IMap from '../../components/IMap';
 import LayoutContainer from '../../components/LayoutContainer';
 import Logo from '../../components/header/Logo';
-import Search from '../../components/search/Search';
+import Search, { SearchDatasource } from '../../components/search/Search';
 
 const PlanContent = styled.div`
   display: flex;
@@ -37,13 +40,40 @@ const SearchHeader = styled.div`
   }
 `;
 
-function Plan(_: RouteComponentProps) {
+function PlanEdit(_: RouteComponentProps) {
   const { signedIn } = useAuthentication();
+
+  const searchResults: SearchResult[] = [
+    { text: 'Chicago', annotation: 'Illinois, USA', icon: IoIosPin },
+    { text: 'Amsterdam', annotation: 'Netherlands', icon: IoIosPin },
+    { text: 'The Pink Door', annotation: 'Seattle, WA, USA', icon: IoIosRestaurant },
+    {
+      text: 'San Francisco Museum of Modern Art',
+      annotation: 'San Francisco, CA, USA',
+      icon: GiBalloons,
+    },
+    { text: 'Tokyo', annotation: 'Japan', icon: IoIosPin },
+  ];
 
   // Do not render if not signed in
   if (!signedIn) {
     return null;
   }
+
+  const dataSource: SearchDatasource = {
+    initialDataset: searchResults,
+    onSearch: (text) => {
+      const textLower = text.toLowerCase();
+      return Promise.resolve(
+        searchResults.filter((item) => {
+          return (
+            item.text.toLowerCase().includes(textLower) ||
+            item.annotation?.toLowerCase().includes(textLower)
+          );
+        })
+      );
+    },
+  };
 
   return (
     <LayoutContainer fullHeight noHeader noMargin noPadding>
@@ -51,7 +81,7 @@ function Plan(_: RouteComponentProps) {
         <Locations>
           <SearchHeader>
             <Logo noText />
-            <Search placeholder='Search cities, attractions, or keywords' />
+            <Search placeholder='Search cities, attractions, or keywords' dataSource={dataSource} />
           </SearchHeader>
         </Locations>
 
@@ -61,4 +91,4 @@ function Plan(_: RouteComponentProps) {
   );
 }
 
-export default Plan;
+export default PlanEdit;
