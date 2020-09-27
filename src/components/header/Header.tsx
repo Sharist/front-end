@@ -3,7 +3,6 @@ import { IoIosMenu } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
 import { Breakpoint, Palette } from '../../common/themes';
-import { HeaderActions } from './HeaderComponents';
 import { remToPx } from '../../common/dimensions';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import Button from '../Button';
@@ -19,11 +18,13 @@ const HeaderWrapper = styled.div<{ translucent: boolean }>`
   ${({ translucent, theme: { palette } }) => css`
     align-items: center;
     background-color: ${translucent ? palette.TRANSPARENT : palette.WHITE};
+    box-shadow: 0 0 0.25rem ${palette.GREY};
     display: flex;
     height: ${HEADER_HEIGHT_REM}rem;
     justify-content: space-between;
     margin: auto;
     padding: 0.5rem 1rem;
+    position: relative;
     transition: padding 1s, background-color 300ms;
     width: 100%;
   `}
@@ -32,6 +33,7 @@ const HeaderWrapper = styled.div<{ translucent: boolean }>`
 const FloatingHeader = styled(HeaderWrapper)`
   position: fixed;
   top: 0;
+  box-shadow: none;
 `;
 
 const HeaderActionButton = styled(Button)`
@@ -49,6 +51,20 @@ const LandingMainSectionActionButton = styled(HeaderActionButton).attrs({ transp
 const MobileMenuHamburgerIcon = styled(IoIosMenu)<{ color: Palette }>`
   ${({ color }) => css`
     color: ${color};
+  `}
+`;
+
+const HeaderActions = styled.div`
+  ${({ theme: { breakpoints } }) => css`
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+
+    @media screen and (max-width: ${breakpoints.MOBILE}) {
+      font-size: 2rem;
+      padding: 0.25rem;
+      width: unset;
+    }
   `}
 `;
 
@@ -77,13 +93,13 @@ function Header({ className, isLanding = false }: Props) {
     }
   }, [isLanding]);
 
-  const { signOut, plan, signUp, logIn, home } = routes;
+  const { signOut, planEdit, signUp, logIn, home } = routes;
 
   const ButtonType = translucentHeader ? LandingMainSectionActionButton : HeaderActionButton;
   const headerActions = signedIn ? (
     <>
       <ButtonType onClick={signOut.navigator}>Sign out</ButtonType>
-      <ButtonType isPrimary onClick={plan.navigator}>
+      <ButtonType isPrimary onClick={planEdit.navigator}>
         Plan
       </ButtonType>
     </>
