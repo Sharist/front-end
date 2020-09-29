@@ -26,13 +26,18 @@ const SearchBox = styled.input`
 `;
 
 export interface SearchDatasource {
-  initialDataset?: SearchResult[];
+  initialDataset: SearchResult[];
   onSearch: (text: string) => Promise<SearchResult[]>;
 }
 
+const defaultDataSource: SearchDatasource = {
+  initialDataset: [],
+  onSearch: (text: string) => Promise.resolve([]),
+};
+
 type Props = {
   className?: string;
-  dataSource: SearchDatasource;
+  dataSource?: SearchDatasource;
   placeholder?: string;
   onSelectResult?: (searchResult: SearchResult) => void;
 };
@@ -46,8 +51,8 @@ const handleSearchInputDebounced = debounce(
   300
 );
 
-function Search({ className, dataSource, onSelectResult, placeholder }: Props) {
-  const { initialDataset = [], onSearch } = dataSource;
+function Search({ className, dataSource = defaultDataSource, onSelectResult, placeholder }: Props) {
+  const { initialDataset, onSearch } = dataSource;
 
   const [value, setValue] = useState('');
   const [results, setResults] = useState<SearchResult[]>(initialDataset);
