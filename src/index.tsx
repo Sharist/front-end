@@ -5,7 +5,7 @@ import { Router } from '@reach/router';
 import { ThemeProvider } from 'styled-components';
 
 import './index.css';
-import { MapContextProvider } from './components/contexts/MapContext';
+import { MapContextProvider } from './common/contexts/MapContext';
 import { SharistTheme } from './common/themes';
 import * as serviceWorker from './serviceWorker';
 import routes from './routes';

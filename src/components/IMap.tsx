@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 
-import MapContext from './contexts/MapContext';
+import MapContext from '../common/contexts/MapContext';
 
 const MapContainer = styled.div`
   width: 100%;
