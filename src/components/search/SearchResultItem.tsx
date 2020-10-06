@@ -2,9 +2,10 @@ import React from 'react';
 import { IconType } from 'react-icons';
 import styled, { css } from 'styled-components';
 
-const Wrapper = styled.div`
-  ${({ theme: { palette } }) => css`
+const Wrapper = styled.div<{ isHighlighted: boolean }>`
+  ${({ isHighlighted, theme: { palette } }) => css`
     align-items: center;
+    background-color: ${isHighlighted ? palette.ASH_LIGHTER : ''};
     cursor: pointer;
     display: flex;
     padding: 1rem 1.5rem;
@@ -46,20 +47,22 @@ const Annotation = styled.p`
 export interface SearchResult {
   annotation?: string;
   icon?: IconType;
+  key?: string;
   ranking?: number;
   text: string;
 }
 
 type SearchResultItemProps = {
+  isHighlighted: boolean;
   searchResult: SearchResult;
   onSelect?: () => void;
 };
 
-function SearchResultItem({ onSelect, searchResult }: SearchResultItemProps) {
+function SearchResultItem({ isHighlighted, onSelect, searchResult }: SearchResultItemProps) {
   const { text, annotation, icon: IconElement } = searchResult;
 
   return (
-    <Wrapper onClick={onSelect}>
+    <Wrapper isHighlighted={isHighlighted} onClick={onSelect}>
       {IconElement && (
         <Icon>
           <IconElement />

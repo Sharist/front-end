@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import { debounce } from '../../common/timing';
@@ -54,33 +54,63 @@ const handleSearchInputDebounced = debounce(
 function Search({ className, dataSource = defaultDataSource, onSelectResult, placeholder }: Props) {
   const { initialDataset, onSearch } = dataSource;
 
-  const [value, setValue] = useState('');
-  const [results, setResults] = useState<SearchResult[]>(initialDataset);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
+  const [results, setResults] = useState<SearchResult[]>(initialDataset);
+  const [value, setValue] = useState('');
 
   function handleResultSelected(searchResult: SearchResult) {
     setValue(searchResult.text);
     setDropdownVisible(false);
+    setHighlightedIndex(-1);
     onSelectResult?.(searchResult);
   }
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
     setValue(value);
+    setDropdownVisible(true);
     handleSearchInputDebounced(value, onSearch, setResults);
+  }
+
+  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      // Prevent input cursor from moving
+      e.preventDefault();
+      if (e.key === 'ArrowDown' && highlightedIndex < results.length - 1) {
+        setHighlightedIndex(highlightedIndex + 1);
+      } else if (e.key === 'ArrowUp' && highlightedIndex > 0) {
+        setHighlightedIndex(highlightedIndex - 1);
+      }
+    } else if (e.key === 'Escape') {
+      setHighlightedIndex(-1);
+      setDropdownVisible(false);
+    }
+  }
+
+  function handleKeyPress(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter' && highlightedIndex !== -1) {
+      handleResultSelected(results[highlightedIndex]);
+    }
   }
 
   return (
     <SearchWrapper className={className}>
       <SearchBox
+        onKeyDown={handleKeyDown}
+        onKeyPress={handleKeyPress}
         onChange={handleInputChange}
-        onFocus={() => setDropdownVisible(true)}
         placeholder={placeholder}
         spellCheck={false}
         value={value}
       />
       {dropdownVisible && (
-        <SuggestionsDropdown onSelectResult={handleResultSelected} searchResults={results} />
+        <SuggestionsDropdown
+          clearResultHighlight={() => setHighlightedIndex(-1)}
+          highlightedResultKey={results[highlightedIndex]?.key}
+          onSelectResult={handleResultSelected}
+          searchResults={results}
+        />
       )}
     </SearchWrapper>
   );

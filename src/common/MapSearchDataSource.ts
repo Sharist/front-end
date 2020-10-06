@@ -19,7 +19,7 @@ export class MapSearchDataSource implements SearchDatasource {
 
     const result = await this.mapApi.getPrediction(text);
 
-    return result.map(({ terms, types }) => {
+    return result.map(({ place_id, terms, types }) => {
       const text = terms[0].value;
       const annotation = terms
         .slice(1)
@@ -27,9 +27,10 @@ export class MapSearchDataSource implements SearchDatasource {
         .join(', ');
 
       return {
-        text,
         annotation,
         icon: this.mapTypeToIcon(types),
+        key: place_id,
+        text,
       };
     });
   };

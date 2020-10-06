@@ -28,11 +28,18 @@ const DropdownPanel = styled.div`
 `;
 
 type SuggestionsDropdownProps = {
-  searchResults: SearchResult[];
+  clearResultHighlight: () => void;
+  highlightedResultKey?: string;
   onSelectResult?: (searchResult: SearchResult) => void;
+  searchResults: SearchResult[];
 };
 
-function SuggestionsDropdown({ onSelectResult, searchResults }: SuggestionsDropdownProps) {
+function SuggestionsDropdown({
+  clearResultHighlight,
+  highlightedResultKey,
+  onSelectResult,
+  searchResults,
+}: SuggestionsDropdownProps) {
   const { height: documentHeight } = useDimensions();
 
   if (searchResults.length === 0) {
@@ -40,12 +47,13 @@ function SuggestionsDropdown({ onSelectResult, searchResults }: SuggestionsDropd
   }
 
   return (
-    <Wrapper maxHeight={documentHeight - 200}>
+    <Wrapper maxHeight={documentHeight - 200} onMouseOver={clearResultHighlight}>
       <DropdownPanel>
         {searchResults.map((searchResult) => (
           <SearchResultItem
+            isHighlighted={searchResult.key === highlightedResultKey}
+            key={searchResult.key}
             onSelect={() => onSelectResult?.(searchResult)}
-            key={searchResult.text + Math.random() * 100}
             searchResult={searchResult}
           />
         ))}
