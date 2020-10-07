@@ -17,7 +17,7 @@ function Home(_: RouteComponentProps) {
   const { signedIn } = useAuthentication({ requestLogin: false });
 
   useEffect(() => {
-    signedIn && routes.planEdit.navigator();
+    signedIn && routes.tripEdit.navigator();
   }, [signedIn]);
 
   return (

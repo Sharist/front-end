@@ -38,7 +38,7 @@ const SearchHeader = styled.div`
   }
 `;
 
-function PlanEdit(_: RouteComponentProps) {
+function TripEdit(_: RouteComponentProps) {
   const { signedIn } = useAuthentication();
   const { mapSearchDataSource } = useContext(MapContext);
 
@@ -66,4 +66,4 @@ function PlanEdit(_: RouteComponentProps) {
   );
 }
 
-export default PlanEdit;
+export default TripEdit;

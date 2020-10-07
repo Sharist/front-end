@@ -93,13 +93,13 @@ function Header({ className, isLanding = false }: Props) {
     }
   }, [isLanding]);
 
-  const { signOut, planEdit, signUp, logIn, home } = routes;
+  const { signOut, tripEdit, signUp, logIn, home } = routes;
 
   const ButtonType = translucentHeader ? LandingMainSectionActionButton : HeaderActionButton;
   const headerActions = signedIn ? (
     <>
       <ButtonType onClick={signOut.navigator}>Sign out</ButtonType>
-      <ButtonType isPrimary onClick={planEdit.navigator}>
+      <ButtonType isPrimary onClick={tripEdit.navigator}>
         Plan
       </ButtonType>
     </>
