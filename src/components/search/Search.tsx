@@ -27,12 +27,12 @@ const SearchBox = styled.input`
 
 export interface SearchDatasource {
   initialDataset: SearchResult[];
-  onSearch: (text: string) => Promise<SearchResult[]>;
+  onAutocompleteSearch: (text: string) => Promise<SearchResult[]>;
 }
 
 const defaultDataSource: SearchDatasource = {
   initialDataset: [],
-  onSearch: (text: string) => Promise.resolve([]),
+  onAutocompleteSearch: (text: string) => Promise.resolve([]),
 };
 
 type Props = {
@@ -45,14 +45,14 @@ type Props = {
 const handleSearchInputDebounced = debounce(
   (
     value: string,
-    onSearch: (text: string) => Promise<SearchResult[]>,
+    onAutocompleteSearch: (text: string) => Promise<SearchResult[]>,
     setResults: (value: SearchResult[]) => void
-  ) => onSearch(value).then(setResults),
+  ) => onAutocompleteSearch(value).then(setResults),
   300
 );
 
 function Search({ className, dataSource = defaultDataSource, onSelectResult, placeholder }: Props) {
-  const { initialDataset, onSearch } = dataSource;
+  const { initialDataset, onAutocompleteSearch } = dataSource;
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
@@ -70,7 +70,7 @@ function Search({ className, dataSource = defaultDataSource, onSelectResult, pla
     const { value } = e.target;
     setValue(value);
     setDropdownVisible(true);
-    handleSearchInputDebounced(value, onSearch, setResults);
+    handleSearchInputDebounced(value, onAutocompleteSearch, setResults);
   }
 
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {

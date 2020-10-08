@@ -13,7 +13,7 @@ export class MapApi {
   public async getPrediction(
     searchString: string
   ): Promise<google.maps.places.AutocompletePrediction[]> {
-    const input = {
+    const input: google.maps.places.AutocompletionRequest = {
       input: searchString,
       bounds: this.mapInstance?.getBounds() ?? undefined,
     };

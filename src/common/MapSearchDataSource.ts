@@ -12,14 +12,15 @@ export class MapSearchDataSource implements SearchDatasource {
 
   constructor(private readonly mapApi: MapApi) {}
 
-  public onSearch = async (text: string): Promise<SearchResult[]> => {
+  public onAutocompleteSearch = async (text: string): Promise<SearchResult[]> => {
     if (!text) {
       return [];
     }
 
-    const result = await this.mapApi.getPrediction(text);
+    const predictions = await this.mapApi.getPrediction(text);
 
-    return result.map(({ place_id, terms, types }) => {
+    return predictions.map((result) => {
+      const { place_id, terms, types } = result;
       const text = terms[0].value;
       const annotation = terms
         .slice(1)
