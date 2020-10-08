@@ -1,3 +1,20 @@
+let autocompleteSessionToken: {
+  value: google.maps.places.AutocompleteSessionToken;
+  expiration: number;
+} | null = null;
+
+function getToken(): google.maps.places.AutocompleteSessionToken {
+  if (!autocompleteSessionToken || Date.now() >= autocompleteSessionToken.expiration) {
+    autocompleteSessionToken = {
+      value: new google.maps.places.AutocompleteSessionToken(),
+      // Set to expire at 2 minutes 50 seconds mark
+      expiration: Date.now() + 1000 * 60 * 3 - 10000,
+    };
+  }
+
+  return autocompleteSessionToken.value;
+}
+
 export class MapApi {
   private readonly placesAutocompleteService: google.maps.places.AutocompleteService;
 
@@ -16,6 +33,7 @@ export class MapApi {
     const input: google.maps.places.AutocompletionRequest = {
       input: searchString,
       bounds: this.mapInstance?.getBounds() ?? undefined,
+      sessionToken: getToken(),
     };
 
     return new Promise((resolve, reject) => {
