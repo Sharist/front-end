@@ -17,9 +17,11 @@ function getToken(): google.maps.places.AutocompleteSessionToken {
 
 export class MapApi {
   private readonly placesAutocompleteService: google.maps.places.AutocompleteService;
+  private readonly placesService: google.maps.places.PlacesService;
 
   constructor(private readonly mapInstance: google.maps.Map<HTMLDivElement>) {
     this.placesAutocompleteService = new google.maps.places.AutocompleteService();
+    this.placesService = new google.maps.places.PlacesService(mapInstance);
   }
 
   /**
@@ -30,25 +32,50 @@ export class MapApi {
   public async getPrediction(
     searchString: string
   ): Promise<google.maps.places.AutocompletePrediction[]> {
-    const input: google.maps.places.AutocompletionRequest = {
+    const request: google.maps.places.AutocompletionRequest = {
       input: searchString,
       bounds: this.mapInstance?.getBounds() ?? undefined,
       sessionToken: getToken(),
     };
 
     return new Promise((resolve, reject) => {
-      this.placesAutocompleteService.getPlacePredictions(input, (predictions, status) => {
-        const { PlacesServiceStatus } = google.maps.places;
-
+      this.placesAutocompleteService.getPlacePredictions(request, (predictions, status) => {
         switch (status) {
-          case PlacesServiceStatus.ZERO_RESULTS:
+          case google.maps.places.PlacesServiceStatus.ZERO_RESULTS:
             resolve([]);
             break;
-          case PlacesServiceStatus.OK:
+          case google.maps.places.PlacesServiceStatus.OK:
             resolve(predictions);
             break;
           default:
-            reject(new Error('Error using Google Maps. Please try again later.'));
+            reject(new Error(`Error using Google Maps: ${status}; please try again later.`));
+        }
+      });
+    });
+  }
+
+  public async getPlaceDetail(placeId: string): Promise<google.maps.places.PlaceResult> {
+    // See https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceResult
+    // for what each field means.
+    const fields = ['formatted_address', 'geometry', 'icon', 'name', 'photo', 'types', 'vicinity'];
+
+    const request: google.maps.places.PlaceDetailsRequest = {
+      placeId,
+      fields,
+      sessionToken: getToken(),
+    };
+
+    return new Promise((resolve, reject) => {
+      this.placesService.getDetails(request, (result, status) => {
+        switch (status) {
+          case google.maps.places.PlacesServiceStatus.OK:
+            resolve(result);
+            break;
+          case google.maps.places.PlacesServiceStatus.NOT_FOUND:
+            reject(new Error(`Place ID ${placeId} is not found`));
+            break;
+          default:
+            reject(new Error(`Error using Google Maps: ${status}; please try again later.`));
         }
       });
     });

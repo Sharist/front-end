@@ -12,6 +12,11 @@ export class MapSearchDataSource implements SearchDatasource {
 
   constructor(private readonly mapApi: MapApi) {}
 
+  /**
+   * This is used for both autocomplete and prediction search.
+   *
+   * @param text Search text
+   */
   public onAutocompleteSearch = async (text: string): Promise<SearchResult[]> => {
     if (!text) {
       return [];
