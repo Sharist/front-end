@@ -6,6 +6,7 @@ import SearchResultItem, { SearchResult } from './SearchResultItem';
 
 const Wrapper = styled.div<{ maxHeight: number }>`
   ${({ maxHeight, theme: { palette } }) => css`
+    background-color: white;
     border-radius: 1.25rem;
     border: 0.05rem solid ${palette.ASH_DARKER};
     box-shadow: 0 0 0.25rem ${palette.GREY_LIGHTER};

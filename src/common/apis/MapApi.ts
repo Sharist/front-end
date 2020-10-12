@@ -15,6 +15,12 @@ function getToken(): google.maps.places.AutocompleteSessionToken {
   return autocompleteSessionToken.value;
 }
 
+function expireToken() {
+  if (autocompleteSessionToken) {
+    autocompleteSessionToken.expiration = 0;
+  }
+}
+
 export class MapApi {
   private readonly placesAutocompleteService: google.maps.places.AutocompleteService;
   private readonly placesService: google.maps.places.PlacesService;
@@ -67,6 +73,8 @@ export class MapApi {
 
     return new Promise((resolve, reject) => {
       this.placesService.getDetails(request, (result, status) => {
+        expireToken();
+
         switch (status) {
           case google.maps.places.PlacesServiceStatus.OK:
             resolve(result);
