@@ -48,7 +48,7 @@ const handleSearchInputDebounced = debounce(
     onAutocompleteSearch: (text: string) => Promise<SearchResult[]>,
     setResults: (value: SearchResult[]) => void
   ) => onAutocompleteSearch(value).then(setResults),
-  300
+  650
 );
 
 function Search({ className, dataSource = defaultDataSource, onSelectResult, placeholder }: Props) {
