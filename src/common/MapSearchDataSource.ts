@@ -3,14 +3,14 @@ import { IconType } from 'react-icons';
 import { IoIosPin, IoIosRestaurant } from 'react-icons/io';
 import { MdStore } from 'react-icons/md';
 
-import { MapApi } from './apis/MapApi';
+import { MapAdaptor } from './apis/MapAdaptor';
 import { SearchDatasource } from '../components/search/Search';
 import { SearchResult } from '../components/search/SearchResultItem';
 
 export class MapSearchDataSource implements SearchDatasource {
   public initialDataset = [];
 
-  constructor(private readonly mapApi: MapApi) {}
+  constructor(private readonly mapAdaptor: MapAdaptor) {}
 
   /**
    * This is used for both autocomplete and prediction search.
@@ -22,7 +22,7 @@ export class MapSearchDataSource implements SearchDatasource {
       return [];
     }
 
-    const predictions = await this.mapApi.getPrediction(text);
+    const predictions = await this.mapAdaptor.getPrediction(text);
 
     return predictions.map((result) => {
       const { place_id, terms, types } = result;

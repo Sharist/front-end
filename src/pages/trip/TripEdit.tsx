@@ -65,7 +65,7 @@ function TripEdit(_: RouteComponentProps) {
   const [pendingPlace, setPendingPlace] = useState<PendingPlace | null>(null);
 
   const { signedIn } = useAuthentication();
-  const { mapApi, mapInstance, mapSearchDataSource } = useContext(MapContext);
+  const { mapAdaptor, mapInstance, mapSearchDataSource } = useContext(MapContext);
 
   // Do not render if not signed in
   if (!signedIn) {
@@ -73,9 +73,9 @@ function TripEdit(_: RouteComponentProps) {
   }
 
   async function handleResultSelected(searchResult: SearchResult) {
-    if (mapApi && mapInstance && searchResult.key) {
+    if (mapAdaptor && mapInstance && searchResult.key) {
       try {
-        const place = await mapApi.getPlaceDetail(searchResult.key);
+        const place = await mapAdaptor.getPlaceDetail(searchResult.key);
 
         let marker: google.maps.Marker | undefined = undefined;
         if (place.geometry?.location) {

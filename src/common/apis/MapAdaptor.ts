@@ -21,7 +21,7 @@ function expireToken() {
   }
 }
 
-export class MapApi {
+export class MapAdaptor {
   private readonly placesAutocompleteService: google.maps.places.AutocompleteService;
   private readonly placesService: google.maps.places.PlacesService;
 

@@ -1,13 +1,13 @@
 import React, { ReactChild, useState } from 'react';
 
-import { MapApi } from '../apis/MapApi';
+import { MapAdaptor } from '../apis/MapAdaptor';
 import { MapSearchDataSource } from '../MapSearchDataSource';
 
 type MapContextType = {
   /** Initialize Google Map */
   initMap: () => void;
   /** Google Maps object instance */
-  mapApi?: MapApi;
+  mapAdaptor?: MapAdaptor;
   mapInstance?: google.maps.Map<HTMLDivElement>;
   mapSearchDataSource?: MapSearchDataSource;
   extraData: {
@@ -28,7 +28,7 @@ const MapContext = React.createContext<MapContextType>({
 
 function MapContextProvider({ children }: { children?: ReactChild }) {
   const [mapInstanceData, setMapInstanceData] = useState<{
-    mapApi?: MapApi;
+    mapAdaptor?: MapAdaptor;
     mapInstance?: google.maps.Map<HTMLDivElement>;
     mapSearchDataSource?: MapSearchDataSource;
   }>({});
@@ -53,10 +53,10 @@ function MapContextProvider({ children }: { children?: ReactChild }) {
           center: { lat: 41.8781, lng: -87.6298 },
         });
 
-        const mapApi = new MapApi(mapInstance);
-        const mapSearchDataSource = new MapSearchDataSource(mapApi);
+        const mapAdaptor = new MapAdaptor(mapInstance);
+        const mapSearchDataSource = new MapSearchDataSource(mapAdaptor);
         setMapInstanceData({
-          mapApi,
+          mapAdaptor,
           mapInstance,
           mapSearchDataSource,
         });
