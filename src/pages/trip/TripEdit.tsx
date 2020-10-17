@@ -47,22 +47,8 @@ const SearchHeader = styled.div`
   }
 `;
 
-/**
- * A place that a user searched for and clicked onto the search result,
- * yet has not decided whether to add the place to the trip or not.
- *
- * Groups together Google Maps object instances for easier manpulation
- * through handlers.
- */
-interface PendingPlace {
-  /** The selected place from search */
-  place: google.maps.places.PlaceResult;
-  /** The associated marker on Map created with the selection */
-  marker?: google.maps.Marker;
-}
-
 function TripEdit(_: RouteComponentProps) {
-  const [pendingPlace, setPendingPlace] = useState<PendingPlace | null>(null);
+  const [pendingPlace, setPendingPlace] = useState<google.maps.places.PlaceResult | null>(null);
 
   const { signedIn } = useAuthentication();
   const { mapAdaptor, mapInstance, mapSearchDataSource } = useContext(MapContext);
@@ -74,22 +60,19 @@ function TripEdit(_: RouteComponentProps) {
 
   async function handleResultSelected(searchResult: SearchResult) {
     if (mapAdaptor && mapInstance && searchResult.key) {
+      if (pendingPlace) {
+        mapAdaptor.removeMarkers(pendingPlace);
+      }
+
       try {
         const place = await mapAdaptor.getPlaceDetail(searchResult.key);
-
-        let marker: google.maps.Marker | undefined = undefined;
         if (place.geometry?.location) {
-          marker = new google.maps.Marker({
-            position: place.geometry.location,
-            map: mapInstance,
-            title: place.name,
-          });
-
+          mapAdaptor.addMarkers(place);
           mapInstance.setCenter(place.geometry.location);
           mapInstance.setZoom(17);
         }
 
-        setPendingPlace({ place, marker });
+        setPendingPlace(place);
       } catch (error) {
         console.error(error.message);
       }
@@ -97,9 +80,9 @@ function TripEdit(_: RouteComponentProps) {
   }
 
   let imageConfig;
-  if (pendingPlace?.place?.photos) {
+  if (pendingPlace?.photos) {
     const cardImageHeight = remToPx(15);
-    const { photos } = pendingPlace.place;
+    const { photos } = pendingPlace;
     const firstPhoto =
       photos.find(({ width, height }) => height < width && height > cardImageHeight) || photos[0];
 
@@ -113,7 +96,9 @@ function TripEdit(_: RouteComponentProps) {
     {
       actionText: 'Cancel',
       handler: () => {
-        pendingPlace?.marker?.setMap(null);
+        if (pendingPlace) {
+          mapAdaptor?.removeMarkers(pendingPlace);
+        }
         setPendingPlace(null);
       },
     },
@@ -140,12 +125,12 @@ function TripEdit(_: RouteComponentProps) {
             />
           </SearchHeader>
 
-          {pendingPlace?.place && (
+          {pendingPlace && (
             <PendingCard>
               <Card
                 image={imageConfig}
-                subtitle={pendingPlace.place.vicinity}
-                title={pendingPlace.place.name}
+                subtitle={pendingPlace.vicinity}
+                title={pendingPlace.name}
                 actions={pendingPlaceActions}
               ></Card>
             </PendingCard>

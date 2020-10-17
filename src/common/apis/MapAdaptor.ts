@@ -25,9 +25,12 @@ export class MapAdaptor {
   private readonly placesAutocompleteService: google.maps.places.AutocompleteService;
   private readonly placesService: google.maps.places.PlacesService;
 
+  private placeIdMarkerMap: Map<string, google.maps.Marker>;
+
   constructor(private readonly mapInstance: google.maps.Map<HTMLDivElement>) {
     this.placesAutocompleteService = new google.maps.places.AutocompleteService();
     this.placesService = new google.maps.places.PlacesService(mapInstance);
+    this.placeIdMarkerMap = new Map();
   }
 
   /**
@@ -63,7 +66,16 @@ export class MapAdaptor {
   public async getPlaceDetail(placeId: string): Promise<google.maps.places.PlaceResult> {
     // See https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceResult
     // for what each field means.
-    const fields = ['formatted_address', 'geometry', 'icon', 'name', 'photo', 'types', 'vicinity'];
+    const fields = [
+      'formatted_address',
+      'geometry',
+      'icon',
+      'name',
+      'photo',
+      'place_id',
+      'types',
+      'vicinity',
+    ];
 
     const request: google.maps.places.PlaceDetailsRequest = {
       placeId,
@@ -86,6 +98,50 @@ export class MapAdaptor {
             reject(new Error(`Error using Google Maps: ${status}; please try again later.`));
         }
       });
+    });
+  }
+
+  /**
+   * Place marker on the places specified in the argument.
+   *
+   * @param place Variable list of places to mark on the map.
+   */
+  public addMarkers(...places: google.maps.places.PlaceResult[]): Map<string, google.maps.Marker> {
+    const newMarkersMap = new Map<string, google.maps.Marker>();
+
+    places
+      .filter(({ place_id }) => place_id && !this.placeIdMarkerMap.has(place_id))
+      .forEach(({ name, geometry, place_id }) => {
+        if (name && geometry?.location && place_id) {
+          const newMarker = new google.maps.Marker({
+            position: geometry.location,
+            map: this.mapInstance,
+            title: name,
+          });
+
+          newMarkersMap.set(place_id, newMarker);
+          this.placeIdMarkerMap.set(place_id, newMarker);
+        }
+      });
+
+    return newMarkersMap;
+  }
+
+  /**
+   * Remove markers for the specified places from the map.
+   *
+   * @param places Variable list of places to remove marker from the map.
+   */
+  public removeMarkers(...places: google.maps.places.PlaceResult[]) {
+    places.forEach(({ place_id }) => {
+      if (place_id) {
+        const marker = this.placeIdMarkerMap.get(place_id);
+
+        if (marker) {
+          marker.setMap(null);
+          this.placeIdMarkerMap.delete(place_id);
+        }
+      }
     });
   }
 }
