@@ -37,8 +37,30 @@ export class MapSearchDataSource implements SearchDatasource {
         icon: this.mapTypeToIcon(types),
         key: place_id,
         text,
+        extraData: result,
       };
     });
+  };
+
+  public onSearch = async (query: string): Promise<SearchResult[]> => {
+    if (!query) {
+      return [];
+    }
+
+    const placeResults = await this.mapAdaptor.getPlacesFromQuery(query);
+
+    const ret = placeResults.map((result) => {
+      const { name, formatted_address, place_id } = result;
+      return {
+        text: name,
+        annotation: formatted_address,
+        key: place_id,
+        icon: this.mapTypeToIcon(result.types || []),
+        extraData: result,
+      };
+    });
+    console.log(ret);
+    return ret;
   };
 
   private mapTypeToIcon(types: string[]): IconType {

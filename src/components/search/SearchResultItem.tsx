@@ -50,6 +50,7 @@ export interface SearchResult {
   key?: string;
   ranking?: number;
   text: string;
+  extraData?: any;
 }
 
 type SearchResultItemProps = {

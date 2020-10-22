@@ -28,11 +28,13 @@ const SearchBox = styled.input`
 export interface SearchDatasource {
   initialDataset: SearchResult[];
   onAutocompleteSearch: (text: string) => Promise<SearchResult[]>;
+  onSearch: (query: string) => Promise<SearchResult[]>;
 }
 
 const defaultDataSource: SearchDatasource = {
   initialDataset: [],
   onAutocompleteSearch: (text: string) => Promise.resolve([]),
+  onSearch: (query: string) => Promise.resolve([]),
 };
 
 type Props = {
@@ -52,15 +54,15 @@ const handleSearchInputDebounced = debounce(
 );
 
 function Search({ className, dataSource = defaultDataSource, onSelectResult, placeholder }: Props) {
-  const { initialDataset, onAutocompleteSearch } = dataSource;
+  const { initialDataset, onAutocompleteSearch, onSearch } = dataSource;
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
   const [results, setResults] = useState<SearchResult[]>(initialDataset);
-  const [value, setValue] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   function handleResultSelected(searchResult: SearchResult) {
-    setValue(searchResult.text);
+    setSearchQuery(searchResult.text);
     setDropdownVisible(false);
     setHighlightedIndex(-1);
     onSelectResult?.(searchResult);
@@ -68,7 +70,7 @@ function Search({ className, dataSource = defaultDataSource, onSelectResult, pla
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
-    setValue(value);
+    setSearchQuery(value);
     setDropdownVisible(true);
     handleSearchInputDebounced(value, onAutocompleteSearch, setResults);
   }
@@ -89,8 +91,12 @@ function Search({ className, dataSource = defaultDataSource, onSelectResult, pla
   }
 
   function handleKeyPress(e: KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'Enter' && highlightedIndex !== -1) {
-      handleResultSelected(results[highlightedIndex]);
+    if (e.key === 'Enter') {
+      if (highlightedIndex !== -1) {
+        handleResultSelected(results[highlightedIndex]);
+      } else {
+        onSearch(searchQuery);
+      }
     }
   }
 
@@ -102,7 +108,7 @@ function Search({ className, dataSource = defaultDataSource, onSelectResult, pla
         onChange={handleInputChange}
         placeholder={placeholder}
         spellCheck={false}
-        value={value}
+        value={searchQuery}
       />
       {dropdownVisible && (
         <SuggestionsDropdown

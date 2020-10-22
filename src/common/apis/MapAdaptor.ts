@@ -22,10 +22,22 @@ function expireToken() {
 }
 
 export class MapAdaptor {
+  private readonly placeIdMarkerMap: Map<string, google.maps.Marker>;
   private readonly placesAutocompleteService: google.maps.places.AutocompleteService;
   private readonly placesService: google.maps.places.PlacesService;
 
-  private placeIdMarkerMap: Map<string, google.maps.Marker>;
+  // See https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceResult
+  // for what each field means.
+  private readonly placeDetailFields = [
+    'formatted_address',
+    'geometry',
+    'icon',
+    'name',
+    'photo',
+    'place_id',
+    'types',
+    'vicinity',
+  ];
 
   constructor(private readonly mapInstance: google.maps.Map<HTMLDivElement>) {
     this.placesAutocompleteService = new google.maps.places.AutocompleteService();
@@ -34,7 +46,7 @@ export class MapAdaptor {
   }
 
   /**
-   * Queries against Google Maps API with the search text.
+   * Queries against google maps API for auto complete predictions.
    *
    * @param input Search text
    */
@@ -63,23 +75,37 @@ export class MapAdaptor {
     });
   }
 
-  public async getPlaceDetail(placeId: string): Promise<google.maps.places.PlaceResult> {
-    // See https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceResult
-    // for what each field means.
-    const fields = [
-      'formatted_address',
-      'geometry',
-      'icon',
-      'name',
-      'photo',
-      'place_id',
-      'types',
-      'vicinity',
-    ];
+  /**
+   * Query against Google Maps API with search text.
+   *
+   * @param query Keywords to search for
+   */
+  public async getPlacesFromQuery(query: string): Promise<google.maps.places.PlaceResult[]> {
+    const request: google.maps.places.TextSearchRequest = {
+      query,
+      location: this.mapInstance.getCenter(),
+    };
 
+    return new Promise((resolve, reject) => {
+      this.placesService.textSearch(request, (places, status) => {
+        switch (status) {
+          case google.maps.places.PlacesServiceStatus.ZERO_RESULTS:
+            resolve([]);
+            break;
+          case google.maps.places.PlacesServiceStatus.OK:
+            resolve(places);
+            break;
+          default:
+            reject(new Error(`Error using Google Maps: ${status}; please try again later.`));
+        }
+      });
+    });
+  }
+
+  public async getPlaceDetail(placeId: string): Promise<google.maps.places.PlaceResult> {
     const request: google.maps.places.PlaceDetailsRequest = {
       placeId,
-      fields,
+      fields: this.placeDetailFields,
       sessionToken: getToken(),
     };
 
