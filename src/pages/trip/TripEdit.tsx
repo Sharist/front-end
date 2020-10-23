@@ -79,6 +79,10 @@ function TripEdit(_: RouteComponentProps) {
     }
   }
 
+  async function handleFullSearch(searchResults: SearchResult[]) {
+    console.log(searchResults);
+  }
+
   let imageConfig;
   if (pendingPlace?.photos) {
     const cardImageHeight = remToPx(15);
@@ -122,6 +126,7 @@ function TripEdit(_: RouteComponentProps) {
               placeholder='Search cities, attractions, or keywords'
               dataSource={mapSearchDataSource}
               onSelectAutocompleteResult={handleResultSelected}
+              onFullSearchResult={handleFullSearch}
             />
           </SearchHeader>
 

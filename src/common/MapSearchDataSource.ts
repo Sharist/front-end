@@ -59,7 +59,7 @@ export class MapSearchDataSource implements SearchDatasource {
         extraData: result,
       };
     });
-    console.log(ret);
+
     return ret;
   };
 

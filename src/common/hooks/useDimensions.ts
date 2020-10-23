@@ -41,9 +41,10 @@ export function useDimensions(config: Config = {}) {
           setDimensions(newDimensions);
         }
       }
+
       const handler =
         debounceTimeout > 0
-          ? debounce(handleDimensionChange, debounceTimeout)
+          ? debounce(handleDimensionChange, debounceTimeout).debounced
           : handleDimensionChange;
 
       window.addEventListener('resize', handler);

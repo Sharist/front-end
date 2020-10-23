@@ -26,13 +26,11 @@ const SearchBox = styled.input`
 `;
 
 export interface SearchDatasource {
-  initialDataset: SearchResult[];
   onAutocompleteSearch: (text: string) => Promise<SearchResult[]>;
   onSearch: (query: string) => Promise<SearchResult[]>;
 }
 
 const defaultDataSource: SearchDatasource = {
-  initialDataset: [],
   onAutocompleteSearch: (text: string) => Promise.resolve([]),
   onSearch: (query: string) => Promise.resolve([]),
 };
@@ -42,9 +40,10 @@ type Props = {
   dataSource?: SearchDatasource;
   placeholder?: string;
   onSelectAutocompleteResult?: (searchResult: SearchResult) => void;
+  onFullSearchResult?: (searchResults: SearchResult[]) => void;
 };
 
-const handleSearchInputDebounced = debounce(
+const { cancel: cancelAutocompleteSearch, debounced: handleSearchInputDebounced } = debounce(
   (
     value: string,
     onAutocompleteSearch: (text: string) => Promise<SearchResult[]>,
@@ -56,32 +55,40 @@ const handleSearchInputDebounced = debounce(
 function Search({
   className,
   dataSource = defaultDataSource,
+  onFullSearchResult,
   onSelectAutocompleteResult: onSelectResult,
   placeholder,
 }: Props) {
-  const { initialDataset, onAutocompleteSearch, onSearch } = dataSource;
+  const { onAutocompleteSearch, onSearch } = dataSource;
 
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
-  const [results, setResults] = useState<SearchResult[]>(initialDataset);
+  const [results, setResults] = useState<SearchResult[] | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  function handleResultSelected(searchResult: SearchResult) {
-    setSearchQuery(searchResult.text);
-    setDropdownVisible(false);
+  function clearDropdown() {
     setHighlightedIndex(-1);
+    setResults(null);
+  }
+
+  function handleResultSelected(searchResult: SearchResult) {
+    clearDropdown();
+    setSearchQuery(searchResult.text);
     onSelectResult?.(searchResult);
   }
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
     setSearchQuery(value);
-    setDropdownVisible(true);
-    handleSearchInputDebounced(value, onAutocompleteSearch, setResults);
+
+    if (value) {
+      handleSearchInputDebounced(value, onAutocompleteSearch, setResults);
+    } else {
+      clearDropdown();
+    }
   }
 
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    if (results && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
       // Prevent input cursor from moving
       e.preventDefault();
       if (e.key === 'ArrowDown' && highlightedIndex < results.length - 1) {
@@ -90,17 +97,18 @@ function Search({
         setHighlightedIndex(highlightedIndex - 1);
       }
     } else if (e.key === 'Escape') {
-      setHighlightedIndex(-1);
-      setDropdownVisible(false);
+      clearDropdown();
     }
   }
 
   function handleKeyPress(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
-      if (highlightedIndex !== -1) {
+      if (results && highlightedIndex !== -1) {
         handleResultSelected(results[highlightedIndex]);
-      } else {
-        onSearch(searchQuery);
+      } else if (onFullSearchResult) {
+        clearDropdown();
+        cancelAutocompleteSearch();
+        onSearch(searchQuery).then(onFullSearchResult);
       }
     }
   }
@@ -115,10 +123,10 @@ function Search({
         spellCheck={false}
         value={searchQuery}
       />
-      {dropdownVisible && (
+      {searchQuery && (
         <SuggestionsDropdown
           clearResultHighlight={() => setHighlightedIndex(-1)}
-          highlightedResultKey={results[highlightedIndex]?.key}
+          highlightedResultKey={results?.[highlightedIndex]?.key}
           onSelectResult={handleResultSelected}
           searchResults={results}
         />

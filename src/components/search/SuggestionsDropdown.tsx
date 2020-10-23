@@ -28,11 +28,25 @@ const DropdownPanel = styled.div`
   width: 100%;
 `;
 
+const NoResult = styled.span`
+  ${({ theme: { palette } }) => css`
+    align-items: center;
+    color: ${palette.ASPHALT_LIGHTER};
+    display: flex;
+    font-style: italics;
+    padding: 0 1.5rem;
+
+    &:before {
+      content: 'No result matching query';
+    }
+  `}
+`;
+
 type SuggestionsDropdownProps = {
   clearResultHighlight: () => void;
   highlightedResultKey?: string;
   onSelectResult?: (searchResult: SearchResult) => void;
-  searchResults: SearchResult[];
+  searchResults: SearchResult[] | null;
 };
 
 function SuggestionsDropdown({
@@ -43,22 +57,27 @@ function SuggestionsDropdown({
 }: SuggestionsDropdownProps) {
   const { height: documentHeight } = useDimensions();
 
-  if (searchResults.length === 0) {
+  if (!searchResults) {
     return null;
   }
 
+  const dropdownContent =
+    searchResults.length === 0 ? (
+      <NoResult />
+    ) : (
+      searchResults.map((searchResult) => (
+        <SearchResultItem
+          isHighlighted={searchResult.key === highlightedResultKey}
+          key={searchResult.key}
+          onSelect={() => onSelectResult?.(searchResult)}
+          searchResult={searchResult}
+        />
+      ))
+    );
+
   return (
     <Wrapper maxHeight={documentHeight - 200} onMouseOver={clearResultHighlight}>
-      <DropdownPanel>
-        {searchResults.map((searchResult) => (
-          <SearchResultItem
-            isHighlighted={searchResult.key === highlightedResultKey}
-            key={searchResult.key}
-            onSelect={() => onSelectResult?.(searchResult)}
-            searchResult={searchResult}
-          />
-        ))}
-      </DropdownPanel>
+      <DropdownPanel>{dropdownContent}</DropdownPanel>
     </Wrapper>
   );
 }
