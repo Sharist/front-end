@@ -121,7 +121,7 @@ function TripEdit(_: RouteComponentProps) {
             <Search
               placeholder='Search cities, attractions, or keywords'
               dataSource={mapSearchDataSource}
-              onSelectResult={handleResultSelected}
+              onSelectAutocompleteResult={handleResultSelected}
             />
           </SearchHeader>
 

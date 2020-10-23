@@ -41,7 +41,7 @@ type Props = {
   className?: string;
   dataSource?: SearchDatasource;
   placeholder?: string;
-  onSelectResult?: (searchResult: SearchResult) => void;
+  onSelectAutocompleteResult?: (searchResult: SearchResult) => void;
 };
 
 const handleSearchInputDebounced = debounce(
@@ -53,7 +53,12 @@ const handleSearchInputDebounced = debounce(
   650
 );
 
-function Search({ className, dataSource = defaultDataSource, onSelectResult, placeholder }: Props) {
+function Search({
+  className,
+  dataSource = defaultDataSource,
+  onSelectAutocompleteResult: onSelectResult,
+  placeholder,
+}: Props) {
   const { initialDataset, onAutocompleteSearch, onSearch } = dataSource;
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
