@@ -50,7 +50,7 @@ const BaseLayout = styled.div<BaseLayoutProps>`
 
 type LayoutContainerProps = {
   center?: boolean;
-  children: ReactChild | ReactChild[];
+  children?: ReactChild | ReactChild[];
   floatingHeader?: boolean;
   fullHeight?: boolean;
   isLanding?: boolean;

@@ -5,6 +5,7 @@ import Auth from './pages/auth/Auth';
 import Home from './pages/home/Home';
 import SignOut from './pages/auth/SignOut';
 import TripEdit from './pages/trip/TripEdit';
+import TripList from './pages/trip/TripList';
 import VerifyEmail from './pages/auth/VerifyEmail';
 
 interface RouteSpec {
@@ -34,6 +35,7 @@ function routeSpecOf(pageComponent: ComponentType<RouteComponentProps>, path: st
 const routes: RouteMap = {
   home: routeSpecOf(Home, '/'),
   logIn: routeSpecOf(Auth, '/login'),
+  tripList: routeSpecOf(TripList, '/trips'),
   tripEdit: routeSpecOf(TripEdit, '/trips/edit'),
   signOut: routeSpecOf(SignOut, '/signout'),
   signUp: routeSpecOf(Auth, '/signup'),
