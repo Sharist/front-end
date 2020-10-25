@@ -18,11 +18,22 @@ const EmptyStateImage = styled.div`
     align-items: center;
     display: flex;
     justify-content: center;
-    margin: 10rem 0 -2.5rem 0;
+    margin: 10rem 0 -5rem 0;
     transform: rotate(-15deg);
 
+    & > * {
+      font-size: 25rem !important;
+
+      @media screen and (max-width: ${breakpoints.TABLET}) {
+        font-size: 22rem !important;
+      }
+      @media screen and (max-width: ${breakpoints.MOBILE}) {
+        font-size: 15rem !important;
+      }
+    }
+
     @media screen and (max-width: ${breakpoints.MOBILE}) {
-      margin-top: 0;
+      margin: 3rem 0 -2.5rem 0;
     }
   `}
 `;
@@ -57,7 +68,7 @@ function EmptyState({ title, subtitle, action }: Props) {
   return (
     <Wrapper>
       <EmptyStateImage>
-        <GiAirplane size='90%' color={Palette.ASH_DARKER} />
+        <GiAirplane color={Palette.ASH_DARKER} />
       </EmptyStateImage>
 
       <Title>{title}</Title>

@@ -40,7 +40,8 @@ export enum Typography {
   REGULAR = '1rem',
   MEDIUM = '1.2rem',
   LARGE = '1.5rem',
-  X_LARGE = '2rem',
+  X_LARGE = '1.8rem',
+  XX_LARGE = '2.3rem',
   GIANT = '3rem',
 }
 
