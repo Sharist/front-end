@@ -30,7 +30,7 @@ function VerifyEmail({ location }: RouteComponentProps) {
         await refreshSignedInStatusMemo();
 
         // Navigate to home on successful signin
-        routes.tripEdit.navigator();
+        routes.tripList.navigator();
       } catch (err) {
         setIsVerifyingToken(false);
         setIsTokenValid(false);
