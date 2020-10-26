@@ -50,3 +50,41 @@ export const SharistTheme = {
   palette: Palette,
   typography: Typography,
 };
+
+/**
+ * Converts a hex colour code to rgba. Returns actual CSS statement (e.g.. 'rgba(0, 0, 0, 1)').
+ *
+ * @param hexValue Hex value of a colour, can be #fff or #ffffff or fff or ffffff
+ * @param alpha Alpha value; 1 if not specified. Value should be between 0 and 1.
+ */
+export function toRgba(hexValue: string | Palette, alpha: number = 1): string {
+  if (alpha < 0 || alpha > 1) {
+    throw Error(`Invalid alpha value: ${alpha}`);
+  }
+
+  if (hexValue.startsWith('#')) {
+    hexValue = hexValue.substr(1);
+  }
+
+  if (hexValue.length !== 3 && hexValue.length !== 6) {
+    throw Error(`Invalid hex value: ${hexValue}`);
+  }
+
+  // Expand if using shorthand hex (e.g. #fee for #ffeeee)
+  if (hexValue.length === 3) {
+    hexValue = hexValue
+      .split('')
+      .map((hexDigit) => `${hexDigit}${hexDigit}`)
+      .join('');
+  }
+
+  if (!hexValue.match(/([0-9]|[a-f]){6}/i)) {
+    throw Error(`Invalid hex value: ${hexValue}`);
+  }
+
+  const red = parseInt(hexValue.substr(0, 2), 16);
+  const green = parseInt(hexValue.substr(2, 2), 16);
+  const blue = parseInt(hexValue.substr(4, 2), 16);
+
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+}
