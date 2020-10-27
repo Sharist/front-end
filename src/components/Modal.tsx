@@ -1,7 +1,8 @@
 import React, { createRef, ReactChild } from 'react';
+import { IoMdClose } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
-import { IoMdClose } from 'react-icons/io';
+import { randomInputName } from '../common/forms';
 import { toRgba } from '../common/themes';
 import Button from './Button';
 
@@ -57,6 +58,7 @@ const CloseButton = styled.div`
 const ModalActionsWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-top: 1rem;
   padding: 0.5rem;
 
   & > * {
@@ -121,7 +123,11 @@ function Modal({ actions, children, isVisible, hasCloseButton = false, title, sh
         {actions && (
           <ModalActionsWrapper>
             {actions.map(({ isPrimary, onClick, label }) => (
-              <Button isPrimary={isPrimary} onClick={onClick}>
+              <Button
+                key={randomInputName({ prefix: label })}
+                isPrimary={isPrimary}
+                onClick={onClick}
+              >
                 {label}
               </Button>
             ))}
