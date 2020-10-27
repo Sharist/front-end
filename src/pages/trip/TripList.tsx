@@ -49,6 +49,15 @@ function TripList(_: RouteComponentProps) {
     setCeateTripModalVisible(true);
   }
 
+  function hideCreateTripModal() {
+    setCeateTripModalVisible(false);
+  }
+
+  function createTrip() {
+    alert('Trip created!');
+    hideCreateTripModal();
+  }
+
   return (
     <LayoutContainer center>
       <Wrapper>
@@ -65,9 +74,13 @@ function TripList(_: RouteComponentProps) {
 
       <Modal
         hasCloseButton
-        hide={() => setCeateTripModalVisible(false)}
+        hide={hideCreateTripModal}
         isVisible={createTripModalVisible}
         title='Create trip'
+        actions={[
+          { label: 'Cancel', onClick: hideCreateTripModal },
+          { label: 'Create', isPrimary: true, onClick: createTrip },
+        ]}
       >
         hello world!
       </Modal>

@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { IoMdClose } from 'react-icons/io';
 import { toRgba } from '../common/themes';
+import Button from './Button';
 
 const Backdrop = styled.div<{ isVisible: boolean }>`
   ${({ isVisible, theme: { palette } }) => css`
@@ -53,10 +54,28 @@ const CloseButton = styled.div`
   cursor: pointer;
 `;
 
+const ModalActionsWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem;
+
+  & > * {
+    margin: 0 0.5rem;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`;
+
 interface ActionButtonConfig {
-  isPrimary: boolean;
+  isPrimary?: boolean;
   label: string;
-  onClick: (e: React.MouseEvent) => void;
+  onClick: () => void;
 }
 
 type Props = {
@@ -69,7 +88,7 @@ type Props = {
   title?: string;
 };
 
-function Modal({ children, isVisible, hasCloseButton = false, title, show, hide }: Props) {
+function Modal({ actions, children, isVisible, hasCloseButton = false, title, show, hide }: Props) {
   const backdropRef = createRef<HTMLDivElement>();
 
   document.body.style.overflow = isVisible ? 'hidden' : 'visible';
@@ -96,7 +115,18 @@ function Modal({ children, isVisible, hasCloseButton = false, title, show, hide 
             )}
           </ModalHeader>
         )}
+
         {children}
+
+        {actions && (
+          <ModalActionsWrapper>
+            {actions.map(({ isPrimary, onClick, label }) => (
+              <Button isPrimary={isPrimary} onClick={onClick}>
+                {label}
+              </Button>
+            ))}
+          </ModalActionsWrapper>
+        )}
       </ModalWrapper>
     </Backdrop>
   );
