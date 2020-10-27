@@ -6,6 +6,8 @@ import { useAuthentication } from '../../common/hooks/useAuthentication';
 import EmptyState from '../../components/EmptyState';
 import LayoutContainer from '../../components/LayoutContainer';
 import Modal from '../../components/Modal';
+import TextInput from '../../components/forms/TextInput';
+import TextAreaInput from '../../components/forms/TextArea';
 
 const Wrapper = styled.div`
   ${({ theme: { breakpoints } }) => css`
@@ -31,10 +33,37 @@ const PageTitle = styled.div`
   `}
 `;
 
+const CreateTripWrapper = styled.div`
+  ${({ theme: { breakpoints } }) => css`
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    width: 30rem;
+
+    & > * {
+      margin: 1.5rem 0;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    @media screen and (max-width: ${breakpoints.MOBILE}) {
+      width: 100%;
+    }
+  `};
+`;
+
 function TripList(_: RouteComponentProps) {
   const { signedIn } = useAuthentication();
   const [trips, setTrips] = useState<any[]>([]);
   const [createTripModalVisible, setCeateTripModalVisible] = useState(true);
+  const [tripTitle, setTripTitle] = useState('');
+  const [tripDescription, setTripDescription] = useState('');
 
   useEffect(() => {
     // Fetch trips
@@ -54,7 +83,7 @@ function TripList(_: RouteComponentProps) {
   }
 
   function createTrip() {
-    alert('Trip created!');
+    alert(`Trip title: ${tripTitle}, trip description: ${tripDescription}`);
     hideCreateTripModal();
   }
 
@@ -82,7 +111,24 @@ function TripList(_: RouteComponentProps) {
           { label: 'Create', isPrimary: true, onClick: createTrip },
         ]}
       >
-        hello world!
+        <CreateTripWrapper>
+          <TextInput
+            label='Where are you heading to?'
+            onChange={(e) => setTripTitle(e.target.value)}
+            placeholder='Family vacation to Venice, Italy'
+            required
+            spellCheck
+            type='text'
+            value={tripTitle}
+          />
+          <TextAreaInput
+            label='Tell us more about this trip!'
+            onChange={(e) => setTripDescription(e.target.value)}
+            placeholder='4-day trip to Venice for Summer 2022 with people I love!'
+            spellCheck
+            value={tripDescription}
+          />
+        </CreateTripWrapper>
       </Modal>
     </LayoutContainer>
   );

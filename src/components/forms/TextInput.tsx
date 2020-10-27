@@ -7,6 +7,7 @@ const InputLabel = styled.label<{ isInputFocused: boolean }>`
   ${({ isInputFocused, theme: { palette } }) => css`
     color: ${isInputFocused ? palette.REGULAR : palette.GREY};
     font-size: 0.85rem;
+    margin-bottom: 0.2rem;
     transition: color 200ms;
   `}
 `;
@@ -33,10 +34,6 @@ const TextInputWrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   width: 100%;
-
-  & > * {
-    margin: 0.25rem 0;
-  }
 `;
 
 type Props = {
@@ -45,6 +42,7 @@ type Props = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
+  required?: boolean;
   spellCheck?: boolean;
   type?: string;
   value?: string;
@@ -56,6 +54,7 @@ function TextInput({
   onChange,
   onKeyPress,
   placeholder = '',
+  required,
   spellCheck = true,
   type,
   value,
@@ -83,6 +82,7 @@ function TextInput({
         onKeyPress={onKeyPress}
         placeholder={placeholder}
         ref={inputRef}
+        required={required}
         spellCheck={spellCheck}
         type={type}
         value={value}
