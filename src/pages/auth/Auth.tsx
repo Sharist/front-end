@@ -27,6 +27,11 @@ export const AuthWrapper = styled.div`
   `}
 `;
 
+export const AuthLogo = styled(Logo)`
+  height: 2rem;
+  margin-bottom: 1rem;
+`;
+
 const NextButton = styled(Button)`
   align-self: flex-end;
   margin-top: 3rem;
@@ -57,7 +62,7 @@ function Auth({ path }: RouteComponentProps) {
   return (
     <LayoutContainer center fullHeight noHeader noMargin>
       <AuthWrapper>
-        <Logo onClick={routes.home.navigator} />
+        <AuthLogo onClick={routes.home.navigator} />
 
         {emailSubmitted ? (
           <LogoSubtitle>Please check your email for instructions.</LogoSubtitle>

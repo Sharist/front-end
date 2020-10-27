@@ -12,18 +12,18 @@ import Logo, { LogoType } from './Logo';
 import MobileMenu from './MobileMenu';
 import routes from '../../routes';
 
-export const HEADER_HEIGHT_REM = 5;
+export const HEADER_HEIGHT_REM = 4.5;
 
 const HeaderWrapper = styled.div<{ translucent: boolean }>`
   ${({ translucent, theme: { palette } }) => css`
     align-items: center;
     background-color: ${translucent ? palette.TRANSPARENT : palette.WHITE};
-    box-shadow: 0 0 0.25rem ${palette.GREY};
+    box-shadow: 0 0 0.1rem ${palette.GREY};
     display: flex;
     height: ${HEADER_HEIGHT_REM}rem;
     justify-content: space-between;
     margin: auto;
-    padding: 0.5rem 1rem;
+    padding: 1rem 1.25rem;
     position: relative;
     transition: padding 1s, background-color 300ms;
     width: 100%;
@@ -38,7 +38,12 @@ const FloatingHeader = styled(HeaderWrapper)`
 
 const HeaderActionButton = styled(Button)`
   margin: 0 0.5rem;
-  width: 6rem;
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
 `;
 
 const LandingMainSectionActionButton = styled(HeaderActionButton).attrs({ transparent: true })`

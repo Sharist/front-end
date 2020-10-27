@@ -16,7 +16,7 @@ const BaseButton = styled.button`
       display: flex;
       font-weight: 400;
       justify-content: center;
-      padding: 0.6rem 1rem;
+      padding: 0.4rem 1rem;
       text-shadow: 0 0 0 transparent;
       transition: border 0.1s, box-shadow 0.1s, text-shadow 0.1s;
 

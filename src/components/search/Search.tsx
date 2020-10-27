@@ -2,6 +2,7 @@ import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import { debounce } from '../../common/timing';
+import Logo, { LogoType } from '../header/Logo';
 import { SearchResult } from './SearchResultItem';
 import SuggestionsDropdown from './SuggestionsDropdown';
 
@@ -10,19 +11,32 @@ const SearchWrapper = styled.div`
   width: 100%;
 `;
 
-const SearchBox = styled.input`
-  ${({ theme: { palette } }) => css`
-    border-radius: 1.25rem;
+const SearchBox = styled.input<{ hasLogo: boolean }>`
+  ${({ hasLogo, theme: { palette } }) => css`
+    border-radius: 1rem;
     border: 0.05rem solid ${palette.ASH_DARKER};
-    box-shadow: 0 0 0.25rem ${palette.ASH};
-    padding: 0.8rem 1.25rem;
+    box-shadow: 0 0 0.25rem ${palette.ASH_LIGHTER};
+    padding: 1rem 1.25rem;
+    padding-left: ${hasLogo ? '3.5rem' : ''};
     width: 100%;
+    transition: box-shadow 200ms;
 
     &:focus {
-      box-shadow: 0 0 0.25rem ${palette.GREY_LIGHTER};
+      box-shadow: 0 0.05rem 0.3rem ${palette.ASH_DARKER};
       outline-width: 0;
     }
   `}
+`;
+
+const InputBoxWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
+const InlineLogo = styled.div`
+  left: 1rem;
+  position: absolute;
 `;
 
 export interface SearchDatasource {
@@ -38,6 +52,7 @@ const defaultDataSource: SearchDatasource = {
 type Props = {
   className?: string;
   dataSource?: SearchDatasource;
+  hasLogo?: boolean;
   placeholder?: string;
   onSelectAutocompleteResult?: (searchResult: SearchResult) => void;
   onFullSearchResult?: (searchResults: SearchResult[]) => void;
@@ -55,6 +70,7 @@ const { cancel: cancelAutocompleteSearch, debounced: handleSearchInputDebounced 
 function Search({
   className,
   dataSource = defaultDataSource,
+  hasLogo = false,
   onFullSearchResult,
   onSelectAutocompleteResult: onSelectResult,
   placeholder,
@@ -115,14 +131,22 @@ function Search({
 
   return (
     <SearchWrapper className={className}>
-      <SearchBox
-        onKeyDown={handleKeyDown}
-        onKeyPress={handleKeyPress}
-        onChange={handleInputChange}
-        placeholder={placeholder}
-        spellCheck={false}
-        value={searchQuery}
-      />
+      <InputBoxWrapper>
+        {hasLogo && (
+          <InlineLogo>
+            <Logo logoType={LogoType.MONO_WHITE} noText />
+          </InlineLogo>
+        )}
+        <SearchBox
+          hasLogo={hasLogo}
+          onKeyDown={handleKeyDown}
+          onKeyPress={handleKeyPress}
+          onChange={handleInputChange}
+          placeholder={placeholder}
+          spellCheck={false}
+          value={searchQuery}
+        />
+      </InputBoxWrapper>
       {searchQuery && (
         <SuggestionsDropdown
           clearResultHighlight={() => setHighlightedIndex(-1)}

@@ -9,44 +9,22 @@ const LogoText = styled.span<{ fontColor: Palette }>`
   ${({ fontColor, theme: { palette } }) => css`
     color: ${fontColor};
     font-weight: 300;
+    font-size: 1.8rem;
     text-shadow: 0 0 0.15rem ${fontColor === palette.REGULAR ? 'none' : palette.GREY};
-
-    &::after {
-      content: 'Sharist';
-    }
+    margin-left: 0.5rem;
   `}
 `;
 
 const LogoIcon = styled.img`
-  ${({ theme: { breakpoints } }) => css`
-    height: 2.5rem;
-
-    @media screen and (max-width: ${breakpoints.MOBILE}) {
-      height: 2rem;
-    }
-  `}
+  height: 2.25rem;
 `;
 
-const LogoWrapper = styled.div.attrs({ className: 'noselect' })`
-  ${({ theme: { breakpoints } }) => css`
+const LogoWrapper = styled.div`
+  ${({ onClick }) => css`
     align-items: center;
-    cursor: pointer;
+    cursor: ${onClick ? 'pointer' : ''};
     display: flex;
-    font-size: 2.25rem;
-    padding: 0.5rem;
-
-    & > * {
-      margin: 0 0.25rem;
-    }
-
-    @media screen and (max-width: ${breakpoints.MOBILE}) {
-      font-size: 1.75rem;
-      padding: 0.25rem;
-
-      & > * {
-        margin: 0 0.2rem;
-      }
-    }
+    height: 100%;
   `}
 `;
 
@@ -56,21 +34,20 @@ export enum LogoType {
 }
 
 type LogoProps = {
+  className?: string;
   logoType?: LogoType;
   noText?: boolean;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 };
 
-function Logo({ logoType = LogoType.REGULAR, noText = false, onClick }: LogoProps) {
+function Logo({ className, logoType = LogoType.REGULAR, noText = false, onClick }: LogoProps) {
   const logo = logoType === LogoType.MONO_WHITE ? SharistLogoWhite : SharistLogo;
   const color = logoType === LogoType.MONO_WHITE ? Palette.ASH_LIGHTER : Palette.REGULAR;
 
-  return noText ? (
-    <LogoIcon src={logo} />
-  ) : (
-    <LogoWrapper onClick={onClick}>
+  return (
+    <LogoWrapper className={`${className} noselect`} onClick={onClick}>
       <LogoIcon src={logo} />
-      <LogoText fontColor={color} />
+      {!noText && <LogoText fontColor={color}>Sharist</LogoText>}
     </LogoWrapper>
   );
 }

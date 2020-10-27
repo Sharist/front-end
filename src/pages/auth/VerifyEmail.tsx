@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 
-import { AuthWrapper, LogoSubtitle } from './Auth';
+import { AuthLogo, AuthWrapper, LogoSubtitle } from './Auth';
 import { get, parseQueryString } from '../../common/http';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import LayoutContainer from '../../components/LayoutContainer';
-import Logo from '../../components/header/Logo';
 import routes from '../../routes';
 
 function VerifyEmail({ location }: RouteComponentProps) {
@@ -45,7 +44,7 @@ function VerifyEmail({ location }: RouteComponentProps) {
   return (
     <LayoutContainer center fullHeight noHeader noMargin>
       <AuthWrapper>
-        <Logo onClick={routes.home.navigator} />
+        <AuthLogo onClick={routes.home.navigator} />
         {isVerifyingToken ? (
           <LogoSubtitle awaitingServer={true}>Verifying your personal link...</LogoSubtitle>
         ) : (

@@ -8,7 +8,6 @@ import { useAuthentication } from '../../common/hooks/useAuthentication';
 import Card, { CardAction } from '../../components/Card';
 import IMap from '../../components/IMap';
 import LayoutContainer from '../../components/LayoutContainer';
-import Logo from '../../components/header/Logo';
 import MapContext from '../../common/contexts/MapContext';
 import Search from '../../components/search/Search';
 
@@ -30,21 +29,8 @@ const PlaceList = styled.div`
   z-index: 1;
 `;
 
-const PendingCard = styled.div``;
-
 const SearchHeader = styled.div`
-  align-items: center;
-  display: flex;
-  width: 100%;
-  height: 6rem;
-  justify-content: space-between;
-
-  & > :not(:last-child) {
-    margin-right: 0.5rem;
-  }
-  & > :not(:first-child) {
-    margin-left: 0.5rem;
-  }
+  padding: 0.75rem 0;
 `;
 
 function TripEdit(_: RouteComponentProps) {
@@ -121,8 +107,8 @@ function TripEdit(_: RouteComponentProps) {
       <Content>
         <PlaceList>
           <SearchHeader>
-            <Logo noText />
             <Search
+              hasLogo
               placeholder='Search cities, attractions, or keywords'
               dataSource={mapSearchDataSource}
               onSelectAutocompleteResult={handleResultSelected}
@@ -131,14 +117,12 @@ function TripEdit(_: RouteComponentProps) {
           </SearchHeader>
 
           {pendingPlace && (
-            <PendingCard>
-              <Card
-                image={imageConfig}
-                subtitle={pendingPlace.vicinity}
-                title={pendingPlace.name}
-                actions={pendingPlaceActions}
-              ></Card>
-            </PendingCard>
+            <Card
+              image={imageConfig}
+              subtitle={pendingPlace.vicinity}
+              title={pendingPlace.name}
+              actions={pendingPlaceActions}
+            ></Card>
           )}
         </PlaceList>
 
