@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import { randomInputName } from '../../common/forms';
+import ErrorMessage from './ErrorMessage';
 
 const InputLabel = styled.label<{ isInputFocused: boolean }>`
   ${({ isInputFocused, theme: { palette } }) => css`
@@ -12,16 +13,16 @@ const InputLabel = styled.label<{ isInputFocused: boolean }>`
   `}
 `;
 
-const Input = styled.input`
-  ${({ theme: { palette } }) => css`
+const Input = styled.input<{ hasError: boolean }>`
+  ${({ hasError, theme: { palette } }) => css`
     border: none;
-    border-bottom: 0.05rem solid ${palette.ASH};
+    border-bottom: 0.05rem solid ${hasError ? palette.SUN : palette.ASH};
     padding: 0.5rem 0.25rem;
     transition: border-bottom 200ms, box-shadow 200ms;
     width: 100%;
 
     &:focus {
-      border-bottom: 0.05rem solid ${palette.GREY};
+      border-bottom: 0.05rem solid ${hasError ? palette.SUN : palette.GREY};
       box-shadow: 0 0.15rem 0.25rem -0.25rem ${palette.GREY};
       outline-width: 0;
     }
@@ -29,15 +30,16 @@ const Input = styled.input`
 `;
 
 const TextInputWrapper = styled.div`
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
   width: 100%;
 `;
 
 type Props = {
   disabled?: boolean;
+  errorMessage?: string;
   inputRef?: React.Ref<HTMLInputElement>;
   label?: string;
   name?: string;
@@ -52,6 +54,7 @@ type Props = {
 
 function TextInput({
   disabled = false,
+  errorMessage,
   inputRef,
   label,
   name = randomInputName(),
@@ -76,6 +79,7 @@ function TextInput({
       <Input
         autoFocus
         disabled={disabled}
+        hasError={!!errorMessage}
         name={name}
         onBlur={() => setFocused(false)}
         onChange={onChange}
@@ -88,6 +92,8 @@ function TextInput({
         type={type}
         value={value}
       />
+
+      {errorMessage && <ErrorMessage message={errorMessage} />}
     </TextInputWrapper>
   );
 }

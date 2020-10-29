@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
+import joi from 'joi';
 import styled, { css } from 'styled-components';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import { useForm } from 'react-hook-form';
@@ -43,7 +45,7 @@ const CreateTripWrapper = styled.div`
     width: 30rem;
 
     & > * {
-      margin: 1.5rem 0;
+      margin: 1.25rem 0;
 
       &:first-child {
         margin-top: 0;
@@ -61,9 +63,14 @@ const CreateTripWrapper = styled.div`
 `;
 
 interface CreateTripFormData {
-  tripTitle: string;
+  tripName: string;
   tripDescription: string;
 }
+
+const createFormValidationSchema = joi.object({
+  tripName: joi.string().label('Name').required(),
+  tripDescription: joi.optional(),
+});
 
 function TripList(_: RouteComponentProps) {
   const { signedIn } = useAuthentication();
@@ -71,7 +78,10 @@ function TripList(_: RouteComponentProps) {
   const [createTripModalVisible, setCeateTripModalVisible] = useState(true);
   const [trips, setTrips] = useState<any[]>([]);
 
-  const { register, handleSubmit } = useForm<CreateTripFormData>();
+  const { errors, handleSubmit, register } = useForm<CreateTripFormData>({
+    resolver: joiResolver(createFormValidationSchema),
+  });
+
   const hiddenSubmitRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
@@ -92,7 +102,7 @@ function TripList(_: RouteComponentProps) {
   }
 
   function createTrip(data: CreateTripFormData) {
-    alert(`Title: ${data.tripTitle} / Description: ${data.tripDescription}`);
+    alert(`Title: ${data.tripName} / Description: ${data.tripDescription}`);
     hideCreateTripModal();
   }
 
@@ -124,19 +134,20 @@ function TripList(_: RouteComponentProps) {
           <CreateTripWrapper>
             <TextInput
               inputRef={register}
-              name='tripTitle'
-              label='Where are you heading to?'
+              name='tripName'
+              label='Give this trip a name'
               placeholder='Family vacation to Venice, Italy'
-              required
               spellCheck
               type='text'
+              errorMessage={errors.tripName?.message}
             />
             <TextAreaInput
-              label='Tell us more about this trip!'
+              label='Tells us a bit more about this trip'
               name='tripDescription'
               placeholder='4-day trip to Venice for Summer 2022 with people I love!'
               spellCheck
               textAreaRef={register}
+              errorMessage={errors.tripDescription?.message}
             />
           </CreateTripWrapper>
         </Form>

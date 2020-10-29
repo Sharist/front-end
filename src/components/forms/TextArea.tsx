@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import { randomInputName } from '../../common/forms';
+import ErrorMessage from './ErrorMessage';
 
 const TextAreaLabel = styled.label<{ isInputFocused: boolean }>`
   ${({ isInputFocused, theme: { palette } }) => css`
@@ -12,10 +13,10 @@ const TextAreaLabel = styled.label<{ isInputFocused: boolean }>`
   `}
 `;
 
-const TextArea = styled.textarea`
-  ${({ theme: { palette } }) => css`
+const TextArea = styled.textarea<{ hasError: boolean }>`
+  ${({ hasError, theme: { palette } }) => css`
     border: none;
-    border-bottom: 0.05rem solid ${palette.ASH};
+    border-bottom: 0.05rem solid ${hasError ? palette.SUN : palette.ASH};
     padding: 0.5rem 0.25rem;
     resize: vertical;
     transition: border-bottom 200ms, box-shadow 200ms;
@@ -24,7 +25,7 @@ const TextArea = styled.textarea`
     max-height: 20rem;
 
     &:focus {
-      border-bottom: 0.05rem solid ${palette.GREY};
+      border-bottom: 0.05rem solid ${hasError ? palette.SUN : palette.GREY};
       box-shadow: 0 0.15rem 0.25rem -0.25rem ${palette.GREY};
       outline-width: 0;
     }
@@ -41,6 +42,7 @@ const TextAreaWrapper = styled.div`
 
 type Props = {
   disabled?: boolean;
+  errorMessage?: string;
   label?: string;
   name?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -55,6 +57,7 @@ type Props = {
 
 function TextAreaInput({
   disabled = false,
+  errorMessage,
   label,
   name = randomInputName(),
   onChange,
@@ -78,6 +81,7 @@ function TextAreaInput({
 
       <TextArea
         disabled={disabled}
+        hasError={!!errorMessage}
         name={name}
         onBlur={() => setFocused(false)}
         onChange={onChange}
@@ -90,6 +94,8 @@ function TextAreaInput({
         spellCheck={spellCheck}
         value={value}
       />
+
+      {errorMessage && <ErrorMessage message={errorMessage} />}
     </TextAreaWrapper>
   );
 }
