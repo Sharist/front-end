@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import styled, { css } from 'styled-components';
 
 import { useAuthentication } from '../../common/hooks/useAuthentication';
+import { useForm } from 'react-hook-form';
 import EmptyState from '../../components/EmptyState';
+import Form from '../../components/forms/Form';
 import LayoutContainer from '../../components/LayoutContainer';
 import Modal from '../../components/Modal';
-import TextInput from '../../components/forms/TextInput';
 import TextAreaInput from '../../components/forms/TextArea';
+import TextInput from '../../components/forms/TextInput';
 
 const Wrapper = styled.div`
   ${({ theme: { breakpoints } }) => css`
@@ -58,12 +60,19 @@ const CreateTripWrapper = styled.div`
   `};
 `;
 
+interface CreateTripFormData {
+  tripTitle: string;
+  tripDescription: string;
+}
+
 function TripList(_: RouteComponentProps) {
   const { signedIn } = useAuthentication();
-  const [trips, setTrips] = useState<any[]>([]);
+
   const [createTripModalVisible, setCeateTripModalVisible] = useState(true);
-  const [tripTitle, setTripTitle] = useState('');
-  const [tripDescription, setTripDescription] = useState('');
+  const [trips, setTrips] = useState<any[]>([]);
+
+  const { register, handleSubmit } = useForm<CreateTripFormData>();
+  const hiddenSubmitRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     // Fetch trips
@@ -82,8 +91,8 @@ function TripList(_: RouteComponentProps) {
     setCeateTripModalVisible(false);
   }
 
-  function createTrip() {
-    alert(`Trip title: ${tripTitle}, trip description: ${tripDescription}`);
+  function createTrip(data: CreateTripFormData) {
+    alert(`Title: ${data.tripTitle} / Description: ${data.tripDescription}`);
     hideCreateTripModal();
   }
 
@@ -108,27 +117,29 @@ function TripList(_: RouteComponentProps) {
         title='Create trip'
         actions={[
           { label: 'Cancel', onClick: hideCreateTripModal },
-          { label: 'Create', isPrimary: true, onClick: createTrip },
+          { label: 'Create', isPrimary: true, onClick: () => hiddenSubmitRef.current?.click() },
         ]}
       >
-        <CreateTripWrapper>
-          <TextInput
-            label='Where are you heading to?'
-            onChange={(e) => setTripTitle(e.target.value)}
-            placeholder='Family vacation to Venice, Italy'
-            required
-            spellCheck
-            type='text'
-            value={tripTitle}
-          />
-          <TextAreaInput
-            label='Tell us more about this trip!'
-            onChange={(e) => setTripDescription(e.target.value)}
-            placeholder='4-day trip to Venice for Summer 2022 with people I love!'
-            spellCheck
-            value={tripDescription}
-          />
-        </CreateTripWrapper>
+        <Form onSubmit={handleSubmit(createTrip)} hiddenSubmitRef={hiddenSubmitRef}>
+          <CreateTripWrapper>
+            <TextInput
+              inputRef={register}
+              name='tripTitle'
+              label='Where are you heading to?'
+              placeholder='Family vacation to Venice, Italy'
+              required
+              spellCheck
+              type='text'
+            />
+            <TextAreaInput
+              label='Tell us more about this trip!'
+              name='tripDescription'
+              placeholder='4-day trip to Venice for Summer 2022 with people I love!'
+              spellCheck
+              textAreaRef={register}
+            />
+          </CreateTripWrapper>
+        </Form>
       </Modal>
     </LayoutContainer>
   );
