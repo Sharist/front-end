@@ -38,7 +38,9 @@ const TextInputWrapper = styled.div`
 
 type Props = {
   disabled?: boolean;
+  inputRef?: React.Ref<HTMLInputElement>;
   label?: string;
+  name?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
@@ -50,7 +52,9 @@ type Props = {
 
 function TextInput({
   disabled = false,
+  inputRef,
   label,
+  name = randomInputName(),
   onChange,
   onKeyPress,
   placeholder = '',
@@ -59,9 +63,6 @@ function TextInput({
   type,
   value,
 }: Props) {
-  const name = randomInputName();
-
-  const inputRef = useRef<HTMLInputElement | null>(null);
   const [focused, setFocused] = useState(false);
 
   return (

@@ -90,6 +90,7 @@ const SpinnerContainer = styled.span`
 `;
 
 type Props = {
+  buttonRef?: React.Ref<HTMLButtonElement>;
   children: ReactChild | ReactChild[];
   className?: string;
   disabled?: boolean;
@@ -97,19 +98,24 @@ type Props = {
   isLoading?: boolean;
   /** Set background to primary color. If `transparent` is set, this prop is ignored. */
   isPrimary?: boolean;
+  name?: string;
   onClick?: () => void;
   /** Set background to transparent. Overrides `isPrimary`. */
   transparent?: boolean;
+  type?: 'button' | 'reset' | 'submit';
 };
 
 function Button({
+  buttonRef,
   children,
   className,
   disabled = false,
   isLoading = false,
   isPrimary = false,
+  name,
   onClick,
   transparent = false,
+  type = 'button',
 }: Props) {
   const shouldDisableButton = disabled || isLoading;
 
@@ -129,7 +135,14 @@ function Button({
   }
 
   return (
-    <ButtonComponent disabled={shouldDisableButton} className={className} onClick={onClickWrapper}>
+    <ButtonComponent
+      disabled={shouldDisableButton}
+      className={className}
+      name={name}
+      onClick={onClickWrapper}
+      ref={buttonRef}
+      type={type}
+    >
       <ButtonContent isHidden={isLoading}>{children}</ButtonContent>
       {isLoading && (
         <SpinnerContainer>

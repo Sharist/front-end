@@ -42,29 +42,30 @@ const TextAreaWrapper = styled.div`
 type Props = {
   disabled?: boolean;
   label?: string;
+  name?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onKeyPress?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   placeholder?: string;
   required?: boolean;
   rows?: number;
   spellCheck?: boolean;
+  textAreaRef?: React.Ref<HTMLTextAreaElement>;
   value?: string;
 };
 
 function TextAreaInput({
   disabled = false,
   label,
+  name = randomInputName(),
   onChange,
   onKeyPress,
   placeholder = '',
   required,
   rows,
   spellCheck = true,
+  textAreaRef,
   value,
 }: Props) {
-  const name = randomInputName();
-
-  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const [focused, setFocused] = useState(false);
 
   return (
