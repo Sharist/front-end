@@ -47,6 +47,7 @@ type Props = {
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
   required?: boolean;
+  /** `true` to turn on spellcheck. Default is `true`. */
   spellCheck?: boolean;
   type?: string;
   value?: string;

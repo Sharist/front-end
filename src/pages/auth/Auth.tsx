@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import { RouteComponentProps } from '@reach/router';
 
+import { joiResolver } from '@hookform/resolvers/joi';
 import { post } from '../../common/http';
+import { useForm } from 'react-hook-form';
 import Button from '../../components/Button';
+import Form from '../../components/forms/Form';
+import joi from 'joi';
 import LayoutContainer from '../../components/LayoutContainer';
 import Logo from '../../components/header/Logo';
 import routes from '../../routes';
@@ -17,8 +21,6 @@ export const AuthWrapper = styled.div`
     display: flex;
     flex-direction: column;
     height: 26.5rem;
-    max-width: 25rem;
-    width: 100%;
 
     @media screen and (max-width: ${breakpoints.MOBILE}) {
       align-self: flex-start;
@@ -30,6 +32,13 @@ export const AuthWrapper = styled.div`
 export const AuthLogo = styled(Logo)`
   height: 2rem;
   margin-bottom: 1rem;
+`;
+
+const AuthForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  max-width: 25rem;
+  width: 25rem;
 `;
 
 const NextButton = styled(Button)`
@@ -45,12 +54,27 @@ export const LogoSubtitle = styled.p<{ awaitingServer?: boolean }>`
   `}
 `;
 
+interface AuthFormData {
+  email: string;
+}
+
 function Auth({ path }: RouteComponentProps) {
-  const [email, setEmail] = useState('');
   const [awaitingServer, setAwaitingServer] = useState(false);
   const [emailSubmitted, setEmailSubmitted] = useState(false);
 
-  async function handleNextClick() {
+  const { errors, register, handleSubmit } = useForm<AuthFormData>({
+    resolver: joiResolver(
+      joi.object({
+        email: joi
+          .string()
+          .label('Email')
+          .email({ tlds: { allow: false } })
+          .required(),
+      })
+    ),
+  });
+
+  async function handleNextClick({ email }: AuthFormData) {
     setAwaitingServer(true);
 
     const endpoint = path === '/signup' ? 'signup' : 'signin-request';
@@ -69,25 +93,23 @@ function Auth({ path }: RouteComponentProps) {
         ) : (
           <>
             <LogoSubtitle awaitingServer={awaitingServer}>Please verify your email.</LogoSubtitle>
-            <TextInput
-              label='Email'
-              placeholder='youremail@example.com'
-              disabled={awaitingServer}
-              onChange={(e) => setEmail(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter') {
-                  handleNextClick();
-                }
-              }}
-              spellCheck={false}
-              type='email'
-              value={email}
-            ></TextInput>
+            <AuthForm onSubmit={handleSubmit(handleNextClick)}>
+              <TextInput
+                disabled={awaitingServer}
+                errorMessage={errors.email?.message}
+                inputRef={register}
+                label='Email'
+                name='email'
+                placeholder='youremail@example.com'
+                spellCheck={false}
+                type='email'
+              ></TextInput>
 
-            <NextButton isLoading={awaitingServer} transparent onClick={handleNextClick}>
-              NEXT
-              <IoIosArrowRoundForward />
-            </NextButton>
+              <NextButton type='submit' isLoading={awaitingServer} transparent>
+                NEXT
+                <IoIosArrowRoundForward />
+              </NextButton>
+            </AuthForm>
           </>
         )}
       </AuthWrapper>

@@ -2,7 +2,7 @@ import React, { ReactChild } from 'react';
 
 type Props = {
   children?: ReactChild | ReactChild[];
-
+  className?: string;
   /**
    * If specified, generates a hidden `<button type="submit"></button>`
    * and assign this prop to the `button`'s ref.
@@ -15,9 +15,9 @@ type Props = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
-function Form({ children, hiddenSubmitRef, onSubmit }: Props) {
+function Form({ className, children, hiddenSubmitRef, onSubmit }: Props) {
   return (
-    <form onSubmit={onSubmit}>
+    <form className={className} onSubmit={onSubmit}>
       {children}
 
       {hiddenSubmitRef && (
