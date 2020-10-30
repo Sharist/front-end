@@ -72,7 +72,7 @@ function TripList(_: RouteComponentProps) {
   const [createTripModalVisible, setCeateTripModalVisible] = useState(true);
   const [trips, setTrips] = useState<any[]>([]);
 
-  const { errors, handleSubmit, register } = useForm<CreateTripFormData>({
+  const { errors, handleSubmit, register, reset } = useForm<CreateTripFormData>({
     tripName: Joi.string().label('Name').required(),
     tripDescription: Joi.optional(),
   });
@@ -99,6 +99,7 @@ function TripList(_: RouteComponentProps) {
   function createTrip(data: CreateTripFormData) {
     alert(`Title: ${data.tripName} / Description: ${data.tripDescription}`);
     hideCreateTripModal();
+    reset();
   }
 
   return (
