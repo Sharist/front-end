@@ -68,7 +68,7 @@ export default class Color {
   /**
    * Return the rgba string of this instance, in the form of `'rgba([R],[G],[B],[A])'`.
    */
-  public get color(): string {
+  public get rgba(): string {
     return this.rgbaString;
   }
 

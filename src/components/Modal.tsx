@@ -3,13 +3,12 @@ import { IoMdClose } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
 import { randomInputName } from '../common/forms';
-import { toRgba } from '../common/themes';
 import Button from './Button';
 
 const Backdrop = styled.div<{ isVisible: boolean }>`
-  ${({ isVisible, theme: { oldPalette: palette } }) => css`
+  ${({ isVisible, theme: { palette } }) => css`
     align-items: center;
-    background-color: ${toRgba(palette.GREY, 0.5)};
+    background-color: ${palette.grey.alpha(0.5).rgba};
     display: ${isVisible ? 'flex' : 'none'};
     justify-content: center;
     position: fixed;
