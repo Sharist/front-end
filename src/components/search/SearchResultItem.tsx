@@ -3,7 +3,7 @@ import { IconType } from 'react-icons';
 import styled, { css } from 'styled-components';
 
 const Wrapper = styled.div<{ isHighlighted: boolean }>`
-  ${({ isHighlighted, theme: { palette } }) => css`
+  ${({ isHighlighted, theme: { oldPalette: palette } }) => css`
     align-items: center;
     background-color: ${isHighlighted ? palette.ASH_LIGHTER : ''};
     cursor: pointer;
@@ -18,7 +18,7 @@ const Wrapper = styled.div<{ isHighlighted: boolean }>`
 `;
 
 const Icon = styled.div`
-  ${({ theme: { palette } }) => css`
+  ${({ theme: { oldPalette: palette } }) => css`
     color: ${palette.ASPHALT};
     margin-right: 1.25rem;
   `}
@@ -30,14 +30,14 @@ const TextContent = styled.div`
 `;
 
 const Text = styled.p`
-  ${({ theme: { palette } }) => css`
+  ${({ theme: { oldPalette: palette } }) => css`
     color: ${palette.ASPHALT_DARKER};
     margin: 0;
   `}
 `;
 
 const Annotation = styled.p`
-  ${({ theme: { palette } }) => css`
+  ${({ theme: { oldPalette: palette } }) => css`
     color: ${palette.ASPHALT_LIGHTER};
     font-size: 0.8rem;
     margin: 0;

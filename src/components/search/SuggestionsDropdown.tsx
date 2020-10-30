@@ -5,7 +5,7 @@ import { useDimensions } from '../../common/hooks/useDimensions';
 import SearchResultItem, { SearchResult } from './SearchResultItem';
 
 const Wrapper = styled.div<{ maxHeight: number }>`
-  ${({ maxHeight, theme: { palette } }) => css`
+  ${({ maxHeight, theme: { oldPalette: palette } }) => css`
     background-color: white;
     border-radius: 1.25rem;
     border: 0.05rem solid ${palette.ASH_DARKER};
@@ -29,7 +29,7 @@ const DropdownPanel = styled.div`
 `;
 
 const NoResult = styled.span`
-  ${({ theme: { palette } }) => css`
+  ${({ theme: { oldPalette: palette } }) => css`
     align-items: center;
     color: ${palette.ASPHALT_LIGHTER};
     display: flex;

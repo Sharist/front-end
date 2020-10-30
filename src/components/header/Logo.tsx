@@ -1,12 +1,12 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { Palette } from '../../common/themes';
+import { OldPalette } from '../../common/themes';
 import SharistLogo from '../../resources/images/sharist-logo.svg';
 import SharistLogoWhite from '../../resources/images/sharist-logo-white.svg';
 
-const LogoText = styled.span<{ fontColor: Palette }>`
-  ${({ fontColor, theme: { palette } }) => css`
+const LogoText = styled.span<{ fontColor: OldPalette }>`
+  ${({ fontColor, theme: { oldPalette: palette } }) => css`
     color: ${fontColor};
     font-weight: 300;
     font-size: 1.8rem;
@@ -42,7 +42,7 @@ type LogoProps = {
 
 function Logo({ className, logoType = LogoType.REGULAR, noText = false, onClick }: LogoProps) {
   const logo = logoType === LogoType.MONO_WHITE ? SharistLogoWhite : SharistLogo;
-  const color = logoType === LogoType.MONO_WHITE ? Palette.ASH_LIGHTER : Palette.REGULAR;
+  const color = logoType === LogoType.MONO_WHITE ? OldPalette.ASH_LIGHTER : OldPalette.REGULAR;
 
   return (
     <LogoWrapper className={`${className} noselect`} onClick={onClick}>

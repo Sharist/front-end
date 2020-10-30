@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import Button from './Button';
 
 const CardWrapper = styled.div`
-  ${({ theme: { palette } }) => css`
+  ${({ theme: { oldPalette: palette } }) => css`
     background-color: white;
     border-radius: 0.5rem;
     border: 0.05rem solid ${palette.ASH_DARKER};
@@ -38,7 +38,7 @@ const CardContent = styled.div`
 `;
 
 const CardActionsWrapper = styled.div`
-  ${({ theme: { palette } }) => css`
+  ${({ theme: { oldPalette: palette } }) => css`
     align-items: center;
     border-top: 0.05rem solid ${palette.ASH};
     display: flex;

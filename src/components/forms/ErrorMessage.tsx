@@ -3,7 +3,7 @@ import { MdErrorOutline } from 'react-icons/md';
 import styled, { css } from 'styled-components';
 
 const ErrorMessageWrapper = styled.p`
-  ${({ theme: { palette, typography } }) => css`
+  ${({ theme: { oldPalette: palette, typography } }) => css`
     align-items: center;
     color: ${palette.SUN};
     display: flex;

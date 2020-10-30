@@ -6,7 +6,7 @@ export enum Breakpoint {
   REGULAR = '1200px',
 }
 
-export enum Palette {
+export enum OldPalette {
   /** Basics */
   BLACK = '#000',
   GREY = '#888888',
@@ -67,7 +67,7 @@ export enum Typography {
 
 export const SharistTheme = {
   breakpoints: Breakpoint,
-  palette: Palette,
+  oldPalette: OldPalette,
   typography: Typography,
 };
 
@@ -77,7 +77,7 @@ export const SharistTheme = {
  * @param hexValue Hex value of a colour, can be #fff or #ffffff or fff or ffffff
  * @param alpha Alpha value; 1 if not specified. Value should be between 0 and 1.
  */
-export function toRgba(hexValue: string | Palette, alpha: number = 1): string {
+export function toRgba(hexValue: string | OldPalette, alpha: number = 1): string {
   if (alpha < 0 || alpha > 1) {
     throw Error(`Invalid alpha value: ${alpha}`);
   }

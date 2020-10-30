@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import { GiAirplane } from 'react-icons/gi';
-import { Palette } from '../common/themes';
+import { OldPalette } from '../common/themes';
 import Button from './Button';
 
 const Wrapper = styled.div`
@@ -68,7 +68,7 @@ function EmptyState({ title, subtitle, action }: Props) {
   return (
     <Wrapper>
       <EmptyStateImage>
-        <GiAirplane color={Palette.ASH_DARKER} />
+        <GiAirplane color={OldPalette.ASH_DARKER} />
       </EmptyStateImage>
 
       <Title>{title}</Title>

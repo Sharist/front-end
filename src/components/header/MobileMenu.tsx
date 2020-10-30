@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components';
 import routes from '../../routes';
 
 const MobileMenuShadow = styled.div<{ visible: boolean }>`
-  ${({ visible, theme: { palette } }) => css`
+  ${({ visible, theme: { oldPalette: palette } }) => css`
     background-color: ${palette.GREY_DARKER};
     bottom: 0;
     left: 0;
@@ -21,7 +21,7 @@ const MobileMenuShadow = styled.div<{ visible: boolean }>`
 `;
 
 const MobileMenuPane = styled.div<{ visible: boolean }>`
-  ${({ visible, theme: { palette } }) => css`
+  ${({ visible, theme: { oldPalette: palette } }) => css`
     background-color: white;
     bottom: 0;
     box-shadow: 0 0 2rem ${visible ? palette.GREY_DARKER : 'transparent'};
@@ -40,7 +40,7 @@ const MobileMenuPane = styled.div<{ visible: boolean }>`
 `;
 
 const MobileMenuSection = styled.div`
-  ${({ theme: { palette } }) => css`
+  ${({ theme: { oldPalette: palette } }) => css`
     align-items: flex-end;
     border-bottom: 0.05rem solid ${palette.ASH_LIGHTER};
     display: flex;
@@ -62,7 +62,7 @@ const MobileMenuSection = styled.div`
 `;
 
 const MobileSiteMapLink = styled(Link)`
-  ${({ theme: { palette, typography } }) => css`
+  ${({ theme: { oldPalette: palette, typography } }) => css`
     border-radius: 0.25rem;
     box-sizing: border-box;
     color: ${palette.GREY_DARKER};

@@ -5,7 +5,7 @@ import { randomInputName } from '../../common/forms';
 import ErrorMessage from './ErrorMessage';
 
 const InputLabel = styled.label<{ isInputFocused: boolean }>`
-  ${({ isInputFocused, theme: { palette } }) => css`
+  ${({ isInputFocused, theme: { oldPalette: palette } }) => css`
     color: ${isInputFocused ? palette.REGULAR : palette.GREY};
     font-size: 0.85rem;
     margin-bottom: 0.2rem;
@@ -14,7 +14,7 @@ const InputLabel = styled.label<{ isInputFocused: boolean }>`
 `;
 
 const Input = styled.input<{ hasError: boolean }>`
-  ${({ hasError, theme: { palette } }) => css`
+  ${({ hasError, theme: { oldPalette: palette } }) => css`
     border: none;
     border-bottom: 0.05rem solid ${hasError ? palette.SUN : palette.ASH};
     padding: 0.5rem 0.25rem;

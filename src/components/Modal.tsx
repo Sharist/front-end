@@ -7,7 +7,7 @@ import { toRgba } from '../common/themes';
 import Button from './Button';
 
 const Backdrop = styled.div<{ isVisible: boolean }>`
-  ${({ isVisible, theme: { palette } }) => css`
+  ${({ isVisible, theme: { oldPalette: palette } }) => css`
     align-items: center;
     background-color: ${toRgba(palette.GREY, 0.5)};
     display: ${isVisible ? 'flex' : 'none'};
@@ -21,7 +21,7 @@ const Backdrop = styled.div<{ isVisible: boolean }>`
 `;
 
 const ModalWrapper = styled.div`
-  ${({ theme: { breakpoints, palette } }) => css`
+  ${({ theme: { breakpoints, oldPalette: palette } }) => css`
     background-color: ${palette.WHITE};
     border-radius: 0.5rem;
     box-shadow: 0 0 0.5rem ${palette.GREY};

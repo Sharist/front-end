@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { IoIosMenu } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
-import { Breakpoint, Palette } from '../../common/themes';
+import { Breakpoint, OldPalette } from '../../common/themes';
 import { remToPx } from '../../common/dimensions';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import Button from '../Button';
@@ -15,7 +15,7 @@ import routes from '../../routes';
 export const HEADER_HEIGHT_REM = 4.5;
 
 const HeaderWrapper = styled.div<{ translucent: boolean }>`
-  ${({ translucent, theme: { palette } }) => css`
+  ${({ translucent, theme: { oldPalette: palette } }) => css`
     align-items: center;
     background-color: ${translucent ? palette.TRANSPARENT : palette.WHITE};
     box-shadow: 0 0 0.1rem ${palette.GREY};
@@ -47,13 +47,13 @@ const HeaderActionButton = styled(Button)`
 `;
 
 const LandingMainSectionActionButton = styled(HeaderActionButton).attrs({ transparent: true })`
-  ${({ theme: { palette } }) => css`
+  ${({ theme: { oldPalette: palette } }) => css`
     color: ${palette.WHITE};
     width: 4rem;
   `}
 `;
 
-const MobileMenuHamburgerIcon = styled(IoIosMenu)<{ color: Palette }>`
+const MobileMenuHamburgerIcon = styled(IoIosMenu)<{ color: OldPalette }>`
   ${({ color }) => css`
     color: ${color};
   `}
@@ -128,9 +128,9 @@ function Header({ className, isLanding = false }: Props) {
 
         <HideAbove breakpoint={Breakpoint.MOBILE}>
           <MobileMenuHamburgerIcon
-            color={isLanding && translucentHeader ? Palette.ASH : Palette.REGULAR}
+            color={isLanding && translucentHeader ? OldPalette.ASH : OldPalette.REGULAR}
             onClick={() => setMobileMenuOpen(true)}
-            stroke={Palette.GREY}
+            stroke={OldPalette.GREY}
             strokeWidth={1}
           />
           <MobileMenu

@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import Spinner from './Spinner';
 
 const BaseButton = styled.button`
-  ${({ disabled, theme: { palette } }) =>
+  ${({ disabled, theme: { oldPalette: palette } }) =>
     css`
       align-items: center;
       background-color: ${palette.ASH};
@@ -42,7 +42,7 @@ const BaseButton = styled.button`
 `;
 
 const PrimaryButton = styled(BaseButton)`
-  ${({ disabled, theme: { palette } }) => css`
+  ${({ disabled, theme: { oldPalette: palette } }) => css`
     background-color: ${disabled ? palette.SUN_LIGHTER : palette.SUN};
     border-color: ${disabled ? palette.SUN_LIGHTER : palette.SUN};
     color: ${disabled ? palette.ASH_LIGHTER : palette.WHITE};
@@ -63,7 +63,7 @@ const PrimaryButton = styled(BaseButton)`
 `;
 
 const TransparentButton = styled(BaseButton)`
-  ${({ disabled, theme: { palette } }) => css`
+  ${({ disabled, theme: { oldPalette: palette } }) => css`
     background-color: ${palette.TRANSPARENT};
     border: none;
     box-shadow: 0 0 0 ${palette.TRANSPARENT};
