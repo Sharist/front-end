@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
-import joi from 'joi';
+import Joi from 'joi';
 import styled, { css } from 'styled-components';
-import { joiResolver } from '@hookform/resolvers/joi';
 
 import { useAuthentication } from '../../common/hooks/useAuthentication';
-import { useForm } from 'react-hook-form';
+import { useForm } from '../../common/hooks/useForm';
 import EmptyState from '../../components/EmptyState';
 import Form from '../../components/forms/Form';
 import LayoutContainer from '../../components/LayoutContainer';
@@ -67,11 +66,6 @@ interface CreateTripFormData {
   tripDescription: string;
 }
 
-const createFormValidationSchema = joi.object({
-  tripName: joi.string().label('Name').required(),
-  tripDescription: joi.optional(),
-});
-
 function TripList(_: RouteComponentProps) {
   const { signedIn } = useAuthentication();
 
@@ -79,7 +73,8 @@ function TripList(_: RouteComponentProps) {
   const [trips, setTrips] = useState<any[]>([]);
 
   const { errors, handleSubmit, register } = useForm<CreateTripFormData>({
-    resolver: joiResolver(createFormValidationSchema),
+    tripName: Joi.string().label('Name').required(),
+    tripDescription: Joi.optional(),
   });
 
   const hiddenSubmitRef = useRef<HTMLButtonElement | null>(null);

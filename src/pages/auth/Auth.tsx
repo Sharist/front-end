@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import { RouteComponentProps } from '@reach/router';
+import Joi from 'joi';
+import styled, { css } from 'styled-components';
 
-import { joiResolver } from '@hookform/resolvers/joi';
 import { post } from '../../common/http';
-import { useForm } from 'react-hook-form';
+import { useForm } from '../../common/hooks/useForm';
 import Button from '../../components/Button';
 import Form from '../../components/forms/Form';
-import joi from 'joi';
 import LayoutContainer from '../../components/LayoutContainer';
 import Logo from '../../components/header/Logo';
 import routes from '../../routes';
-import styled, { css } from 'styled-components';
 import TextInput from '../../components/forms/TextInput';
 
 export const AuthWrapper = styled.div`
@@ -63,15 +62,10 @@ function Auth({ path }: RouteComponentProps) {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
 
   const { errors, register, handleSubmit } = useForm<AuthFormData>({
-    resolver: joiResolver(
-      joi.object({
-        email: joi
-          .string()
-          .label('Email')
-          .email({ tlds: { allow: false } })
-          .required(),
-      })
-    ),
+    email: Joi.string()
+      .label('Email')
+      .email({ tlds: { allow: false } })
+      .required(),
   });
 
   async function handleNextClick({ email }: AuthFormData) {
@@ -102,7 +96,6 @@ function Auth({ path }: RouteComponentProps) {
                 name='email'
                 placeholder='youremail@example.com'
                 spellCheck={false}
-                type='email'
               ></TextInput>
 
               <NextButton type='submit' isLoading={awaitingServer} transparent>
