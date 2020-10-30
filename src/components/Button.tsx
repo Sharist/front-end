@@ -4,14 +4,14 @@ import styled, { css } from 'styled-components';
 import Spinner from './Spinner';
 
 const BaseButton = styled.button`
-  ${({ disabled, theme: { oldPalette: palette } }) =>
+  ${({ disabled, theme: { palette } }) =>
     css`
       align-items: center;
-      background-color: ${palette.ASH};
+      background-color: ${palette.ash.rgba};
       border-radius: 0.2rem;
-      border: 0.05rem solid ${palette.ASH};
+      border: 0.05rem solid ${palette.ash.rgba};
       box-shadow: 0 0 0 transparent;
-      color: ${disabled ? palette.GREY : palette.REGULAR};
+      color: ${disabled ? palette.grey.rgba : palette.regular.rgba};
       cursor: ${disabled ? 'default' : 'pointer'};
       display: flex;
       font-weight: 400;
@@ -21,16 +21,16 @@ const BaseButton = styled.button`
       transition: border 0.1s, box-shadow 0.1s, text-shadow 0.1s;
 
       &:hover {
-        border: ${disabled ? '' : `0.05rem solid ${palette.ASH}`};
+        border: ${disabled ? '' : `0.05rem solid ${palette.ash.rgba}`};
         box-shadow: ${disabled
-          ? `0 0 0 ${palette.TRANSPARENT}`
-          : `0 0 0.3rem ${palette.ASH_DARKER}`};
+          ? `0 0 0 ${palette.transparent.rgba}`
+          : `0 0 0.3rem ${palette.ash.darker.rgba}`};
         text-shadow: 0 0 0 transparent;
       }
 
       &:active {
-        border: ${disabled ? '' : `0.05rem solid ${palette.ASH}`};
-        box-shadow: ${disabled ? '' : `0 0.02rem 0.15rem ${palette.ASH_DARKER}`};
+        border: ${disabled ? '' : `0.05rem solid ${palette.ash.rgba}`};
+        box-shadow: ${disabled ? '' : `0 0.02rem 0.15rem ${palette.ash.darker.rgba}`};
         outline: none;
         transform: ${disabled ? 'none' : 'translateY(0.05rem)'};
       }
@@ -42,39 +42,41 @@ const BaseButton = styled.button`
 `;
 
 const PrimaryButton = styled(BaseButton)`
-  ${({ disabled, theme: { oldPalette: palette } }) => css`
-    background-color: ${disabled ? palette.SUN_LIGHTER : palette.SUN};
-    border-color: ${disabled ? palette.SUN_LIGHTER : palette.SUN};
-    color: ${disabled ? palette.ASH_LIGHTER : palette.WHITE};
-    text-shadow: 0 0 0.01rem ${palette.GREY_DARKER};
+  ${({ disabled, theme: { palette } }) => css`
+    background-color: ${disabled ? palette.sun.lighter.rgba : palette.sun.rgba};
+    border-color: ${disabled ? palette.sun.lighter.rgba : palette.sun.rgba};
+    color: ${disabled ? palette.ash.lighter.rgba : palette.white.rgba};
+    text-shadow: 0 0 0.01rem ${palette.grey.darker.rgba};
 
     &:hover {
-      border-color: ${palette.SUN_LIGHTER};
+      border-color: ${palette.sun.lighter.rgba};
       box-shadow: ${disabled
-        ? `0 0 0 ${palette.TRANSPARENT}`
-        : `0 0 0.3rem ${palette.SUN_LIGHTER}`};
+        ? `0 0 0 ${palette.transparent.rgba}`
+        : `0 0 0.3rem ${palette.sun.lighter.rgba}`};
     }
 
     &:active {
-      border-color: ${disabled ? palette.SUN_LIGHTER : palette.SUN};
-      box-shadow: ${disabled ? `0 0 0 ${palette.TRANSPARENT}` : `0 0.02rem 0.15rem ${palette.SUN}`};
+      border-color: ${disabled ? palette.sun.lighter.rgba : palette.sun.rgba};
+      box-shadow: ${disabled
+        ? `0 0 0 ${palette.transparent.rgba}`
+        : `0 0.02rem 0.15rem ${palette.sun}`};
     }
   `}
 `;
 
 const TransparentButton = styled(BaseButton)`
-  ${({ disabled, theme: { oldPalette: palette } }) => css`
-    background-color: ${palette.TRANSPARENT};
+  ${({ disabled, theme: { palette } }) => css`
+    background-color: ${palette.transparent.rgba};
     border: none;
-    box-shadow: 0 0 0 ${palette.TRANSPARENT};
-    color: ${disabled ? palette.ASH_DARKER : palette.GREY_DARKER};
+    box-shadow: 0 0 0 ${palette.transparent.rgba};
+    color: ${disabled ? palette.ash.darker.rgba : palette.grey.darker.darker.rgba};
     padding: 0;
 
     &:hover,
     &:focus {
       border: none;
-      box-shadow: 0 0 0 ${palette.TRANSPARENT};
-      text-shadow: 0 0 0.1rem ${disabled ? palette.TRANSPARENT : palette.ASH_DARKER};
+      box-shadow: 0 0 0 ${palette.transparent.rgba};
+      text-shadow: 0 0 0.1rem ${disabled ? palette.transparent.rgba : palette.ash.darker.rgba};
     }
   `}
 `;

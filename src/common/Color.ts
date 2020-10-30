@@ -1,22 +1,4 @@
-type Shade =
-  | 0.1
-  | 0.2
-  | 0.3
-  | 0.4
-  | 0.5
-  | 0.6
-  | 0.7
-  | 0.8
-  | 0.9
-  | 1.1
-  | 1.2
-  | 1.3
-  | 1.4
-  | 1.5
-  | 1.6
-  | 1.7
-  | 1.8
-  | 1.9;
+type Step = -5 | -4 | -3 | -2 | -1 | 1 | 2 | 3 | 4 | 5;
 
 export default class Color {
   private readonly rgbaString: string;
@@ -32,7 +14,7 @@ export default class Color {
     private readonly alphaValue = 1
   ) {
     this.assertValue(red, green, blue, alphaValue);
-    this.rgbaString = `rgba(${red}, ${blue}, ${green}, ${alphaValue})`;
+    this.rgbaString = `rgba(${red}, ${green}, ${blue}, ${alphaValue})`;
   }
 
   /**
@@ -84,17 +66,25 @@ export default class Color {
   /**
    * Create a new instance with lighter shade by the specified percent.
    *
-   * The higher the `shade`, the lighter the new color will be.
+   * The higher the `step`, the lighter the new color will be.
    *
-   * @param shade Increments of 0.1 between 0 and 2 exclusive, excluding 1.
+   * @param step Range -5 to 5 inclusive, excluding 0.
    */
-  public shaded(shade: Shade): Color {
+  public shaded(step: Step): Color {
     return new Color(
-      this.bound(this.red * shade),
-      this.bound(this.green * shade),
-      this.bound(this.blue * shade),
+      this.bound(this.red + step * 15),
+      this.bound(this.green + step * 15),
+      this.bound(this.blue + step * 15),
       this.alphaValue
     );
+  }
+
+  public get darker(): Color {
+    return this.shaded(-2);
+  }
+
+  public get lighter(): Color {
+    return this.shaded(2);
   }
 
   /**
