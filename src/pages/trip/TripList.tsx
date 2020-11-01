@@ -69,7 +69,7 @@ interface CreateTripFormData {
 function TripList(_: RouteComponentProps) {
   const { signedIn } = useAuthentication();
 
-  const [createTripModalVisible, setCeateTripModalVisible] = useState(true);
+  const [createTripModalVisible, setCeateTripModalVisible] = useState(false);
   const [trips, setTrips] = useState<any[]>([]);
 
   const { errors, handleSubmit, register, reset } = useForm<CreateTripFormData>({

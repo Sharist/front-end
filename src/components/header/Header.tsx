@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { IoIosMenu } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
-import { Breakpoint, OldPalette } from '../../common/themes';
+import { Breakpoint } from '../../common/themes';
 import { remToPx } from '../../common/dimensions';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import Button from '../Button';
@@ -53,9 +53,11 @@ const LandingMainSectionActionButton = styled(HeaderActionButton).attrs({ transp
   `}
 `;
 
-const MobileMenuHamburgerIcon = styled(IoIosMenu)<{ color: OldPalette }>`
-  ${({ color }) => css`
-    color: ${color};
+const MobileMenuHamburgerIcon = styled.div<{ darkIcon: boolean }>`
+  ${({ darkIcon, theme: { palette } }) => css`
+    align-items: center;
+    color: ${darkIcon ? palette.regular.css : palette.ash.css};
+    display: flex;
   `}
 `;
 
@@ -128,11 +130,11 @@ function Header({ className, isLanding = false }: Props) {
 
         <HideAbove breakpoint={Breakpoint.MOBILE}>
           <MobileMenuHamburgerIcon
-            color={isLanding && translucentHeader ? OldPalette.ASH : OldPalette.REGULAR}
+            darkIcon={!(isLanding && translucentHeader)}
             onClick={() => setMobileMenuOpen(true)}
-            stroke={OldPalette.GREY}
-            strokeWidth={1}
-          />
+          >
+            <IoIosMenu />
+          </MobileMenuHamburgerIcon>
           <MobileMenu
             onDismiss={() => setMobileMenuOpen(false)}
             visible={mobileMenuOpen}

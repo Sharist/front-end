@@ -2,7 +2,6 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import { GiAirplane } from 'react-icons/gi';
-import { OldPalette } from '../common/themes';
 import Button from './Button';
 
 const Wrapper = styled.div`
@@ -14,8 +13,9 @@ const Wrapper = styled.div`
 `;
 
 const EmptyStateImage = styled.div`
-  ${({ theme: { breakpoints } }) => css`
+  ${({ theme: { breakpoints, palette } }) => css`
     align-items: center;
+    color: ${palette.ash.darker.css};
     display: flex;
     justify-content: center;
     margin: 10rem 0 -5rem 0;
@@ -68,7 +68,7 @@ function EmptyState({ title, subtitle, action }: Props) {
   return (
     <Wrapper>
       <EmptyStateImage>
-        <GiAirplane color={OldPalette.ASH_DARKER} />
+        <GiAirplane />
       </EmptyStateImage>
 
       <Title>{title}</Title>
