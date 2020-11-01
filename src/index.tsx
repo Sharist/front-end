@@ -2,17 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { IconContext } from 'react-icons';
 import { Router } from '@reach/router';
-import { ThemeProvider } from 'styled-components';
 
 import './index.css';
 import { MapContextProvider } from './common/contexts/MapContext';
-import { SharistTheme } from './common/themes';
 import * as serviceWorker from './serviceWorker';
 import routes from './routes';
+import SharistThemeProvider from './common/Theme';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={SharistTheme}>
+    <SharistThemeProvider>
       <IconContext.Provider value={{ className: 'icons noselect' }}>
         <MapContextProvider>
           <Router>
@@ -22,7 +21,7 @@ ReactDOM.render(
           </Router>
         </MapContextProvider>
       </IconContext.Provider>
-    </ThemeProvider>
+    </SharistThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

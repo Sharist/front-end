@@ -1,8 +1,5 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Breakpoint } from '../../common/themes';
-import HideAbove from '../../components/helpers/HideAbove';
-import HideBelow from '../../components/helpers/HideBelow';
 
 import Pikachu from '../../resources/images/to-delete/pikachu-for-no-reason.png';
 
@@ -42,14 +39,18 @@ const DescriptionSection = styled.div`
   `}
 `;
 
-const DescriptionTitle = styled.h1`
-  ${({ theme: { breakpoints } }) => css`
+const DescriptionTitle = styled.h1<{ forTablet?: boolean }>`
+  ${({ forTablet, theme: { breakpoints } }) => css`
     font-size: 2.5rem;
     margin: 0 0 3rem 0;
 
     @media screen and (max-width: ${breakpoints.TABLET}) {
       font-size: 1.8rem;
       margin: 0;
+      ${!forTablet && 'display: none;'}
+    }
+    @media screen and (min-width: ${breakpoints.TABLET}) {
+      ${forTablet && 'display: none;'}
     }
   `}
 `;
@@ -65,38 +66,38 @@ const DescriptionText = styled.div`
   `}
 `;
 
-const Image = styled.img`
-  height: auto;
-  margin: 1rem;
-  max-width: 20rem;
-  width: 80%;
+const Image = styled.img<{ forTablet?: boolean }>`
+  ${({ forTablet, theme: { breakpoints } }) => css`
+    height: auto;
+    margin: 1rem;
+    max-width: 20rem;
+    width: 80%;
+
+    @media screen and (max-width: ${breakpoints.TABLET}) {
+      ${!forTablet && 'display: none;'}
+    }
+    @media screen and (min-width: ${breakpoints.TABLET}) {
+      ${forTablet && 'display: none;'}
+    }
+  `}
 `;
 
 function ReasonToUse() {
   return (
     <ReasonToUseWrapper>
-      <HideAbove breakpoint={Breakpoint.TABLET}>
-        <DescriptionTitle>Reasons to use Sharist</DescriptionTitle>
-      </HideAbove>
+      <DescriptionTitle forTablet>Reasons to use Sharist</DescriptionTitle>
 
       {/* TODO (thling) This is really nasty, check with Isabella for mobile view options */}
       <DescriptionSection>
-        <HideBelow breakpoint={Breakpoint.TABLET}>
-          <DescriptionTitle>Reasons to use Sharist</DescriptionTitle>
-        </HideBelow>
-
-        <HideAbove breakpoint={Breakpoint.TABLET}>
-          <Image src={Pikachu} />
-        </HideAbove>
+        <DescriptionTitle>Reasons to use Sharist</DescriptionTitle>
+        <Image forTablet src={Pikachu} />
 
         <DescriptionText>
           Sharist allows you to collaborate with your friends and plan your upcoming trip together.
         </DescriptionText>
       </DescriptionSection>
 
-      <HideBelow breakpoint={Breakpoint.TABLET}>
-        <Image src={Pikachu} />
-      </HideBelow>
+      <Image src={Pikachu} />
     </ReasonToUseWrapper>
   );
 }

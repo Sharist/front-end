@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { IoIosMenu } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
-import { Breakpoint } from '../../common/themes';
 import { remToPx } from '../../common/dimensions';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import Button from '../Button';
-import HideAbove from '../helpers/HideAbove';
-import HideBelow from '../helpers/HideBelow';
 import Logo, { LogoType } from './Logo';
 import MobileMenu from './MobileMenu';
 import routes from '../../routes';
@@ -61,8 +58,8 @@ const MobileMenuHamburgerIcon = styled.div<{ darkIcon: boolean }>`
   `}
 `;
 
-const HeaderActions = styled.div`
-  ${({ theme: { breakpoints } }) => css`
+const HeaderActions = styled.div<{ forMobile?: boolean }>`
+  ${({ forMobile = false, theme: { breakpoints } }) => css`
     align-items: center;
     display: flex;
     justify-content: space-around;
@@ -71,6 +68,11 @@ const HeaderActions = styled.div`
       font-size: 2rem;
       padding: 0.25rem;
       width: unset;
+      display: ${forMobile ? '' : 'none'};
+    }
+
+    @media screen and (min-width: ${breakpoints.MOBILE}) {
+      display: ${forMobile ? 'none' : ''};
     }
   `}
 `;
@@ -125,21 +127,19 @@ function Header({ className, isLanding = false }: Props) {
   return (
     <UseHeaderWrapper translucent={translucentHeader} className={className}>
       <Logo logoType={logoType} onClick={home.navigator} />
-      <HeaderActions>
-        <HideBelow breakpoint={Breakpoint.MOBILE}>{headerActions}</HideBelow>
+      <HeaderActions>{headerActions}</HeaderActions>
 
-        <HideAbove breakpoint={Breakpoint.MOBILE}>
-          <MobileMenuHamburgerIcon
-            darkIcon={!(isLanding && translucentHeader)}
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <IoIosMenu />
-          </MobileMenuHamburgerIcon>
-          <MobileMenu
-            onDismiss={() => setMobileMenuOpen(false)}
-            visible={mobileMenuOpen}
-          ></MobileMenu>
-        </HideAbove>
+      <HeaderActions forMobile>
+        <MobileMenuHamburgerIcon
+          darkIcon={!(isLanding && translucentHeader)}
+          onClick={() => setMobileMenuOpen(true)}
+        >
+          <IoIosMenu />
+        </MobileMenuHamburgerIcon>
+        <MobileMenu
+          onDismiss={() => setMobileMenuOpen(false)}
+          visible={mobileMenuOpen}
+        ></MobileMenu>
       </HeaderActions>
     </UseHeaderWrapper>
   );

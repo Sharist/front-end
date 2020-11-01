@@ -1,12 +1,11 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { SharistTheme } from '../common/themes';
 
 type TruncatableTextType = Pick<Props, 'maxLine' | 'lineHeight'>;
 
 const TruncatableText = styled.p<TruncatableTextType>`
-  ${({ lineHeight, maxLine }) => css`
-    max-height: calc(${lineHeight} * ${maxLine});
+  ${({ lineHeight, maxLine, theme: { typography } }) => css`
+    max-height: calc(${lineHeight || typography.REGULAR} * ${maxLine});
     overflow: hidden;
   `}
 `;
@@ -29,11 +28,7 @@ function Text({ children, className, lineHeight, maxLine = 0 }: Props) {
   }
 
   return (
-    <TruncatableText
-      className={className}
-      lineHeight={lineHeight || SharistTheme.typography.REGULAR}
-      maxLine={maxLine}
-    >
+    <TruncatableText className={className} lineHeight={lineHeight} maxLine={maxLine}>
       {children}
     </TruncatableText>
   );
