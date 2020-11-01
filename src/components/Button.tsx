@@ -7,11 +7,11 @@ const BaseButton = styled.button`
   ${({ disabled, theme: { palette } }) =>
     css`
       align-items: center;
-      background-color: ${palette.ash.rgba};
+      background-color: ${palette.ash.css};
       border-radius: 0.2rem;
-      border: 0.05rem solid ${palette.ash.rgba};
+      border: 0.05rem solid ${palette.ash.css};
       box-shadow: 0 0 0 transparent;
-      color: ${disabled ? palette.grey.rgba : palette.regular.rgba};
+      color: ${disabled ? palette.grey.css : palette.regular.css};
       cursor: ${disabled ? 'default' : 'pointer'};
       display: flex;
       font-weight: 400;
@@ -21,16 +21,16 @@ const BaseButton = styled.button`
       transition: border 0.1s, box-shadow 0.1s, text-shadow 0.1s;
 
       &:hover {
-        border: ${disabled ? '' : `0.05rem solid ${palette.ash.rgba}`};
+        border: ${disabled ? '' : `0.05rem solid ${palette.ash.css}`};
         box-shadow: ${disabled
-          ? `0 0 0 ${palette.transparent.rgba}`
-          : `0 0 0.3rem ${palette.ash.darker.rgba}`};
+          ? `0 0 0 ${palette.transparent.css}`
+          : `0 0 0.3rem ${palette.ash.darker.css}`};
         text-shadow: 0 0 0 transparent;
       }
 
       &:active {
-        border: ${disabled ? '' : `0.05rem solid ${palette.ash.rgba}`};
-        box-shadow: ${disabled ? '' : `0 0.02rem 0.15rem ${palette.ash.darker.rgba}`};
+        border: ${disabled ? '' : `0.05rem solid ${palette.ash.css}`};
+        box-shadow: ${disabled ? '' : `0 0.02rem 0.15rem ${palette.ash.darker.css}`};
         outline: none;
         transform: ${disabled ? 'none' : 'translateY(0.05rem)'};
       }
@@ -43,22 +43,22 @@ const BaseButton = styled.button`
 
 const PrimaryButton = styled(BaseButton)`
   ${({ disabled, theme: { palette } }) => css`
-    background-color: ${disabled ? palette.sun.lighter.rgba : palette.sun.rgba};
-    border-color: ${disabled ? palette.sun.lighter.rgba : palette.sun.rgba};
-    color: ${disabled ? palette.ash.lighter.rgba : palette.white.rgba};
-    text-shadow: 0 0 0.01rem ${palette.grey.darker.rgba};
+    background-color: ${disabled ? palette.sun.lighter.css : palette.sun.css};
+    border-color: ${disabled ? palette.sun.lighter.css : palette.sun.css};
+    color: ${disabled ? palette.ash.lighter.css : palette.white.css};
+    text-shadow: 0 0 0.01rem ${palette.grey.darker.css};
 
     &:hover {
-      border-color: ${palette.sun.lighter.rgba};
+      border-color: ${palette.sun.lighter.css};
       box-shadow: ${disabled
-        ? `0 0 0 ${palette.transparent.rgba}`
-        : `0 0 0.3rem ${palette.sun.lighter.rgba}`};
+        ? `0 0 0 ${palette.transparent.css}`
+        : `0 0 0.3rem ${palette.sun.lighter.css}`};
     }
 
     &:active {
-      border-color: ${disabled ? palette.sun.lighter.rgba : palette.sun.rgba};
+      border-color: ${disabled ? palette.sun.lighter.css : palette.sun.css};
       box-shadow: ${disabled
-        ? `0 0 0 ${palette.transparent.rgba}`
+        ? `0 0 0 ${palette.transparent.css}`
         : `0 0.02rem 0.15rem ${palette.sun}`};
     }
   `}
@@ -66,17 +66,17 @@ const PrimaryButton = styled(BaseButton)`
 
 const TransparentButton = styled(BaseButton)`
   ${({ disabled, theme: { palette } }) => css`
-    background-color: ${palette.transparent.rgba};
+    background-color: ${palette.transparent.css};
     border: none;
-    box-shadow: 0 0 0 ${palette.transparent.rgba};
-    color: ${disabled ? palette.ash.darker.rgba : palette.grey.darker.darker.rgba};
+    box-shadow: 0 0 0 ${palette.transparent.css};
+    color: ${disabled ? palette.ash.darker.css : palette.grey.darker.darker.css};
     padding: 0;
 
     &:hover,
     &:focus {
       border: none;
-      box-shadow: 0 0 0 ${palette.transparent.rgba};
-      text-shadow: 0 0 0.1rem ${disabled ? palette.transparent.rgba : palette.ash.darker.rgba};
+      box-shadow: 0 0 0 ${palette.transparent.css};
+      text-shadow: 0 0 0.1rem ${disabled ? palette.transparent.css : palette.ash.darker.css};
     }
   `}
 `;

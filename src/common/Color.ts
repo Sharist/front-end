@@ -1,6 +1,6 @@
-type Step = -5 | -4 | -3 | -2 | -1 | 1 | 2 | 3 | 4 | 5;
-
 export default class Color {
+  private static step = 0.2;
+
   private readonly rgbaString: string;
 
   public static get transparent() {
@@ -50,7 +50,7 @@ export default class Color {
   /**
    * Return the rgba string of this instance, in the form of `'rgba([R],[G],[B],[A])'`.
    */
-  public get rgba(): string {
+  public get css(): string {
     return this.rgbaString;
   }
 
@@ -64,27 +64,63 @@ export default class Color {
   }
 
   /**
-   * Create a new instance with lighter shade by the specified percent.
+   * Darken this `Color` by `degree` times.
    *
-   * The higher the `step`, the lighter the new color will be.
-   *
-   * @param step Range -5 to 5 inclusive, excluding 0.
+   * @param degree Multiplier for darkening the colour.
    */
-  public shaded(step: Step): Color {
-    return new Color(
-      this.bound(this.red + step * 15),
-      this.bound(this.green + step * 15),
-      this.bound(this.blue + step * 15),
-      this.alphaValue
-    );
+  public darken(degree: number = 1): Color {
+    let [r, g, b] = [this.red, this.green, this.blue];
+    while (degree-- > 0) {
+      [r, g, b] = Color.shade(r, g, b);
+    }
+
+    return new Color(r, g, b, this.alphaValue);
   }
 
-  public get darker(): Color {
-    return this.shaded(-2);
+  /**
+   * Lighten this `Color` by `degree` times.
+   *
+   * @param degree Multiplier for lightening the colour.
+   */
+  public lighten(degree: number = 1): Color {
+    let [r, g, b] = [this.red, this.green, this.blue];
+    while (degree-- > 0) {
+      [r, g, b] = Color.tint(r, g, b);
+    }
+
+    return new Color(r, g, b, this.alphaValue);
   }
 
-  public get lighter(): Color {
-    return this.shaded(2);
+  /**
+   * Get the darker colour (by 1 degree).
+   */
+  public get darker() {
+    return this.darken();
+  }
+
+  /**
+   * Get the lighter colour (by 1 degree).
+   */
+  public get lighter() {
+    return this.lighten();
+  }
+
+  /**
+   * Add a shade (darker mask) to this color.
+   *
+   * @see https://stackoverflow.com/a/31325812
+   */
+  private static shade(r: number, g: number, b: number) {
+    return [r, g, b].map((c) => c * (1 - Color.step)).map(Color.bound);
+  }
+
+  /**
+   * Add a tint (lighter mask) to this color.
+   *
+   * @see https://stackoverflow.com/a/31325812
+   */
+  private static tint(r: number, g: number, b: number) {
+    return [r, g, b].map((c) => c + (255 - c) * Color.step).map(Color.bound);
   }
 
   /**
@@ -92,7 +128,7 @@ export default class Color {
    *
    * @param n Number to bound
    */
-  private bound(n: number): number {
+  private static bound(n: number): number {
     const rounded = Math.round(n);
     if (rounded > 255) {
       return 255;
