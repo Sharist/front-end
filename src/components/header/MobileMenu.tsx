@@ -6,8 +6,8 @@ import styled, { css } from 'styled-components';
 import routes from '../../routes';
 
 const MobileMenuShadow = styled.div<{ visible: boolean }>`
-  ${({ visible, theme: { oldPalette: palette } }) => css`
-    background-color: ${palette.GREY_DARKER};
+  ${({ visible, theme: { palette } }) => css`
+    background-color: ${palette.grey.darker.css};
     bottom: 0;
     left: 0;
     opacity: ${visible ? 0.3 : 0};
@@ -21,10 +21,10 @@ const MobileMenuShadow = styled.div<{ visible: boolean }>`
 `;
 
 const MobileMenuPane = styled.div<{ visible: boolean }>`
-  ${({ visible, theme: { oldPalette: palette } }) => css`
+  ${({ visible, theme: { palette } }) => css`
     background-color: white;
     bottom: 0;
-    box-shadow: 0 0 2rem ${visible ? palette.GREY_DARKER : 'transparent'};
+    box-shadow: 0 0 2rem ${visible ? palette.grey.darker.css : palette.transparent.css};
     display: flex;
     flex-direction: column;
     font-size: 1rem;
@@ -40,9 +40,9 @@ const MobileMenuPane = styled.div<{ visible: boolean }>`
 `;
 
 const MobileMenuSection = styled.div`
-  ${({ theme: { oldPalette: palette } }) => css`
+  ${({ theme: { palette } }) => css`
     align-items: flex-end;
-    border-bottom: 0.05rem solid ${palette.ASH_LIGHTER};
+    border-bottom: 0.05rem solid ${palette.ash.lighter.css};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -62,10 +62,10 @@ const MobileMenuSection = styled.div`
 `;
 
 const MobileSiteMapLink = styled(Link)`
-  ${({ theme: { oldPalette: palette, typography } }) => css`
+  ${({ theme: { palette, typography } }) => css`
     border-radius: 0.25rem;
     box-sizing: border-box;
-    color: ${palette.GREY_DARKER};
+    color: ${palette.grey.darker.css};
     font-size: ${typography.MEDIUM};
     padding: 0.5rem 1rem;
     text-align: right;
@@ -73,11 +73,11 @@ const MobileSiteMapLink = styled(Link)`
     transition: background-color 150ms;
 
     &:active {
-      background-color: ${palette.ASH_LIGHTER};
+      background-color: ${palette.ash.lighter.css};
     }
 
     &:visited {
-      color: ${palette.GREY_DARKER};
+      color: ${palette.grey.darker.css};
     }
   `}
 `;

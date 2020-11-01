@@ -8,7 +8,7 @@ import Button from './Button';
 const Backdrop = styled.div<{ isVisible: boolean }>`
   ${({ isVisible, theme: { palette } }) => css`
     align-items: center;
-    background-color: ${palette.grey.alpha(0.5).rgba};
+    background-color: ${palette.grey.alpha(0.5).css};
     display: ${isVisible ? 'flex' : 'none'};
     justify-content: center;
     position: fixed;
@@ -20,10 +20,10 @@ const Backdrop = styled.div<{ isVisible: boolean }>`
 `;
 
 const ModalWrapper = styled.div`
-  ${({ theme: { breakpoints, oldPalette: palette } }) => css`
-    background-color: ${palette.WHITE};
+  ${({ theme: { breakpoints, palette } }) => css`
+    background-color: ${palette.white.css};
     border-radius: 0.5rem;
-    box-shadow: 0 0 0.5rem ${palette.GREY};
+    box-shadow: 0 0 0.5rem ${palette.grey.css};
     padding: 1rem;
     min-width: 20rem;
 

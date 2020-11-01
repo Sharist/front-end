@@ -15,10 +15,10 @@ import routes from '../../routes';
 export const HEADER_HEIGHT_REM = 4.5;
 
 const HeaderWrapper = styled.div<{ translucent: boolean }>`
-  ${({ translucent, theme: { oldPalette: palette } }) => css`
+  ${({ translucent, theme: { palette } }) => css`
     align-items: center;
-    background-color: ${translucent ? palette.TRANSPARENT : palette.WHITE};
-    box-shadow: 0 0 0.1rem ${palette.GREY};
+    background-color: ${translucent ? palette.transparent.css : palette.white.css};
+    box-shadow: 0 0 0.1rem ${palette.grey.css};
     display: flex;
     height: ${HEADER_HEIGHT_REM}rem;
     justify-content: space-between;
@@ -47,8 +47,8 @@ const HeaderActionButton = styled(Button)`
 `;
 
 const LandingMainSectionActionButton = styled(HeaderActionButton).attrs({ transparent: true })`
-  ${({ theme: { oldPalette: palette } }) => css`
-    color: ${palette.WHITE};
+  ${({ theme: { palette } }) => css`
+    color: ${palette.white.css};
     width: 4rem;
   `}
 `;

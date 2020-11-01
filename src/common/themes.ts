@@ -37,7 +37,6 @@ export enum OldPalette {
   SUN_LIGHTER = '#E8894A',
 }
 
-// Todo(sam): Rename this and migrate everything to the new Palette
 export const Palette = {
   /** Basics */
   black: Color.of('#000000'),
@@ -67,7 +66,6 @@ export enum Typography {
 
 export const SharistTheme = {
   breakpoints: Breakpoint,
-  oldPalette: OldPalette,
   palette: Palette,
   typography: Typography,
 };

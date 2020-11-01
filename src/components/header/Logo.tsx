@@ -6,11 +6,11 @@ import SharistLogo from '../../resources/images/sharist-logo.svg';
 import SharistLogoWhite from '../../resources/images/sharist-logo-white.svg';
 
 const LogoText = styled.span<{ fontColor: OldPalette }>`
-  ${({ fontColor, theme: { oldPalette: palette } }) => css`
+  ${({ fontColor, theme: { palette } }) => css`
     color: ${fontColor};
     font-weight: 300;
     font-size: 1.8rem;
-    text-shadow: 0 0 0.15rem ${fontColor === palette.REGULAR ? 'none' : palette.GREY};
+    text-shadow: 0 0 0.15rem ${fontColor === palette.regular.css ? 'none' : palette.grey.css};
     margin-left: 0.5rem;
   `}
 `;

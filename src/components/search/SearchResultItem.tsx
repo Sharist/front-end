@@ -3,23 +3,23 @@ import { IconType } from 'react-icons';
 import styled, { css } from 'styled-components';
 
 const Wrapper = styled.div<{ isHighlighted: boolean }>`
-  ${({ isHighlighted, theme: { oldPalette: palette } }) => css`
+  ${({ isHighlighted, theme: { palette } }) => css`
     align-items: center;
-    background-color: ${isHighlighted ? palette.ASH_LIGHTER : ''};
+    background-color: ${isHighlighted ? palette.ash.lighter.css : ''};
     cursor: pointer;
     display: flex;
     padding: 1rem 1.5rem;
     transition: background-color 250ms;
 
     &:hover {
-      background-color: ${palette.ASH_LIGHTER};
+      background-color: ${palette.ash.lighter.css};
     }
   `}
 `;
 
 const Icon = styled.div`
-  ${({ theme: { oldPalette: palette } }) => css`
-    color: ${palette.ASPHALT};
+  ${({ theme: { palette } }) => css`
+    color: ${palette.asphalt.css};
     margin-right: 1.25rem;
   `}
 `;
@@ -30,15 +30,15 @@ const TextContent = styled.div`
 `;
 
 const Text = styled.p`
-  ${({ theme: { oldPalette: palette } }) => css`
-    color: ${palette.ASPHALT_DARKER};
+  ${({ theme: { palette } }) => css`
+    color: ${palette.asphalt.darker.css};
     margin: 0;
   `}
 `;
 
 const Annotation = styled.p`
-  ${({ theme: { oldPalette: palette } }) => css`
-    color: ${palette.ASPHALT_LIGHTER};
+  ${({ theme: { palette } }) => css`
+    color: ${palette.asphalt.lighter.css};
     font-size: 0.8rem;
     margin: 0;
   `}

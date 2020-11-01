@@ -5,11 +5,11 @@ import { useDimensions } from '../../common/hooks/useDimensions';
 import SearchResultItem, { SearchResult } from './SearchResultItem';
 
 const Wrapper = styled.div<{ maxHeight: number }>`
-  ${({ maxHeight, theme: { oldPalette: palette } }) => css`
+  ${({ maxHeight, theme: { palette } }) => css`
     background-color: white;
     border-radius: 1.25rem;
-    border: 0.05rem solid ${palette.ASH_DARKER};
-    box-shadow: 0 0 0.25rem ${palette.GREY_LIGHTER};
+    border: 0.05rem solid ${palette.ash.darker.css};
+    box-shadow: 0 0 0.25rem ${palette.grey.lighter.css};
     display: flex;
     flex-direction: column;
     margin-top: 0.5rem;
@@ -29,9 +29,9 @@ const DropdownPanel = styled.div`
 `;
 
 const NoResult = styled.span`
-  ${({ theme: { oldPalette: palette } }) => css`
+  ${({ theme: { palette } }) => css`
     align-items: center;
-    color: ${palette.ASPHALT_LIGHTER};
+    color: ${palette.asphalt.lighter.css};
     display: flex;
     font-style: italics;
     padding: 0 1.5rem;

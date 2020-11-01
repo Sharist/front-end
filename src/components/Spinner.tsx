@@ -14,11 +14,11 @@ const spin = keyframes`
 `;
 
 const Wheel = styled.div<{ color: OldPalette; lengthCss: string }>`
-  ${({ color, lengthCss }) => css`
+  ${({ color, lengthCss, theme: { palette } }) => css`
     animation: ${spin} 0.75s linear infinite;
     border: 0.175rem solid ${color};
-    border-bottom-color: ${OldPalette.TRANSPARENT};
-    border-right-color: ${OldPalette.TRANSPARENT};
+    border-bottom-color: ${palette.transparent.css};
+    border-right-color: ${palette.transparent.css};
     border-radius: 50%;
     opacity: 0.9;
     padding: ${lengthCss};

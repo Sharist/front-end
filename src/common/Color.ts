@@ -68,7 +68,7 @@ export default class Color {
    *
    * @param degree Multiplier for darkening the colour.
    */
-  public darken(degree: number = 1): Color {
+  public darkenBy(degree: number = 1): Color {
     let [r, g, b] = [this.red, this.green, this.blue];
     while (degree-- > 0) {
       [r, g, b] = Color.shade(r, g, b);
@@ -82,7 +82,7 @@ export default class Color {
    *
    * @param degree Multiplier for lightening the colour.
    */
-  public lighten(degree: number = 1): Color {
+  public lightenBy(degree: number = 1): Color {
     let [r, g, b] = [this.red, this.green, this.blue];
     while (degree-- > 0) {
       [r, g, b] = Color.tint(r, g, b);
@@ -95,14 +95,14 @@ export default class Color {
    * Get the darker colour (by 1 degree).
    */
   public get darker() {
-    return this.darken();
+    return this.darkenBy();
   }
 
   /**
    * Get the lighter colour (by 1 degree).
    */
   public get lighter() {
-    return this.lighten();
+    return this.lightenBy();
   }
 
   /**

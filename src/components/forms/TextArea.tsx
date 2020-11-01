@@ -5,8 +5,8 @@ import { randomInputName } from '../../common/forms';
 import ErrorMessage from './ErrorMessage';
 
 const TextAreaLabel = styled.label<{ isInputFocused: boolean }>`
-  ${({ isInputFocused, theme: { oldPalette: palette } }) => css`
-    color: ${isInputFocused ? palette.REGULAR : palette.GREY};
+  ${({ isInputFocused, theme: { palette } }) => css`
+    color: ${isInputFocused ? palette.regular.css : palette.grey.css};
     font-size: 0.85rem;
     margin-bottom: 0.2rem;
     transition: color 200ms;
@@ -14,9 +14,9 @@ const TextAreaLabel = styled.label<{ isInputFocused: boolean }>`
 `;
 
 const TextArea = styled.textarea<{ hasError: boolean }>`
-  ${({ hasError, theme: { oldPalette: palette } }) => css`
+  ${({ hasError, theme: { palette } }) => css`
     border: none;
-    border-bottom: 0.05rem solid ${hasError ? palette.SUN : palette.ASH};
+    border-bottom: 0.05rem solid ${hasError ? palette.sun.css : palette.ash.css};
     padding: 0.5rem 0.25rem;
     resize: vertical;
     transition: border-bottom 200ms, box-shadow 200ms;
@@ -25,8 +25,8 @@ const TextArea = styled.textarea<{ hasError: boolean }>`
     max-height: 20rem;
 
     &:focus {
-      border-bottom: 0.05rem solid ${hasError ? palette.SUN : palette.GREY};
-      box-shadow: 0 0.15rem 0.25rem -0.25rem ${palette.GREY};
+      border-bottom: 0.05rem solid ${hasError ? palette.sun.css : palette.grey.css};
+      box-shadow: 0 0.15rem 0.25rem -0.25rem ${palette.grey.css};
       outline-width: 0;
     }
   `}

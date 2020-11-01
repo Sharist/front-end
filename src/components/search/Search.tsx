@@ -2,8 +2,8 @@ import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import { debounce } from '../../common/timing';
-import Logo, { LogoType } from '../header/Logo';
 import { SearchResult } from './SearchResultItem';
+import Logo, { LogoType } from '../header/Logo';
 import SuggestionsDropdown from './SuggestionsDropdown';
 
 const SearchWrapper = styled.div`
@@ -12,17 +12,17 @@ const SearchWrapper = styled.div`
 `;
 
 const SearchBox = styled.input<{ hasLogo: boolean }>`
-  ${({ hasLogo, theme: { oldPalette: palette } }) => css`
+  ${({ hasLogo, theme: { palette } }) => css`
     border-radius: 1rem;
-    border: 0.05rem solid ${palette.ASH_DARKER};
-    box-shadow: 0 0 0.25rem ${palette.ASH_LIGHTER};
+    border: 0.05rem solid ${palette.ash.darker.css};
+    box-shadow: 0 0 0.25rem ${palette.ash.lighter.css};
     padding: 1rem 1.25rem;
     padding-left: ${hasLogo ? '3.5rem' : ''};
     width: 100%;
     transition: box-shadow 200ms;
 
     &:focus {
-      box-shadow: 0 0.05rem 0.3rem ${palette.ASH_DARKER};
+      box-shadow: 0 0.05rem 0.3rem ${palette.ash.darker.css};
       outline-width: 0;
     }
   `}

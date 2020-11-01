@@ -46,10 +46,10 @@ const NextButton = styled(Button)`
 `;
 
 export const LogoSubtitle = styled.p<{ awaitingServer?: boolean }>`
-  ${({ awaitingServer, theme: { oldPalette: palette } }) => css`
+  ${({ awaitingServer, theme: { palette } }) => css`
     margin-bottom: 3rem;
     text-align: center;
-    color: ${awaitingServer ? palette.ASH_DARKER : palette.BLACK};
+    color: ${awaitingServer ? palette.ash.darker.css : palette.black.css};
   `}
 `;
 

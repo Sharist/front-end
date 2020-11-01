@@ -4,11 +4,11 @@ import styled, { css } from 'styled-components';
 import Button from './Button';
 
 const CardWrapper = styled.div`
-  ${({ theme: { oldPalette: palette } }) => css`
+  ${({ theme: { palette } }) => css`
     background-color: white;
     border-radius: 0.5rem;
-    border: 0.05rem solid ${palette.ASH_DARKER};
-    box-shadow: 0 0.1rem 0.35rem ${palette.ASH_DARKER};
+    border: 0.05rem solid ${palette.ash.darker.css};
+    box-shadow: 0 0.1rem 0.35rem ${palette.ash.darker.css};
     display: flex;
     flex-direction: column;
   `}
@@ -38,9 +38,9 @@ const CardContent = styled.div`
 `;
 
 const CardActionsWrapper = styled.div`
-  ${({ theme: { oldPalette: palette } }) => css`
+  ${({ theme: { palette } }) => css`
     align-items: center;
-    border-top: 0.05rem solid ${palette.ASH};
+    border-top: 0.05rem solid ${palette.ash.css};
     display: flex;
     justify-content: space-between;
     margin-top: 1.5rem;

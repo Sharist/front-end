@@ -4,9 +4,9 @@ import styled, { css } from 'styled-components';
 import LandingBackground from '../../resources/images/home/landing-background-1.jpg';
 
 const LandingWrapper = styled.div<{ loaded: boolean }>`
-  ${({ loaded, theme: { oldPalette: palette } }) => css`
+  ${({ loaded, theme: { palette } }) => css`
     align-items: center;
-    background-color: ${loaded ? '' : palette.ASH};
+    background-color: ${loaded ? '' : palette.ash.css};
     display: flex;
     height: 100%;
     justify-content: center;
@@ -29,14 +29,14 @@ const Background = styled.img<{ loaded: boolean }>`
 `;
 
 const Prompt = styled.div.attrs({ className: 'noselect' })`
-  ${({ theme: { oldPalette: palette } }) => css`
+  ${({ theme: { palette } }) => css`
     align-items: center;
-    color: ${palette.WHITE};
+    color: ${palette.white.css};
     display: flex;
     flex-direction: column;
     font-family: 'Roboto Slab';
     justify-content: center;
-    text-shadow: 0 0 1rem ${palette.BLACK};
+    text-shadow: 0 0 1rem ${palette.black.css};
     z-index: -10;
   `}
 `;
