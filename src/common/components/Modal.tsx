@@ -2,7 +2,7 @@ import React, { createRef, ReactChild } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
-import { randomInputName } from '../common/forms';
+import { randomInputName } from '../forms';
 import Button from './Button';
 
 const Backdrop = styled.div<{ isVisible: boolean }>`

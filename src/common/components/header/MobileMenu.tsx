@@ -3,7 +3,7 @@ import { IoMdClose } from 'react-icons/io';
 import { Link } from '@reach/router';
 import styled, { css } from 'styled-components';
 
-import routes from '../../routes';
+import routes from '../../../routes';
 
 const MobileMenuShadow = styled.div<{ visible: boolean }>`
   ${({ visible, theme: { palette } }) => css`

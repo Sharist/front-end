@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import SharistLogo from '../../resources/images/sharist-logo.svg';
-import SharistLogoWhite from '../../resources/images/sharist-logo-white.svg';
+import SharistLogo from '../../../resources/images/sharist-logo.svg';
+import SharistLogoWhite from '../../../resources/images/sharist-logo-white.svg';
 
 const LogoText = styled.span<{ dark: boolean }>`
   ${({ dark, theme: { palette } }) => css`

@@ -4,8 +4,8 @@ import { IoIosPin, IoIosRestaurant } from 'react-icons/io';
 import { MdStore } from 'react-icons/md';
 
 import { MapAdaptor } from './apis/MapAdaptor';
-import { SearchDatasource } from '../components/search/Search';
-import { SearchResult } from '../components/search/SearchResultItem';
+import { SearchDatasource } from './components/search/Search';
+import { SearchResult } from './components/search/SearchResultItem';
 
 export class MapSearchDataSource implements SearchDatasource {
   public initialDataset = [];

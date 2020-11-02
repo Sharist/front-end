@@ -5,12 +5,12 @@ import styled, { css } from 'styled-components';
 
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import { useForm } from '../../common/hooks/useForm';
-import EmptyState from '../../components/EmptyState';
-import Form from '../../components/forms/Form';
-import LayoutContainer from '../../components/LayoutContainer';
-import Modal from '../../components/Modal';
-import TextAreaInput from '../../components/forms/TextArea';
-import TextInput from '../../components/forms/TextInput';
+import EmptyState from '../../common/components/EmptyState';
+import Form from '../../common/components/forms/Form';
+import LayoutContainer from '../../common/components/LayoutContainer';
+import Modal from '../../common/components/Modal';
+import TextAreaInput from '../../common/components/forms/TextArea';
+import TextInput from '../../common/components/forms/TextInput';
 
 const Wrapper = styled.div`
   ${({ theme: { breakpoints } }) => css`

@@ -1,8 +1,8 @@
 import React, { ReactChild } from 'react';
 import styled, { css } from 'styled-components';
 
-import { pxToRem } from '../common/dimensions';
-import { useDimensions } from '../common/hooks/useDimensions';
+import { pxToRem } from '../dimensions';
+import { useDimensions } from '../hooks/useDimensions';
 import Header, { HEADER_HEIGHT_REM } from './header/Header';
 
 type BaseLayoutProps = {

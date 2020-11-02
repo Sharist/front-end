@@ -6,12 +6,12 @@ import styled, { css } from 'styled-components';
 
 import { post } from '../../common/http';
 import { useForm } from '../../common/hooks/useForm';
-import Button from '../../components/Button';
-import Form from '../../components/forms/Form';
-import LayoutContainer from '../../components/LayoutContainer';
-import Logo from '../../components/header/Logo';
+import Button from '../../common/components/Button';
+import Form from '../../common/components/forms/Form';
+import LayoutContainer from '../../common/components/LayoutContainer';
+import Logo from '../../common/components/header/Logo';
 import routes from '../../routes';
-import TextInput from '../../components/forms/TextInput';
+import TextInput from '../../common/components/forms/TextInput';
 
 export const AuthWrapper = styled.div`
   ${({ theme: { breakpoints } }) => css`

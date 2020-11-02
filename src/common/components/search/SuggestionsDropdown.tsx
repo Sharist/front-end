@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { useDimensions } from '../../common/hooks/useDimensions';
+import { useDimensions } from '../../hooks/useDimensions';
 import SearchResultItem, { SearchResult } from './SearchResultItem';
 
 const Wrapper = styled.div<{ maxHeight: number }>`

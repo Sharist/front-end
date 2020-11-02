@@ -1,7 +1,7 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import { debounce } from '../../common/timing';
+import { debounce } from '../../timing';
 import { SearchResult } from './SearchResultItem';
 import Logo, { LogoType } from '../header/Logo';
 import SuggestionsDropdown from './SuggestionsDropdown';

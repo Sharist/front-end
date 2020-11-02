@@ -4,7 +4,7 @@ import { RouteComponentProps } from '@reach/router';
 import { AuthLogo, AuthWrapper, LogoSubtitle } from './Auth';
 import { get, parseQueryString } from '../../common/http';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
-import LayoutContainer from '../../components/LayoutContainer';
+import LayoutContainer from '../../common/components/LayoutContainer';
 import routes from '../../routes';
 
 function VerifyEmail({ location }: RouteComponentProps) {

@@ -3,13 +3,13 @@ import { RouteComponentProps } from '@reach/router';
 import styled from 'styled-components';
 
 import { remToPx } from '../../common/dimensions';
-import { SearchResult } from '../../components/search/SearchResultItem';
+import { SearchResult } from '../../common/components/search/SearchResultItem';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
-import Card, { CardAction } from '../../components/Card';
-import IMap from '../../components/IMap';
-import LayoutContainer from '../../components/LayoutContainer';
+import Card, { CardAction } from '../../common/components/Card';
+import IMap from '../../common/components/IMap';
+import LayoutContainer from '../../common/components/LayoutContainer';
 import MapContext from '../../common/contexts/MapContext';
-import Search from '../../components/search/Search';
+import Search from '../../common/components/search/Search';
 
 const Content = styled.div`
   display: flex;

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import HowToUse from './HowToUse';
 import Landing from './Landing';
-import LayoutContainer from '../../components/LayoutContainer';
+import LayoutContainer from '../../common/components/LayoutContainer';
 import ReasonToUse from './ReasonToUse';
 import routes from '../../routes';
 

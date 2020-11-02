@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import { randomInputName } from '../../common/forms';
+import { randomInputName } from '../../forms';
 import ErrorMessage from './ErrorMessage';
 
-const TextAreaLabel = styled.label<{ isInputFocused: boolean }>`
+const InputLabel = styled.label<{ isInputFocused: boolean }>`
   ${({ isInputFocused, theme: { palette } }) => css`
     color: ${isInputFocused ? palette.regular.css : palette.grey.css};
     font-size: 0.85rem;
@@ -13,16 +13,13 @@ const TextAreaLabel = styled.label<{ isInputFocused: boolean }>`
   `}
 `;
 
-const TextArea = styled.textarea<{ hasError: boolean }>`
+const Input = styled.input<{ hasError: boolean }>`
   ${({ hasError, theme: { palette } }) => css`
     border: none;
     border-bottom: 0.05rem solid ${hasError ? palette.sun.css : palette.ash.css};
     padding: 0.5rem 0.25rem;
-    resize: vertical;
     transition: border-bottom 200ms, box-shadow 200ms;
     width: 100%;
-    min-height: 2rem;
-    max-height: 20rem;
 
     &:focus {
       border-bottom: 0.05rem solid ${hasError ? palette.sun.css : palette.grey.css};
@@ -32,54 +29,56 @@ const TextArea = styled.textarea<{ hasError: boolean }>`
   `}
 `;
 
-const TextAreaWrapper = styled.div`
+const TextInputWrapper = styled.div`
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
   width: 100%;
 `;
 
 type Props = {
   disabled?: boolean;
   errorMessage?: string;
+  inputRef?: React.Ref<HTMLInputElement>;
   label?: string;
   name?: string;
-  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  onKeyPress?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
   required?: boolean;
-  rows?: number;
+  /** `true` to turn on spellcheck. Default is `true`. */
   spellCheck?: boolean;
-  textAreaRef?: React.Ref<HTMLTextAreaElement>;
+  type?: string;
   value?: string;
 };
 
-function TextAreaInput({
+function TextInput({
   disabled = false,
   errorMessage,
+  inputRef,
   label,
   name = randomInputName(),
   onChange,
   onKeyPress,
   placeholder = '',
   required,
-  rows,
   spellCheck = true,
-  textAreaRef,
+  type,
   value,
 }: Props) {
   const [focused, setFocused] = useState(false);
 
   return (
-    <TextAreaWrapper>
+    <TextInputWrapper>
       {label && (
-        <TextAreaLabel isInputFocused={focused} htmlFor={name}>
+        <InputLabel isInputFocused={focused} htmlFor={name}>
           {label}
-        </TextAreaLabel>
+        </InputLabel>
       )}
 
-      <TextArea
+      <Input
+        autoFocus
         disabled={disabled}
         hasError={!!errorMessage}
         name={name}
@@ -88,16 +87,16 @@ function TextAreaInput({
         onFocus={() => setFocused(true)}
         onKeyPress={onKeyPress}
         placeholder={placeholder}
-        ref={textAreaRef}
+        ref={inputRef}
         required={required}
-        rows={rows}
         spellCheck={spellCheck}
+        type={type}
         value={value}
       />
 
       {errorMessage && <ErrorMessage message={errorMessage} />}
-    </TextAreaWrapper>
+    </TextInputWrapper>
   );
 }
 
-export default TextAreaInput;
+export default TextInput;

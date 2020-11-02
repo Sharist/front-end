@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { IoIosMenu } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
-import { remToPx } from '../../common/dimensions';
-import { useAuthentication } from '../../common/hooks/useAuthentication';
+import { remToPx } from '../../dimensions';
+import { useAuthentication } from '../../hooks/useAuthentication';
 import Button from '../Button';
 import Logo, { LogoType } from './Logo';
 import MobileMenu from './MobileMenu';
-import routes from '../../routes';
+import routes from '../../../routes';
 
 export const HEADER_HEIGHT_REM = 4.5;
 
