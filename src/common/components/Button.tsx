@@ -20,12 +20,14 @@ const BaseButton = styled.button`
       text-shadow: 0 0 0 transparent;
       transition: border 0.1s, box-shadow 0.1s, text-shadow 0.1s;
 
-      &:hover {
+      &:hover,
+      &:focus {
         border: ${disabled ? '' : `0.05rem solid ${palette.ash.css}`};
         box-shadow: ${disabled
           ? `0 0 0 ${palette.transparent.css}`
           : `0 0 0.3rem ${palette.ash.darker.css}`};
         text-shadow: 0 0 0 transparent;
+        outline: 0;
       }
 
       &:active {
@@ -33,10 +35,6 @@ const BaseButton = styled.button`
         box-shadow: ${disabled ? '' : `0 0.02rem 0.15rem ${palette.ash.darker.css}`};
         outline: none;
         transform: ${disabled ? 'none' : 'translateY(0.05rem)'};
-      }
-
-      &:focus {
-        outline: 0;
       }
     `}
 `;
@@ -48,7 +46,8 @@ const PrimaryButton = styled(BaseButton)`
     color: ${disabled ? palette.ash.lighter.css : palette.white.css};
     text-shadow: 0 0 0.01rem ${palette.grey.darker.css};
 
-    &:hover {
+    &:hover,
+    &:focus {
       border-color: ${palette.sun.lighter.css};
       box-shadow: ${disabled
         ? `0 0 0 ${palette.transparent.css}`
