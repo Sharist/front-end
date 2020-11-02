@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { IoIosAdd } from 'react-icons/io';
 import { RouteComponentProps } from '@reach/router';
 import Joi from 'joi';
 import styled, { css } from 'styled-components';
@@ -7,8 +8,8 @@ import { createTrip, getTrips } from './api';
 import { Trip } from './types';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import { useForm } from '../../common/hooks/useForm';
-import Button from '../../common/components/Button';
 import EmptyState from '../../common/components/EmptyState';
+import FloatingActionButton from '../../common/components/FloatingActionButton';
 import Form from '../../common/components/forms/Form';
 import LayoutContainer from '../../common/components/LayoutContainer';
 import Modal from '../../common/components/Modal';
@@ -132,12 +133,7 @@ function TripList(_: RouteComponentProps) {
   return (
     <LayoutContainer center>
       <Wrapper>
-        <PageTitle>
-          Your trips{' '}
-          <Button isPrimary onClick={showCreateTripModal}>
-            Create Trip!
-          </Button>
-        </PageTitle>
+        <PageTitle>Your trips</PageTitle>
 
         {trips.length === 0 && (
           <EmptyState
@@ -154,6 +150,13 @@ function TripList(_: RouteComponentProps) {
             ))}
           </TripCards>
         )}
+
+        <FloatingActionButton
+          icon={IoIosAdd}
+          isPrimary
+          label='Create trip'
+          onClick={showCreateTripModal}
+        />
       </Wrapper>
 
       <Modal
