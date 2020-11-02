@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import { randomInputName } from '../../forms';
+import { generateRandomKey } from '../../forms';
 import ErrorMessage from './ErrorMessage';
 
 const InputLabel = styled.label<{ isInputFocused: boolean }>`
@@ -58,7 +58,7 @@ function TextInput({
   errorMessage,
   inputRef,
   label,
-  name = randomInputName(),
+  name = generateRandomKey(),
   onChange,
   onKeyPress,
   placeholder = '',

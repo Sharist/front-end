@@ -5,7 +5,7 @@
  * @param config.separator Separate sections; default to empty string
  * @param config.numSections Number of sections; default to 2
  */
-export function randomInputName({ prefix = '', separator = '', numSections = 2 } = {}): string {
+export function generateRandomKey({ prefix = '', separator = '', numSections = 2 } = {}): string {
   const ret = [prefix];
 
   for (let i = 0; i < numSections; i++) {

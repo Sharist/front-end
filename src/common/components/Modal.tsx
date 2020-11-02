@@ -2,7 +2,7 @@ import React, { createRef, ReactChild } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
-import { randomInputName } from '../forms';
+import { generateRandomKey } from '../forms';
 import Button from './Button';
 
 const Backdrop = styled.div<{ isVisible: boolean }>`
@@ -123,7 +123,7 @@ function Modal({ actions, children, isVisible, hasCloseButton = false, title, sh
           <ModalActionsWrapper>
             {actions.map(({ isPrimary, onClick, label }) => (
               <Button
-                key={randomInputName({ prefix: label })}
+                key={generateRandomKey({ prefix: label })}
                 isPrimary={isPrimary}
                 onClick={onClick}
               >
