@@ -1,10 +1,4 @@
-import {
-  CreateTripRequest,
-  CreateTripResponse,
-  GetTripResponse,
-  GetTripsResponse,
-  Trip,
-} from './types';
+import { CreateTripResponse, GetTripResponse, GetTripsResponse, Trip } from './types';
 import { generateRandomKey } from '../../common/forms';
 
 export async function getTrips(): Promise<Trip[]> {
@@ -50,10 +44,11 @@ export async function getTrips(): Promise<Trip[]> {
 }
 
 export async function createTrip(name: string, description: string = ''): Promise<Trip> {
-  const createTripRequest: CreateTripRequest = {
-    'sharist.trip/name': name,
-    'sharist.trip/description': description,
-  };
+  // TODO: Hook this up with API
+  // const createTripRequest: CreateTripRequest = {
+  //   'sharist.trip/name': name,
+  //   'sharist.trip/description': description,
+  // };
 
   const date = new Date().toISOString();
   const createTripResponse: CreateTripResponse = await Promise.resolve({

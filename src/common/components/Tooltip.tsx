@@ -24,25 +24,27 @@ function Tooltip({ anchor, text }: Props) {
 
   const tooltipRef = useRef<HTMLDivElement>(null);
 
-  function showTooltip() {
-    if (tooltipRef.current && anchor.current) {
-      setVisible(true);
-    }
-  }
-
-  function hideTooltip() {
-    if (tooltipRef.current && anchor.current) {
-      setVisible(false);
-    }
-  }
-
   useEffect(() => {
-    anchor.current?.addEventListener('mouseover', showTooltip);
-    anchor.current?.addEventListener('mouseout', hideTooltip);
+    function showTooltip() {
+      if (tooltipRef.current && anchor.current) {
+        setVisible(true);
+      }
+    }
+
+    function hideTooltip() {
+      if (tooltipRef.current && anchor.current) {
+        setVisible(false);
+      }
+    }
+
+    const anchorElement = anchor.current;
+
+    anchorElement?.addEventListener('mouseover', showTooltip);
+    anchorElement?.addEventListener('mouseout', hideTooltip);
 
     return function cleanup() {
-      anchor.current?.removeEventListener('mouseover', showTooltip);
-      anchor.current?.removeEventListener('mouseout', hideTooltip);
+      anchorElement?.removeEventListener('mouseover', showTooltip);
+      anchorElement?.removeEventListener('mouseout', hideTooltip);
     };
   }, [anchor]);
 
