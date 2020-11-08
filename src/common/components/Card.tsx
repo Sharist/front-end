@@ -1,7 +1,7 @@
 import React, { ReactChild } from 'react';
 import styled, { css } from 'styled-components';
 
-import Button from './Button';
+import Button, { ButtonRow } from './Button';
 
 const CardWrapper = styled.div`
   ${({ theme: { palette } }) => css`
@@ -35,14 +35,14 @@ const CardContent = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
+  width: 100%;
 `;
 
 const CardActionsWrapper = styled.div`
   ${({ theme: { palette } }) => css`
-    align-items: center;
     border-top: 0.05rem solid ${palette.ash.css};
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-top: 1.5rem;
     padding: 1.25rem 0.5rem 0;
   `}
@@ -88,16 +88,18 @@ function Card({ actions, className, children, image, subtitle, title }: Props) {
         {children}
         {actions && (
           <CardActionsWrapper>
-            {actions.map(({ actionText, isPrimary, handler }) => (
-              <Button
-                key={actionText}
-                isPrimary={isPrimary}
-                onClick={handler}
-                transparent={!isPrimary}
-              >
-                {actionText}
-              </Button>
-            ))}
+            <ButtonRow>
+              {actions.map(({ actionText, isPrimary, handler }) => (
+                <Button
+                  key={actionText}
+                  isPrimary={isPrimary}
+                  onClick={handler}
+                  transparent={!isPrimary}
+                >
+                  {actionText}
+                </Button>
+              ))}
+            </ButtonRow>
           </CardActionsWrapper>
         )}
       </CardContent>

@@ -3,7 +3,7 @@ import { IoMdClose } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
 import { generateRandomKey } from '../forms';
-import Button from './Button';
+import Button, { ButtonRow } from './Button';
 
 const Backdrop = styled.div<{ isVisible: boolean }>`
   ${({ isVisible, theme: { palette } }) => css`
@@ -57,20 +57,8 @@ const CloseButton = styled.div`
 const ModalActionsWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 1rem;
-  padding: 0.5rem;
-
-  & > * {
-    margin: 0 0.5rem;
-
-    &:first-child {
-      margin-left: 0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
+  margin-top: 0.5rem;
+  padding: 1rem;
 `;
 
 interface ActionButtonConfig {
@@ -121,15 +109,17 @@ function Modal({ actions, children, isVisible, hasCloseButton = false, title, sh
 
         {actions && (
           <ModalActionsWrapper>
-            {actions.map(({ isPrimary, onClick, label }) => (
-              <Button
-                key={generateRandomKey({ prefix: label })}
-                isPrimary={isPrimary}
-                onClick={onClick}
-              >
-                {label}
-              </Button>
-            ))}
+            <ButtonRow>
+              {actions.map(({ isPrimary, onClick, label }) => (
+                <Button
+                  key={generateRandomKey({ prefix: label })}
+                  isPrimary={isPrimary}
+                  onClick={onClick}
+                >
+                  {label}
+                </Button>
+              ))}
+            </ButtonRow>
           </ModalActionsWrapper>
         )}
       </ModalWrapper>

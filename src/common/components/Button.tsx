@@ -3,6 +3,22 @@ import styled, { css } from 'styled-components';
 
 import Spinner from './Spinner';
 
+export const ButtonRow = styled.div`
+  display: flex;
+
+  & > * {
+    margin: 0 0.5rem;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`;
+
 const BaseButton = styled.button`
   ${({ disabled, theme: { palette } }) =>
     css`
