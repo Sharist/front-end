@@ -7,6 +7,8 @@ enum Breakpoint {
   MOBILE = '600px',
   TABLET = '800px',
   REGULAR = '1200px',
+  WIDE = '1600px',
+  ULTRAWIDE = '2000px',
 }
 
 const Palette = {

@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import { remToPx } from '../../common/dimensions';
 import { SearchResult } from '../../common/components/search/SearchResultItem';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
-import Card, { CardAction } from '../../common/components/Card';
+import Button, { ButtonRow } from '../../common/components/Button';
+import Card, { CardFooter, CardHeader } from '../../common/components/Card';
 import IMap from '../../common/components/IMap';
 import LayoutContainer from '../../common/components/LayoutContainer';
 import MapContext from '../../common/contexts/MapContext';
@@ -82,25 +83,17 @@ function TripEdit(_: RouteComponentProps) {
     };
   }
 
-  const pendingPlaceActions: CardAction[] = [
-    {
-      actionText: 'Cancel',
-      handler: () => {
-        if (pendingPlace) {
-          mapAdaptor?.removeMarkers(pendingPlace);
-        }
-        setPendingPlace(null);
-      },
-    },
-    {
-      actionText: 'Add to trip',
-      isPrimary: true,
-      handler: () => {
-        console.log('added to trip!');
-        setPendingPlace(null);
-      },
-    },
-  ];
+  function addPendingPlaceHandler() {
+    console.log('added to trip!');
+    setPendingPlace(null);
+  }
+
+  function cancelPendingPlaceHandler() {
+    if (pendingPlace) {
+      mapAdaptor?.removeMarkers(pendingPlace);
+    }
+    setPendingPlace(null);
+  }
 
   return (
     <LayoutContainer fullHeight noHeader noMargin noPadding>
@@ -117,12 +110,23 @@ function TripEdit(_: RouteComponentProps) {
           </SearchHeader>
 
           {pendingPlace && (
-            <Card
-              image={imageConfig}
-              subtitle={pendingPlace.vicinity}
-              title={pendingPlace.name}
-              actions={pendingPlaceActions}
-            ></Card>
+            <Card>
+              <CardHeader
+                image={imageConfig}
+                title={pendingPlace.name}
+                subtitle={pendingPlace.vicinity}
+              />
+              <CardFooter>
+                <ButtonRow>
+                  <Button onClick={cancelPendingPlaceHandler} transparent>
+                    Cancel
+                  </Button>
+                  <Button onClick={addPendingPlaceHandler} isPrimary>
+                    Add to trip
+                  </Button>
+                </ButtonRow>
+              </CardFooter>
+            </Card>
           )}
         </PlaceList>
 

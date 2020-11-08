@@ -6,6 +6,7 @@ import { useDimensions } from '../hooks/useDimensions';
 import Header, { HEADER_HEIGHT_REM } from './header/Header';
 
 type BaseLayoutProps = {
+  adaptiveWidth: boolean;
   center: boolean;
   floatingHeader: boolean;
   fullHeight: boolean;
@@ -17,6 +18,7 @@ type BaseLayoutProps = {
 
 const BaseLayout = styled.div<BaseLayoutProps>`
   ${({
+    adaptiveWidth,
     center,
     floatingHeader,
     fullHeight,
@@ -41,14 +43,52 @@ const BaseLayout = styled.div<BaseLayoutProps>`
       padding: ${noPadding ? '0' : '0 2rem'};
       transition: padding 1s;
 
-      @media screen and (max-width: ${breakpoints.MOBILE}) {
+      ${adaptiveWidth &&
+      css`
+        width: ${breakpoints.ULTRAWIDE};
+        @media screen and (max-width: ${breakpoints.ULTRAWIDE}) {
+          width: ${breakpoints.WIDE};
+        }
+
+        @media screen and (max-width: ${breakpoints.WIDE}) {
+          width: ${breakpoints.REGULAR};
+        }
+
+        @media screen and (max-width: ${breakpoints.REGULAR}) {
+          width: ${breakpoints.TABLET};
+        }
+      `}
+
+      @media screen and (max-width: ${breakpoints.TABLET}) {
         padding: ${noPadding ? '0' : '0 1rem'};
+        ${adaptiveWidth &&
+        css`
+          width: ${breakpoints.MOBILE};
+        `}
+      }
+
+      @media screen and (max-width: ${breakpoints.MOBILE}) {
+        padding: ${noPadding ? '0' : '0 1.5rem'};
+
+        ${adaptiveWidth &&
+        css`
+          width: 100%;
+        `}
       }
     `;
   }}
 `;
 
 type LayoutContainerProps = {
+  /**
+   * If true, layout width will set to the previous breakpoint width (or `100%` for mobile.).
+   *
+   * For example, on mobile, layout width is `100%`. On tablet, width is mobile max.
+   * On regular, width is tablet max, and so on.
+   *
+   * Default is `false`.
+   */
+  adaptiveWidth?: boolean;
   center?: boolean;
   children?: ReactChild | ReactChild[];
   floatingHeader?: boolean;
@@ -60,6 +100,7 @@ type LayoutContainerProps = {
 };
 
 function LayoutContainer({
+  adaptiveWidth = false,
   center = false,
   children,
   floatingHeader = false,
@@ -75,6 +116,7 @@ function LayoutContainer({
     <>
       {!noHeader && <Header isLanding={isLanding} />}
       <BaseLayout
+        adaptiveWidth={adaptiveWidth}
         center={center}
         floatingHeader={floatingHeader}
         fullHeight={fullHeight}

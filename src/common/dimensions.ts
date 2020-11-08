@@ -9,7 +9,7 @@
  */
 export function getRootPxPerRem(): number {
   const rootElementFontSize = getComputedStyle(document.documentElement).fontSize;
-  const parsedNumber = parseInt(rootElementFontSize);
+  const parsedNumber = parseFloat(rootElementFontSize);
   return isNaN(parsedNumber) ? 16 : parsedNumber;
 }
 
@@ -19,7 +19,7 @@ export function getRootPxPerRem(): number {
  * @param pixels Number of pixels
  */
 export function pxToRem(pixels: number | string): number {
-  const pxNum = parseInt(pixels.toString());
+  const pxNum = parseFloat(pixels.toString());
   return pxNum / getRootPxPerRem();
 }
 
@@ -29,6 +29,6 @@ export function pxToRem(pixels: number | string): number {
  * @param pixels Number of pixels
  */
 export function remToPx(rems: number | string): number {
-  const remNum = parseInt(rems.toString());
+  const remNum = parseFloat(rems.toString());
   return remNum * getRootPxPerRem();
 }

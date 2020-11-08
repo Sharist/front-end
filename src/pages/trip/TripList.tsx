@@ -4,6 +4,7 @@ import { RouteComponentProps } from '@reach/router';
 import Joi from 'joi';
 import styled, { css } from 'styled-components';
 
+import { CardList } from '../../common/components/Card';
 import { createTrip, getTrips } from './api';
 import { Trip } from './types';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
@@ -24,11 +25,12 @@ const Wrapper = styled.div`
     padding: 1rem 2rem;
     width: 100%;
 
-    @media screen and (max-width: ${breakpoints.MOBILE}) {
-      padding: 0;
-    }
     @media screen and (max-width: ${breakpoints.TABLET}) {
       padding: 0.5rem;
+    }
+
+    @media screen and (max-width: ${breakpoints.MOBILE}) {
+      padding: 0;
     }
   `}
 `;
@@ -67,22 +69,7 @@ const CreateTripWrapper = styled.div`
 `;
 
 const TripCards = styled.div`
-  ${({ theme: { breakpoints } }) => css`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    margin-top: 3rem;
-
-    & > * {
-      height: 10rem;
-      width: 18rem;
-      margin: 0.5rem;
-
-      @media screen and (max-width: ${breakpoints.MOBILE}) {
-        width: 100%;
-      }
-    }
-  `}
+  margin: 2rem 0;
 `;
 
 interface CreateTripFormData {
@@ -131,7 +118,7 @@ function TripList(_: RouteComponentProps) {
   }
 
   return (
-    <LayoutContainer center>
+    <LayoutContainer adaptiveWidth center>
       <Wrapper>
         <PageTitle>Your trips</PageTitle>
 
@@ -145,9 +132,11 @@ function TripList(_: RouteComponentProps) {
 
         {trips.length !== 0 && (
           <TripCards>
-            {trips.map((trip) => (
-              <TripCard trip={trip} />
-            ))}
+            <CardList>
+              {trips.map((trip) => (
+                <TripCard trip={trip} />
+              ))}
+            </CardList>
           </TripCards>
         )}
 
