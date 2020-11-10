@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
+import { mixins } from '../../common/styles/Theme';
 import LandingBackground from '../../resources/images/home/landing-background-1.jpg';
 
 const LandingWrapper = styled.div<{ loaded: boolean }>`
@@ -42,13 +43,13 @@ const Prompt = styled.div.attrs({ className: 'noselect' })`
 `;
 
 const Title = styled.div<{ loaded: boolean }>`
-  ${({ loaded, theme: { breakpoints } }) => css`
+  ${({ loaded }) => css`
     font-size: 2.75rem;
     margin: 0.5rem;
     opacity: ${loaded ? 1 : 0};
     transition: opacity 750ms 400ms;
 
-    @media screen and (max-width: ${breakpoints.MOBILE}) {
+    ${mixins.belowMobile} {
       font-size: 2.2rem;
       margin: 0.25rem;
     }
@@ -56,14 +57,14 @@ const Title = styled.div<{ loaded: boolean }>`
 `;
 
 const Subtitle = styled.div<{ loaded: boolean }>`
-  ${({ loaded, theme: { breakpoints } }) => css`
+  ${({ loaded }) => css`
     font-size: 1.5rem;
     margin: 0.5rem;
     opacity: ${loaded ? 1 : 0};
     text-align: center;
     transition: opacity 750ms 800ms;
 
-    @media screen and (max-width: ${breakpoints.MOBILE}) {
+    ${mixins.belowMobile} {
       font-size: 1.25rem;
       margin: 0rem;
     }

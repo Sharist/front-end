@@ -3,6 +3,7 @@ import { IoMdClose } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
 import { generateRandomKey } from '../forms';
+import { mixins } from '../styles/Theme';
 import Button, { ButtonRow } from './Button';
 
 const Backdrop = styled.div<{ isVisible: boolean }>`
@@ -20,14 +21,14 @@ const Backdrop = styled.div<{ isVisible: boolean }>`
 `;
 
 const ModalWrapper = styled.div`
-  ${({ theme: { breakpoints, palette } }) => css`
+  ${({ theme: { palette } }) => css`
     background-color: ${palette.white.css};
     border-radius: 0.5rem;
     box-shadow: 0 0 0.5rem ${palette.grey.css};
     padding: 1rem;
     min-width: 20rem;
 
-    @media screen and (max-width: ${breakpoints.MOBILE}) {
+    ${mixins.belowMobile} {
       width: 95%;
       min-width: unset;
     }

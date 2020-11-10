@@ -4,6 +4,7 @@ import { RouteComponentProps } from '@reach/router';
 import Joi from 'joi';
 import styled, { css } from 'styled-components';
 
+import { mixins } from '../../common/styles/Theme';
 import { post } from '../../common/http';
 import { useForm } from '../../common/hooks/useForm';
 import Button from '../../common/components/Button';
@@ -14,18 +15,16 @@ import routes from '../../routes';
 import TextInput from '../../common/components/forms/TextInput';
 
 export const AuthWrapper = styled.div`
-  ${({ theme: { breakpoints } }) => css`
-    align-items: center;
-    align-self: center;
-    display: flex;
-    flex-direction: column;
-    height: 26.5rem;
+  align-items: center;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  height: 26.5rem;
 
-    @media screen and (max-width: ${breakpoints.MOBILE}) {
-      align-self: flex-start;
-      margin-top: 3rem;
-    }
-  `}
+  ${mixins.belowMobile} {
+    align-self: flex-start;
+    margin-top: 3rem;
+  }
 `;
 
 export const AuthLogo = styled(Logo)`

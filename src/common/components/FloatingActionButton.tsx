@@ -1,18 +1,19 @@
 import React, { useRef } from 'react';
 import { IconType } from 'react-icons';
 import styled, { css } from 'styled-components';
+import { mixins } from '../styles/Theme';
 
 import Button from './Button';
 import Tooltip from './Tooltip';
 
 const Wrapper = styled.div<{ isContextual: boolean }>`
-  ${({ isContextual, theme: { breakpoints } }) => css`
+  ${({ isContextual }) => css`
     align-items: center;
     display: flex;
 
     ${!isContextual && 'position: fixed; bottom: 3rem; right: 3rem;'};
 
-    @media screen and (max-width: ${breakpoints.MOBILE}) {
+    ${mixins.belowMobile} {
       ${!isContextual &&
       css`
         position: fixed;

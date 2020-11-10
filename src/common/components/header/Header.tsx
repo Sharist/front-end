@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { IoIosMenu } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
+import { mixins } from '../../styles/Theme';
 import { remToPx } from '../../dimensions';
 import { useAuthentication } from '../../hooks/useAuthentication';
 import Button from '../Button';
@@ -59,19 +60,19 @@ const MobileMenuHamburgerIcon = styled.div<{ darkIcon: boolean }>`
 `;
 
 const HeaderActions = styled.div<{ forMobile?: boolean }>`
-  ${({ forMobile = false, theme: { breakpoints } }) => css`
+  ${({ forMobile = false }) => css`
     align-items: center;
     display: flex;
     justify-content: space-around;
 
-    @media screen and (max-width: ${breakpoints.MOBILE}) {
+    ${mixins.belowMobile} {
       font-size: 2rem;
       padding: 0.25rem;
       width: unset;
       display: ${forMobile ? '' : 'none'};
     }
 
-    @media screen and (min-width: ${breakpoints.MOBILE}) {
+    ${mixins.aboveMobile} {
       display: ${forMobile ? 'none' : ''};
     }
   `}

@@ -1,82 +1,77 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
+import { mixins } from '../../common/styles/Theme';
 import Pikachu from '../../resources/images/to-delete/pikachu-for-no-reason.png';
 
 const ReasonToUseWrapper = styled.div`
-  ${({ theme: { breakpoints } }) => css`
-    align-items: center;
-    display: flex;
-    font-family: 'Roboto slab';
-    justify-content: center;
-    margin: 20rem auto;
-    max-height: 100%;
-    padding: 1rem;
-    width: 80%;
+  align-items: center;
+  display: flex;
+  font-family: 'Roboto slab';
+  justify-content: center;
+  margin: 20rem auto;
+  max-height: 100%;
+  padding: 1rem;
+  width: 80%;
 
-    @media screen and (max-width: ${breakpoints.TABLET}) {
-      align-items: center;
-      flex-direction: column;
-      margin: 5rem auto;
-      width: 100%;
-    }
-  `}
+  ${mixins.belowTablet} {
+    align-items: center;
+    flex-direction: column;
+    margin: 5rem auto;
+    width: 100%;
+  }
 `;
 
 const DescriptionSection = styled.div`
-  ${({ theme: { breakpoints } }) => css`
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 200;
-    justify-content: space-between;
-    margin: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 200;
+  justify-content: space-between;
+  margin: 1.5rem;
 
-    @media screen and (max-width: ${breakpoints.TABLET}) {
-      align-items: center;
-      justify-content: center;
-      width: 80%;
-    }
-  `}
+  ${mixins.belowTablet} {
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+  }
 `;
 
 const DescriptionTitle = styled.h1<{ forTablet?: boolean }>`
-  ${({ forTablet, theme: { breakpoints } }) => css`
+  ${({ forTablet }) => css`
     font-size: 2.5rem;
     margin: 0 0 3rem 0;
 
-    @media screen and (max-width: ${breakpoints.TABLET}) {
+    ${mixins.belowTablet} {
       font-size: 1.8rem;
       margin: 0;
       ${!forTablet && 'display: none;'}
     }
-    @media screen and (min-width: ${breakpoints.TABLET}) {
+    ${mixins.aboveTablet} {
       ${forTablet && 'display: none;'}
     }
   `}
 `;
 
 const DescriptionText = styled.div`
-  ${({ theme: { breakpoints } }) => css`
-    font-size: 1.1rem;
-    text-align: justify;
+  font-size: 1.1rem;
+  text-align: justify;
 
-    @media screen and (max-width: ${breakpoints.TABLET}) {
-      font-size: 1.1rem;
-    }
-  `}
+  ${mixins.belowTablet} {
+    font-size: 1.1rem;
+  }
 `;
 
 const Image = styled.img<{ forTablet?: boolean }>`
-  ${({ forTablet, theme: { breakpoints } }) => css`
+  ${({ forTablet }) => css`
     height: auto;
     margin: 1rem;
     max-width: 20rem;
     width: 80%;
 
-    @media screen and (max-width: ${breakpoints.TABLET}) {
+    ${mixins.belowTablet} {
       ${!forTablet && 'display: none;'}
     }
-    @media screen and (min-width: ${breakpoints.TABLET}) {
+    ${mixins.aboveTablet} {
       ${forTablet && 'display: none;'}
     }
   `}

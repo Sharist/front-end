@@ -1,7 +1,8 @@
 import React from 'react';
+import { GiAirplane } from 'react-icons/gi';
 import styled, { css } from 'styled-components';
 
-import { GiAirplane } from 'react-icons/gi';
+import { mixins } from '../styles/Theme';
 import Button from './Button';
 
 const Wrapper = styled.div`
@@ -13,7 +14,7 @@ const Wrapper = styled.div`
 `;
 
 const EmptyStateImage = styled.div`
-  ${({ theme: { breakpoints, palette } }) => css`
+  ${({ theme: { palette } }) => css`
     align-items: center;
     color: ${palette.ash.darker.css};
     display: flex;
@@ -24,27 +25,27 @@ const EmptyStateImage = styled.div`
     & > * {
       font-size: 25rem !important;
 
-      @media screen and (max-width: ${breakpoints.TABLET}) {
+      ${mixins.belowTablet} {
         font-size: 22rem !important;
       }
-      @media screen and (max-width: ${breakpoints.MOBILE}) {
+      ${mixins.belowMobile} {
         font-size: 15rem !important;
       }
     }
 
-    @media screen and (max-width: ${breakpoints.MOBILE}) {
+    ${mixins.belowMobile} {
       margin: 3rem 0 -2.5rem 0;
     }
   `}
 `;
 
 const Title = styled.p`
-  ${({ theme: { typography, breakpoints } }) => css`
+  ${({ theme: { typography } }) => css`
     font-size: ${typography.X_LARGE};
     margin-bottom: 0.5rem;
     text-align: center;
 
-    @media screen and (max-width: ${breakpoints.MOBILE}) {
+    ${mixins.belowMobile} {
       font-size: ${typography.LARGE};
     }
   `}

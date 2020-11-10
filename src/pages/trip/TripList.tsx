@@ -6,6 +6,7 @@ import styled, { css } from 'styled-components';
 
 import { CardList } from '../../common/components/Card';
 import { createTrip, getTrips } from './api';
+import { mixins } from '../../common/styles/Theme';
 import { Trip } from './types';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import { useForm } from '../../common/hooks/useForm';
@@ -19,20 +20,18 @@ import TextInput from '../../common/components/forms/TextInput';
 import TripCard from './components/TripCard';
 
 const Wrapper = styled.div`
-  ${({ theme: { breakpoints } }) => css`
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 2rem;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  width: 100%;
 
-    @media screen and (max-width: ${breakpoints.TABLET}) {
-      padding: 0.5rem;
-    }
+  ${mixins.belowTablet} {
+    padding: 0.5rem;
+  }
 
-    @media screen and (max-width: ${breakpoints.MOBILE}) {
-      padding: 0;
-    }
-  `}
+  ${mixins.belowMobile} {
+    padding: 0;
+  }
 `;
 
 const PageTitle = styled.div`
@@ -44,28 +43,26 @@ const PageTitle = styled.div`
 `;
 
 const CreateTripWrapper = styled.div`
-  ${({ theme: { breakpoints } }) => css`
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    width: 30rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: 30rem;
 
-    & > * {
-      margin: 1.25rem 0;
+  & > * {
+    margin: 1.25rem 0;
 
-      &:first-child {
-        margin-top: 0;
-      }
-
-      &:last-child {
-        margin-bottom: 0;
-      }
+    &:first-child {
+      margin-top: 0;
     }
 
-    @media screen and (max-width: ${breakpoints.MOBILE}) {
-      width: 100%;
+    &:last-child {
+      margin-bottom: 0;
     }
-  `};
+  }
+
+  ${mixins.belowMobile} {
+    width: 100%;
+  }
 `;
 
 const TripCards = styled.div`

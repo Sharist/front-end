@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
+import { mixins } from '../styles/Theme';
 import { pxToRem } from '../dimensions';
 import { useDimensions } from '../hooks/useDimensions';
 import Header, { HEADER_HEIGHT_REM } from './header/Header';
@@ -46,20 +47,21 @@ const BaseLayout = styled.div<BaseLayoutProps>`
       ${adaptiveWidth &&
       css`
         width: ${breakpoints.ULTRAWIDE};
-        @media screen and (max-width: ${breakpoints.ULTRAWIDE}) {
+
+        ${mixins.belowUltrawide} {
           width: ${breakpoints.WIDE};
         }
 
-        @media screen and (max-width: ${breakpoints.WIDE}) {
+        ${mixins.belowWide} {
           width: ${breakpoints.REGULAR};
         }
 
-        @media screen and (max-width: ${breakpoints.REGULAR}) {
+        ${mixins.belowRegular} {
           width: ${breakpoints.TABLET};
         }
       `}
 
-      @media screen and (max-width: ${breakpoints.TABLET}) {
+      ${mixins.belowTablet} {
         padding: ${noPadding ? '0' : '0 1rem'};
         ${adaptiveWidth &&
         css`
@@ -67,7 +69,7 @@ const BaseLayout = styled.div<BaseLayoutProps>`
         `}
       }
 
-      @media screen and (max-width: ${breakpoints.MOBILE}) {
+      ${mixins.belowMobile} {
         padding: ${noPadding ? '0' : '0 1.5rem'};
 
         ${adaptiveWidth &&

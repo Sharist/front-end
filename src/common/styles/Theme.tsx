@@ -38,6 +38,22 @@ enum Typography {
   GIANT = '3rem',
 }
 
+/**
+ * Define theme-based mixins here.
+ */
+export const mixins = {
+  belowMobile: `@media screen and (max-width: ${Breakpoint.MOBILE})`,
+  belowTablet: `@media screen and (max-width: ${Breakpoint.TABLET})`,
+  belowRegular: `@media screen and (max-width: ${Breakpoint.REGULAR})`,
+  belowWide: `@media screen and (max-width: ${Breakpoint.WIDE})`,
+  belowUltrawide: `@media screen and (max-width: ${Breakpoint.ULTRAWIDE})`,
+  aboveMobile: `@media screen and (min-width: ${Breakpoint.MOBILE})`,
+  aboveTablet: `@media screen and (min-width: ${Breakpoint.TABLET})`,
+  aboveRegular: `@media screen and (min-width: ${Breakpoint.REGULAR})`,
+  aboveWide: `@media screen and (min-width: ${Breakpoint.WIDE})`,
+  aboveUltrawide: `@media screen and (min-width: ${Breakpoint.ULTRAWIDE})`,
+};
+
 export interface SharistTheme {
   breakpoints: typeof Breakpoint;
   palette: typeof Palette;

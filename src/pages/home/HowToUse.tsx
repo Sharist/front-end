@@ -1,67 +1,60 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { mixins } from '../../common/styles/Theme';
 
 import Ipman from '../../resources/images/to-delete/ip-man-for-no-reason.png';
 import SailorMoon from '../../resources/images/to-delete/sailor-moon-for-no-reason.png';
 import Ultraman from '../../resources/images/to-delete/ultraman-for-no-reason.png';
 
 const HowToUseWrapper = styled.div`
-  ${({ theme: { breakpoints } }) => css`
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Roboto Slab';
-    justify-content: center;
-    margin: 20rem auto;
-    padding: 1rem;
-    width: 80%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto Slab';
+  justify-content: center;
+  margin: 20rem auto;
+  padding: 1rem;
+  width: 80%;
 
-    @media screen and (max-width: ${breakpoints.TABLET}) {
-      margin: 5rem auto;
-      width: 100%;
-    }
-  `}
+  ${mixins.belowTablet} {
+    margin: 5rem auto;
+    width: 100%;
+  }
 `;
 
 const Title = styled.h1`
-  ${({ theme: { breakpoints } }) => css`
-    font-size: 2.5rem;
-    margin: 3rem 1.5rem;
+  font-size: 2.5rem;
+  margin: 3rem 1.5rem;
 
-    @media screen and (max-width: ${breakpoints.TABLET}) {
-      font-size: 1.8rem;
-    }
-  `}
+  ${mixins.belowTablet} {
+    font-size: 1.8rem;
+  }
 `;
 
 const CardSection = styled.div`
-  ${({ theme: { breakpoints } }) => css`
-    display: flex;
-    flex-wrap: no-wrap;
+  display: flex;
+  flex-wrap: no-wrap;
 
-    @media screen and (max-width: ${breakpoints.TABLET}) {
-      align-items: center;
-      flex-direction: column;
-    }
-  `}
+  ${mixins.belowTablet} {
+    align-items: center;
+    flex-direction: column;
+  }
 `;
 
 const Card = styled.div`
-  ${({ theme: { breakpoints } }) => css`
-    align-items: center;
-    display: flex;
-    flex-basis: 0;
-    flex-direction: column;
-    flex-grow: 1;
-    margin: 2rem;
+  align-items: center;
+  display: flex;
+  flex-basis: 0;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 2rem;
 
-    @media screen and (max-width: ${breakpoints.TABLET}) {
-      align-items: center;
-      justify-content: center;
-      margin: 2rem;
-      width: 80%;
-    }
-  `}
+  ${mixins.belowTablet} {
+    align-items: center;
+    justify-content: center;
+    margin: 2rem;
+    width: 80%;
+  }
 `;
 
 const CardImage = styled.img`
