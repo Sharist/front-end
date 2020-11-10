@@ -1,4 +1,4 @@
-import React, { createRef, ReactChild } from 'react';
+import React, { createRef, ReactNode } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
@@ -69,7 +69,7 @@ interface ActionButtonConfig {
 
 type Props = {
   actions?: ActionButtonConfig[];
-  children?: ReactChild | ReactChild[];
+  children: ReactNode;
   hasCloseButton?: boolean;
   hide?: () => void;
   isVisible: boolean;

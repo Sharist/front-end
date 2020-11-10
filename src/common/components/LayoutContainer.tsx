@@ -1,4 +1,4 @@
-import React, { ReactChild } from 'react';
+import React, { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
 import { pxToRem } from '../dimensions';
@@ -90,7 +90,7 @@ type LayoutContainerProps = {
    */
   adaptiveWidth?: boolean;
   center?: boolean;
-  children?: ReactChild | ReactChild[];
+  children: ReactNode;
   floatingHeader?: boolean;
   fullHeight?: boolean;
   isLanding?: boolean;

@@ -1,4 +1,4 @@
-import React, { ReactChild } from 'react';
+import React, { ReactNode } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import Color from './Color';
@@ -45,7 +45,7 @@ export interface SharistTheme {
 }
 
 type Props = {
-  children?: ReactChild | ReactChild[];
+  children: ReactNode;
 };
 
 function SharistThemeProvider({ children }: Props) {

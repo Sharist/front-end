@@ -1,4 +1,4 @@
-import React, { ReactChild, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 
 import { MapAdaptor } from '../apis/MapAdaptor';
 import { MapSearchDataSource } from '../MapSearchDataSource';
@@ -26,7 +26,7 @@ const MapContext = React.createContext<MapContextType>({
   extraData: { initialized: false },
 });
 
-function MapContextProvider({ children }: { children?: ReactChild }) {
+function MapContextProvider({ children }: { children: ReactNode }) {
   const [mapInstanceData, setMapInstanceData] = useState<{
     mapAdaptor?: MapAdaptor;
     mapInstance?: google.maps.Map<HTMLDivElement>;

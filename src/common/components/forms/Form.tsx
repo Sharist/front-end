@@ -1,7 +1,7 @@
-import React, { ReactChild } from 'react';
+import React, { ReactNode } from 'react';
 
 type Props = {
-  children?: ReactChild | ReactChild[];
+  children: ReactNode;
   className?: string;
   /**
    * If specified, generates a hidden `<button type="submit"></button>`

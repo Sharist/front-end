@@ -1,4 +1,4 @@
-import React, { ReactChild } from 'react';
+import React, { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
 import Spinner from './Spinner';
@@ -108,7 +108,7 @@ const SpinnerContainer = styled.span`
 
 type Props = {
   buttonRef?: React.Ref<HTMLButtonElement>;
-  children: ReactChild | ReactChild[];
+  children: ReactNode;
   className?: string;
   disabled?: boolean;
   /** Button will be disabled and a spinner will show up replacing the text. Overrides `disabled` setting. */
