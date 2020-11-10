@@ -7,7 +7,7 @@ import './index.css';
 import { MapContextProvider } from './common/contexts/MapContext';
 import * as serviceWorker from './serviceWorker';
 import routes from './routes';
-import SharistThemeProvider from './common/Theme';
+import SharistThemeProvider from './common/styles/Theme';
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,6 +1,6 @@
 import 'styled-components';
 
-import { SharistTheme } from '../common/Theme';
+import { SharistTheme } from '../common/styles/Theme';
 
 declare module 'styled-components' {
   type Theme = SharistTheme;
