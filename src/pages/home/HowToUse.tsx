@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { mixins } from '../../common/styles/Theme';
 
 import Ipman from '../../resources/images/to-delete/ip-man-for-no-reason.png';
