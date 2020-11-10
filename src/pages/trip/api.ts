@@ -4,35 +4,35 @@ import { generateRandomKey } from '../../common/forms';
 export async function getTrips(): Promise<Trip[]> {
   const tripsResponse: GetTripsResponse = await Promise.resolve([
     {
-      'sharist.trip/id': '8f3d2804-1773-49b4-a4f7-45f21072454a',
+      'sharist.trip/id': generateRandomKey(),
       'sharist.trip/name': 'San Diego',
       'sharist.trip/description': '2 day trip',
       'sharist.trip/created-at': '2020-09-26T15:07:16Z',
       'sharist.trip/last-updated-at': '2020-09-26T15:07:16Z',
     },
     {
-      'sharist.trip/id': '8f3d2804-1773-49b4-a4f7-45f21072454a',
+      'sharist.trip/id': generateRandomKey(),
       'sharist.trip/name': 'San Diego',
       'sharist.trip/description': '2 day trip',
       'sharist.trip/created-at': '2020-09-26T15:07:16Z',
       'sharist.trip/last-updated-at': '2020-09-26T15:07:16Z',
     },
     {
-      'sharist.trip/id': '8f3d2804-1773-49b4-a4f7-45f21072454a',
+      'sharist.trip/id': generateRandomKey(),
       'sharist.trip/name': 'San Diego',
       'sharist.trip/description': '2 day trip',
       'sharist.trip/created-at': '2020-09-26T15:07:16Z',
       'sharist.trip/last-updated-at': '2020-09-26T15:07:16Z',
     },
     {
-      'sharist.trip/id': '8f3d2804-1773-49b4-a4f7-45f21072454a',
+      'sharist.trip/id': generateRandomKey(),
       'sharist.trip/name': 'San Diego',
       'sharist.trip/description': '2 day trip',
       'sharist.trip/created-at': '2020-09-26T15:07:16Z',
       'sharist.trip/last-updated-at': '2020-09-26T15:07:16Z',
     },
     {
-      'sharist.trip/id': '8f3d2804-1773-49b4-a4f7-45f21072454a',
+      'sharist.trip/id': generateRandomKey(),
       'sharist.trip/name': 'San Diego',
       'sharist.trip/description': '2 day trip',
       'sharist.trip/created-at': '2020-09-26T15:07:16Z',

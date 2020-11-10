@@ -131,7 +131,7 @@ function TripList(_: RouteComponentProps) {
           <TripCards>
             <CardList>
               {trips.map((trip) => (
-                <TripCard trip={trip} />
+                <TripCard key={trip.id} trip={trip} />
               ))}
             </CardList>
           </TripCards>
