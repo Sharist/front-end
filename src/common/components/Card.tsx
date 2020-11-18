@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styled, { css } from 'styled-components';
+import { mixins } from '../styles/Theme';
 
 /**
  * Card component. This is a composite component.
@@ -32,6 +33,7 @@ const Card = styled.div`
     flex-direction: column;
   `}
 `;
+
 export default Card;
 
 type CardListProps = {
@@ -47,13 +49,18 @@ type CardListProps = {
  * Columns are automatically created based on container and content width.
  */
 export const CardList = styled.div<CardListProps>`
-  ${({ contentMinWidth = '18rem', gap = '1.5rem' }) => css`
+  ${({ contentMinWidth = '15rem', gap = '1.5rem' }) => css`
     display: grid;
     gap: ${gap};
-    grid-template-columns: repeat(auto-fit, minmax(${contentMinWidth}, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(${contentMinWidth}, 1fr));
     justify-content: stretch;
     margin: 0;
     padding: 0;
+
+    ${mixins.belowMobile} {
+      grid-template-columns: 95%;
+      justify-content: center;
+    }
   `}
 `;
 
@@ -81,10 +88,9 @@ export const CardContent = styled.div`
  */
 export const CardFooter = styled.div<{ noSeparator?: boolean }>`
   ${({ noSeparator = false, theme: { palette } }) => css`
-    align-self: center;
     display: flex;
     justify-content: flex-end;
-    margin: auto 1.25rem;
+    margin: auto 1.25rem 0;
     padding: 1.25rem 0;
     width: calc(100% - 2.5rem);
 

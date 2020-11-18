@@ -33,18 +33,20 @@ const ActionIcon = styled.a`
 
 type Props = {
   trip: Trip;
+  onDelete: () => void;
+  onEdit: () => void;
 };
 
-function TripCard({ trip }: Props) {
+function TripCard({ trip, onDelete, onEdit }: Props) {
   return (
     <Card title={trip.name}>
       <CardHeader title={trip.name} subtitle={trip.description} />
       <CardFooter noSeparator>
         <ActionRow>
-          <ActionIcon>
+          <ActionIcon onClick={onEdit}>
             <IoMdCreate size={remToPx(1.25)} />
           </ActionIcon>
-          <ActionIcon>
+          <ActionIcon onClick={onDelete}>
             <IoMdTrash size={remToPx(1.25)} />
           </ActionIcon>
         </ActionRow>

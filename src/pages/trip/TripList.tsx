@@ -5,7 +5,7 @@ import Joi from 'joi';
 import styled, { css } from 'styled-components';
 
 import { CardList } from '../../common/components/Card';
-import { createTrip, getTrips } from './api';
+import { createTrip, deleteTrip, editTrip, getTrips } from './api';
 import { mixins } from '../../common/styles/Theme';
 import { Trip } from './types';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
@@ -65,50 +65,61 @@ const CreateTripWrapper = styled.div`
   }
 `;
 
-const TripCards = styled.div`
+const TripCardList = styled(CardList)`
   margin: 2rem 0;
 `;
 
 interface CreateTripFormData {
-  tripName: string;
-  tripDescription: string;
+  name: string;
+  description: string;
 }
 
 function TripList(_: RouteComponentProps) {
   const { signedIn } = useAuthentication();
 
-  const [createTripModalVisible, setCeateTripModalVisible] = useState(false);
+  const [tripModalSettings, setTripModalSettings] = useState<{ visible: boolean; editTrip?: Trip }>(
+    { visible: false }
+  );
+
   const [trips, setTrips] = useState<Trip[]>([]);
 
   const { errors, handleSubmit, register, reset: resetForm } = useForm<CreateTripFormData>({
-    tripName: Joi.string().label('Name').required(),
-    tripDescription: Joi.optional(),
+    name: Joi.string().label('Name').required(),
+    description: Joi.optional(),
   });
 
   const hiddenSubmitRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    getTrips().then(setTrips);
+    refreshTrips();
   }, []);
 
   if (!signedIn) {
     return null;
   }
 
-  function showCreateTripModal() {
-    setCeateTripModalVisible(true);
+  async function refreshTrips() {
+    setTrips(await getTrips());
   }
 
-  function hideCreateTripModal() {
-    setCeateTripModalVisible(false);
+  function openTripModal(editTrip?: Trip) {
+    resetForm(editTrip);
+    setTripModalSettings({ editTrip, visible: true });
   }
 
-  async function onCreateTripClick({ tripName, tripDescription }: CreateTripFormData) {
+  function closeCreateTripModal() {
+    resetForm({});
+    setTripModalSettings({ ...tripModalSettings, visible: false });
+  }
+
+  async function onTripModalSubmit({ name, description }: CreateTripFormData) {
     try {
-      const createdTrip = await createTrip(tripName, tripDescription);
-      setTrips([createdTrip, ...trips]);
-      hideCreateTripModal();
-      resetForm();
+      tripModalSettings.editTrip
+        ? await editTrip({ name, description, id: tripModalSettings.editTrip.id })
+        : await createTrip({ name, description });
+
+      await refreshTrips();
+      closeCreateTripModal();
     } catch (error) {
       console.error(`Error creating trip: ${error.message}. Please try again later.`);
     }
@@ -123,56 +134,66 @@ function TripList(_: RouteComponentProps) {
           <EmptyState
             title='Well, this is a bit empty 😥'
             subtitle="Let's brighten this page up by planning your next trip!"
-            action={{ actionLabel: 'Start planning', actionHandler: showCreateTripModal }}
+            action={{ actionLabel: 'Start planning', actionHandler: openTripModal }}
           />
         )}
 
         {trips.length !== 0 && (
-          <TripCards>
-            <CardList>
-              {trips.map((trip) => (
-                <TripCard key={trip.id} trip={trip} />
-              ))}
-            </CardList>
-          </TripCards>
+          <TripCardList>
+            {trips.map((trip) => (
+              <TripCard
+                key={trip.id}
+                trip={trip}
+                onDelete={async () => {
+                  deleteTrip(trip);
+                  await refreshTrips();
+                }}
+                onEdit={() => openTripModal(trip)}
+              />
+            ))}
+          </TripCardList>
         )}
 
         <FloatingActionButton
-          icon={IoIosAdd}
           isPrimary
+          icon={IoIosAdd}
           label='Create trip'
-          onClick={showCreateTripModal}
+          onClick={openTripModal}
         />
       </Wrapper>
 
       <Modal
         hasCloseButton
-        hide={hideCreateTripModal}
-        isVisible={createTripModalVisible}
+        hide={closeCreateTripModal}
+        isVisible={tripModalSettings.visible}
         title='Create trip'
         actions={[
-          { label: 'Cancel', onClick: hideCreateTripModal },
-          { label: 'Create', isPrimary: true, onClick: () => hiddenSubmitRef.current?.click() },
+          { label: 'Cancel', onClick: closeCreateTripModal },
+          {
+            isPrimary: true,
+            label: tripModalSettings.editTrip ? 'Update' : 'Create',
+            onClick: () => hiddenSubmitRef.current?.click(),
+          },
         ]}
       >
-        <Form onSubmit={handleSubmit(onCreateTripClick)} hiddenSubmitRef={hiddenSubmitRef}>
+        <Form onSubmit={handleSubmit(onTripModalSubmit)} hiddenSubmitRef={hiddenSubmitRef}>
           <CreateTripWrapper>
             <TextInput
               inputRef={register}
-              name='tripName'
+              name='name'
               label='Give this trip a name'
               placeholder='Family vacation to Venice, Italy'
               spellCheck
               type='text'
-              errorMessage={errors.tripName?.message}
+              errorMessage={errors.name?.message}
             />
             <TextAreaInput
               label='Tells us a bit more about this trip'
-              name='tripDescription'
+              name='description'
               placeholder='4-day trip to Venice for Summer 2022 with people I love!'
               spellCheck
               textAreaRef={register}
-              errorMessage={errors.tripDescription?.message}
+              errorMessage={errors.description?.message}
             />
           </CreateTripWrapper>
         </Form>
