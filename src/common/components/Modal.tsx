@@ -1,4 +1,4 @@
-import React, { createRef, ReactNode } from 'react';
+import React, { createRef, ReactNode, useEffect, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
@@ -69,8 +69,11 @@ interface ActionButtonConfig {
 }
 
 type Props = {
-  actions?: ActionButtonConfig[];
+  cancelAction: () => void;
+  cancelButtonText?: string;
   children: ReactNode;
+  confirmAction: () => void;
+  confirmButtonText?: string;
   hasCloseButton?: boolean;
   hide?: () => void;
   isVisible: boolean;
@@ -78,8 +81,26 @@ type Props = {
   title?: string;
 };
 
-function Modal({ actions, children, isVisible, hasCloseButton = false, title, show, hide }: Props) {
+function Modal({
+  cancelAction,
+  cancelButtonText = 'Cancel',
+  children,
+  confirmAction,
+  confirmButtonText = 'Confirm',
+  isVisible,
+  hasCloseButton = false,
+  title,
+  hide,
+}: Props) {
+  const [confirmActionLoading, setConfirmActionLoading] = useState(false);
   const backdropRef = createRef<HTMLDivElement>();
+
+  useEffect(() => {
+    // Set not loading every time the modal's opened
+    if (!isVisible) {
+      setConfirmActionLoading(false);
+    }
+  }, [isVisible]);
 
   document.body.style.overflow = isVisible ? 'hidden' : 'visible';
 
@@ -108,21 +129,28 @@ function Modal({ actions, children, isVisible, hasCloseButton = false, title, sh
 
         {children}
 
-        {actions && (
-          <ModalActionsWrapper>
-            <ButtonRow>
-              {actions.map(({ isPrimary, onClick, label }) => (
-                <Button
-                  key={generateRandomKey({ prefix: label })}
-                  isPrimary={isPrimary}
-                  onClick={onClick}
-                >
-                  {label}
-                </Button>
-              ))}
-            </ButtonRow>
-          </ModalActionsWrapper>
-        )}
+        <ModalActionsWrapper>
+          <ButtonRow>
+            <Button
+              disabled={confirmActionLoading}
+              key={generateRandomKey({ prefix: cancelButtonText })}
+              onClick={cancelAction}
+            >
+              {cancelButtonText}
+            </Button>
+            <Button
+              key={generateRandomKey({ prefix: confirmButtonText })}
+              isLoading={confirmActionLoading}
+              isPrimary
+              onClick={() => {
+                setConfirmActionLoading(true);
+                confirmAction();
+              }}
+            >
+              {confirmButtonText}
+            </Button>
+          </ButtonRow>
+        </ModalActionsWrapper>
       </ModalWrapper>
     </Backdrop>
   );

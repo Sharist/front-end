@@ -165,18 +165,13 @@ function TripList(_: RouteComponentProps) {
       </Wrapper>
 
       <Modal
+        cancelAction={closeCreateTripModal}
+        confirmAction={() => hiddenSubmitRef.current?.click()}
+        confirmButtonText={tripModalSettings.editTrip ? 'Update' : 'Create'}
         hasCloseButton
         hide={closeCreateTripModal}
         isVisible={tripModalSettings.visible}
         title='Create trip'
-        actions={[
-          { label: 'Cancel', onClick: closeCreateTripModal },
-          {
-            isPrimary: true,
-            label: tripModalSettings.editTrip ? 'Update' : 'Create',
-            onClick: () => hiddenSubmitRef.current?.click(),
-          },
-        ]}
       >
         <Form onSubmit={handleSubmit(onTripModalSubmit)} hiddenSubmitRef={hiddenSubmitRef}>
           <CreateTripWrapper>
