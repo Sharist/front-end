@@ -5,9 +5,9 @@ import Joi from 'joi';
 import styled, { css } from 'styled-components';
 
 import { CardList } from '../../common/components/Card';
-import { createTrip, deleteTrip, editTrip, getTrips } from './api';
+import { createTrip, deleteTrip, replaceTrip, getTrips } from './common/api';
 import { mixins } from '../../common/styles/Theme';
-import { Trip } from './types';
+import { Trip } from './common/types';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import { useForm } from '../../common/hooks/useForm';
 import EmptyState from '../../common/components/EmptyState';
@@ -114,8 +114,10 @@ function TripList(_: RouteComponentProps) {
 
   async function onTripModalSubmit({ name, description }: CreateTripFormData) {
     try {
-      tripModalSettings.editTrip
-        ? await editTrip({ name, description, id: tripModalSettings.editTrip.id })
+      const tripId = tripModalSettings.editTrip?.id;
+
+      tripId
+        ? await replaceTrip(tripId, { name, description })
         : await createTrip({ name, description });
 
       await refreshTrips();

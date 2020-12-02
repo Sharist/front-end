@@ -21,25 +21,8 @@ export interface GetTripResponse {
 // GET /trips
 export type GetTripsResponse = GetTripResponse[];
 
-// POST /trips
-export interface CreateTripRequest {
+// POST /trips or PUT /trips
+export interface UpsertTripRequest {
   'sharist.trip/name': string;
   'sharist.trip/description': string;
-}
-
-export interface CreateTripResponse {
-  'sharist.trip/name': string;
-  'sharist.trip/description': string;
-  'sharist.trip/id': string;
-  'sharist.trip/owner': {
-    'sharist.user/id': string;
-  };
-  'sharist.trip/created-at': string;
-  'sharist.trip/last-updated-at': string;
-}
-
-// PUT /trips/:id
-export interface UpdateTripRequest {
-  'sharist.trip/name'?: string;
-  'sharist.trip/description'?: string;
 }

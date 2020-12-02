@@ -47,6 +47,10 @@ export function post(endpoint: string, data?: any, config?: AxiosRequestConfig) 
   return axios.post(resolveUrl(endpoint), data, setupConfig(config));
 }
 
+export function put(endpoint: string, data?: any, config?: AxiosRequestConfig) {
+  return axios.put(resolveUrl(endpoint), data, setupConfig(config));
+}
+
 export function patch(endpoint: string, data?: any, config?: AxiosRequestConfig) {
   return axios.patch(resolveUrl(endpoint), data, setupConfig(config));
 }
