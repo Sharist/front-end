@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 import { remToPx } from '../../../common/dimensions';
 import { Trip } from '../common/types';
 import Card, { CardFooter, CardHeader } from '../../../common/components/Card';
+import routes from '../../../routes';
 
 const ActionRow = styled.div`
   align-self: flex-end;
@@ -39,14 +40,28 @@ type Props = {
 
 function TripCard({ trip, onDelete, onEdit }: Props) {
   return (
-    <Card title={trip.name}>
+    <Card
+      onClick={() => {
+        routes.tripEdit.navigator({ tripId: trip.id });
+      }}
+    >
       <CardHeader title={trip.name} subtitle={trip.description} />
       <CardFooter noSeparator>
         <ActionRow>
-          <ActionIcon onClick={onEdit}>
+          <ActionIcon
+            onClick={(e) => {
+              onEdit();
+              e.stopPropagation();
+            }}
+          >
             <IoMdCreate size={remToPx(1.25)} />
           </ActionIcon>
-          <ActionIcon onClick={onDelete}>
+          <ActionIcon
+            onClick={(e) => {
+              onDelete();
+              e.stopPropagation();
+            }}
+          >
             <IoMdTrash size={remToPx(1.25)} />
           </ActionIcon>
         </ActionRow>

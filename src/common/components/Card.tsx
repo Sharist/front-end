@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import styled, { css } from 'styled-components';
 import { mixins } from '../styles/Theme';
@@ -22,19 +22,48 @@ import { mixins } from '../styles/Theme';
  *   </CardFooter>
  * </Card>
  */
-const Card = styled.div`
+const RegularCard = styled.div`
   ${({ theme: { palette } }) => css`
-    background-color: white;
+    background-color: ${palette.white.css};
     border-radius: 0.5rem;
     border: 0.05rem solid ${palette.ash.darker.css};
-    box-shadow: 0 0.1rem 0.35rem ${palette.ash.darker.css};
+    box-shadow: 0 0.1rem 0.25rem ${palette.ash.css};
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
   `}
 `;
 
-export default Card;
+const ClickableCard = styled(RegularCard)`
+  ${({ theme: { palette } }) => css`
+    transition: background-color 150ms, border 150ms, box-shadow 150ms;
+
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      background-color: ${palette.white.lighter.css};
+      border: 0.05rem solid ${palette.ash.darker.css};
+      box-shadow: 0 0.2rem 0.5rem ${palette.ash.darker.css};
+    }
+
+    &:active {
+      background-color: ${palette.white.css};
+      border: 0.05rem solid ${palette.ash.darker.css};
+      box-shadow: 0 0.35rem 0.8rem ${palette.ash.darker.css};
+    }
+  `}
+`;
+
+type CardProps = {
+  onClick?: () => void;
+  children: ReactNode;
+};
+
+export default function Card({ children, onClick }: CardProps) {
+  const CardComponent = onClick ? ClickableCard : RegularCard;
+
+  return <CardComponent onClick={onClick}>{children}</CardComponent>;
+}
 
 type CardListProps = {
   /** Gap width between columns and rows. Defaults to `'1.5rem'`. */
@@ -140,7 +169,7 @@ const CardSubtitle = styled.div`
   `}
 `;
 
-type Props = {
+type CardHeaderProps = {
   image?: CardImageConfig;
   title: string;
   subtitle?: string;
@@ -153,7 +182,7 @@ type Props = {
  *
  * See `<Card />` for example.
  */
-export function CardHeader({ image, title, subtitle }: Props) {
+export function CardHeader({ image, title, subtitle }: CardHeaderProps) {
   return (
     <>
       {image && <CardImage imageConfig={image} />}

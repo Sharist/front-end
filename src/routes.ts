@@ -11,7 +11,7 @@ import VerifyEmail from './pages/auth/VerifyEmail';
 interface RouteSpec {
   pageComponent: ComponentType<RouteComponentProps>;
   path: string;
-  navigator: () => Promise<void>;
+  navigator: (param?: any) => Promise<void>;
 }
 
 interface RouteMap {
@@ -22,8 +22,13 @@ function routeSpecOf(pageComponent: ComponentType<RouteComponentProps>, path: st
   return {
     pageComponent,
     path,
-    navigator: (redirectTo?: RouteSpec) =>
-      navigate(redirectTo?.path ? `${path}?redirect=${encodeURIComponent(redirectTo.path)}` : path),
+    navigator: (param = {}) => {
+      const urlSegments = path
+        .split('/')
+        .map((segment) => (segment.startsWith(':') ? param[segment.substr(1)] : segment));
+
+      return navigate(urlSegments.join('/'));
+    },
   };
 }
 
@@ -36,7 +41,7 @@ const routes: RouteMap = {
   home: routeSpecOf(Home, '/'),
   logIn: routeSpecOf(Auth, '/login'),
   tripList: routeSpecOf(TripList, '/trips'),
-  tripEdit: routeSpecOf(TripEdit, '/trips/edit'),
+  tripEdit: routeSpecOf(TripEdit, '/trips/:tripId/edit'),
   signOut: routeSpecOf(SignOut, '/signout'),
   signUp: routeSpecOf(Auth, '/signup'),
   verifyEmail: routeSpecOf(VerifyEmail, '/verify-email'),
