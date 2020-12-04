@@ -104,7 +104,7 @@ function MobileMenu({ onDismiss, visible }: Props) {
 
         <MobileMenuSection>
           <MobileSiteMapLink to={routes.home.path}>Home</MobileSiteMapLink>
-          <MobileSiteMapLink to={routes.tripEdit.path}>Trips</MobileSiteMapLink>
+          <MobileSiteMapLink to={routes.tripList.path}>Trips</MobileSiteMapLink>
         </MobileMenuSection>
 
         <MobileMenuSection>
