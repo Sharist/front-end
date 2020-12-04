@@ -1,6 +1,12 @@
 import { get, post, put } from '../../../common/http';
 import { UpsertTripRequest, GetTripResponse, GetTripsResponse, Trip } from './types';
 
+export async function getTrip(tripId: string): Promise<Trip> {
+  const tripResponse: GetTripResponse = (await get(`/trips/${tripId}`)).data;
+
+  return convertToClientModel(tripResponse);
+}
+
 export async function getTrips(): Promise<Trip[]> {
   // const tripsResponse: GetTripsResponse = await Promise.resolve(fakeTripsData);
   const tripsResponse: GetTripsResponse = (await get('/trips')).data;

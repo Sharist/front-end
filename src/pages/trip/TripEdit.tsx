@@ -1,15 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import styled from 'styled-components';
 
+import { getTrip } from './common/api';
 import { remToPx } from '../../common/dimensions';
 import { SearchResult } from '../../common/components/search/SearchResultItem';
+import { Trip } from './common/types';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import Button, { ButtonRow } from '../../common/components/Button';
 import Card, { CardFooter, CardHeader } from '../../common/components/Card';
 import IMap from '../../common/components/IMap';
 import LayoutContainer from '../../common/components/LayoutContainer';
 import MapContext from '../../common/contexts/MapContext';
+import routes from '../../routes';
 import Search from '../../common/components/search/Search';
 
 const Content = styled.div`
@@ -34,15 +37,31 @@ const SearchHeader = styled.div`
   padding: 0.75rem 0;
 `;
 
-function TripEdit(_: RouteComponentProps) {
+type Props = RouteComponentProps & {
+  tripId?: string;
+};
+
+function TripEdit({ tripId }: Props) {
   const [pendingPlace, setPendingPlace] = useState<google.maps.places.PlaceResult | null>(null);
+  const [edittingTrip, setEdittingTrip] = useState<Trip | null>(null);
 
   const { signedIn } = useAuthentication();
   const { mapAdaptor, mapInstance, mapSearchDataSource } = useContext(MapContext);
 
+  useEffect(() => {
+    if (tripId && !edittingTrip) {
+      getTrip(tripId).then(setEdittingTrip);
+    }
+  }, [edittingTrip, tripId]);
+
   // Do not render if not signed in
   if (!signedIn) {
     return null;
+  }
+
+  // Return to trip selection page if tripId is not specified
+  if (!tripId) {
+    routes.tripList.navigator();
   }
 
   async function handleResultSelected(searchResult: SearchResult) {
