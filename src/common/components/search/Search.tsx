@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import { debounce } from '../../timing';
@@ -80,14 +80,27 @@ function Search({
   const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
   const [results, setResults] = useState<SearchResult[] | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-  function clearDropdown() {
-    setHighlightedIndex(-1);
-    setResults(null);
+  const searchWrapperRef = useRef<HTMLDivElement | null>(null);
+
+  function handleDocumentClick(e: MouseEvent) {
+    if (!searchWrapperRef.current?.contains(e.target as Node)) {
+      setIsDropdownVisible(false);
+    }
   }
 
+  useEffect(() => {
+    window.addEventListener('click', handleDocumentClick);
+
+    return function cleanUp() {
+      window.removeEventListener('click', handleDocumentClick);
+    };
+  }, []);
+
   function handleResultSelected(searchResult: SearchResult) {
-    clearDropdown();
+    setHighlightedIndex(-1);
+    setIsDropdownVisible(false);
     setSearchQuery(searchResult.text);
     onSelectResult?.(searchResult);
   }
@@ -99,7 +112,9 @@ function Search({
     if (value) {
       handleSearchInputDebounced(value, onAutocompleteSearch, setResults);
     } else {
-      clearDropdown();
+      cancelAutocompleteSearch();
+      setHighlightedIndex(-1);
+      setResults(null);
     }
   }
 
@@ -113,24 +128,27 @@ function Search({
         setHighlightedIndex(highlightedIndex - 1);
       }
     } else if (e.key === 'Escape') {
-      clearDropdown();
+      setIsDropdownVisible(false);
     }
   }
 
   function handleKeyPress(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
+      (e.target as HTMLInputElement).blur();
+
       if (results && highlightedIndex !== -1) {
         handleResultSelected(results[highlightedIndex]);
       } else if (onFullSearchResult) {
-        clearDropdown();
         cancelAutocompleteSearch();
+        setHighlightedIndex(-1);
+        setIsDropdownVisible(false);
         onSearch(searchQuery).then(onFullSearchResult);
       }
     }
   }
 
   return (
-    <SearchWrapper className={className}>
+    <SearchWrapper className={className} ref={searchWrapperRef}>
       <InputBoxWrapper>
         {hasLogo && (
           <InlineLogo>
@@ -139,15 +157,16 @@ function Search({
         )}
         <SearchBox
           hasLogo={hasLogo}
+          onChange={handleInputChange}
+          onFocus={() => setIsDropdownVisible(true)}
           onKeyDown={handleKeyDown}
           onKeyPress={handleKeyPress}
-          onChange={handleInputChange}
           placeholder={placeholder}
           spellCheck={false}
           value={searchQuery}
         />
       </InputBoxWrapper>
-      {searchQuery && (
+      {isDropdownVisible && (
         <SuggestionsDropdown
           clearResultHighlight={() => setHighlightedIndex(-1)}
           highlightedResultKey={results?.[highlightedIndex]?.key}

@@ -35,10 +35,6 @@ const NoResult = styled.span`
     display: flex;
     font-style: italics;
     padding: 0 1.5rem;
-
-    &:before {
-      content: 'No result matching query';
-    }
   `}
 `;
 
@@ -63,7 +59,7 @@ function SuggestionsDropdown({
 
   const dropdownContent =
     searchResults.length === 0 ? (
-      <NoResult />
+      <NoResult>No result matching query</NoResult>
     ) : (
       searchResults.map((searchResult) => (
         <SearchResultItem
