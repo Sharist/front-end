@@ -46,8 +46,20 @@ const HeaderActionButton = styled(Button)`
 
 const LandingMainSectionActionButton = styled(HeaderActionButton).attrs({ transparent: true })`
   ${({ theme: { palette } }) => css`
-    color: ${palette.white.css};
+    color: ${palette.ash.css};
     width: 4rem;
+
+    &:hover,
+    &:focus {
+      color: ${palette.white.css};
+      text-shadow: 0 0 0.02rem ${palette.white.css};
+    }
+
+    &:active {
+      border-color: ${palette.transparent.css};
+      color: ${palette.ash.lighter.css};
+      text-shadow: 0 0 0.05rem ${palette.ash.lighter.css};
+    }
   `}
 `;
 

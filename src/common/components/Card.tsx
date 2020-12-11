@@ -25,9 +25,10 @@ import { mixins } from '../styles/Theme';
 const RegularCard = styled.div`
   ${({ theme: { palette } }) => css`
     background-color: ${palette.white.css};
+    border: 0.05rem solid ${palette.white.darker.css};
+    box-shadow: 0 0.05rem 0.1rem ${palette.ash.darker.css};
+
     border-radius: 0.5rem;
-    border: 0.05rem solid ${palette.ash.darker.css};
-    box-shadow: 0 0.1rem 0.25rem ${palette.ash.css};
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -41,15 +42,13 @@ const ClickableCard = styled(RegularCard)`
     &:hover,
     &:focus {
       cursor: pointer;
-      background-color: ${palette.white.lighter.css};
-      border: 0.05rem solid ${palette.ash.darker.css};
-      box-shadow: 0 0.2rem 0.5rem ${palette.ash.darker.css};
+      box-shadow: 0 0.15rem 0.5rem ${palette.ash.darker.css};
     }
 
     &:active {
-      background-color: ${palette.white.css};
-      border: 0.05rem solid ${palette.ash.darker.css};
-      box-shadow: 0 0.35rem 0.8rem ${palette.ash.darker.css};
+      /* background-color: ${palette.white.lighter.lighter.css};
+      border: 0.05rem solid ${palette.white.darker.css}; */
+      box-shadow: 0 0.25rem 0.65rem ${palette.ash.darker.css};
     }
   `}
 `;

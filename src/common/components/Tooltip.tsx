@@ -7,8 +7,8 @@ const Wrapper = styled.div<{ visible: boolean }>`
     border-radius: 0.5rem;
     box-shadow: 0 0.05rem 0.25rem ${palette.grey.css};
     font-size: 1rem;
-    padding: 0.5rem 0.75rem;
     margin: 0 0.5rem;
+    padding: 0.5rem 0.75rem;
 
     ${!visible && 'display: none;'}
   `}

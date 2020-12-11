@@ -22,77 +22,103 @@ export const ButtonRow = styled.div`
 const BaseButton = styled.button`
   ${({ disabled, theme: { palette } }) =>
     css`
-      align-items: center;
       background-color: ${palette.ash.css};
-      border-radius: 0.2rem;
       border: 0.05rem solid ${palette.ash.css};
-      box-shadow: 0 0 0 transparent;
-      color: ${disabled ? palette.grey.css : palette.regular.css};
-      cursor: ${disabled ? 'default' : 'pointer'};
+
+      align-items: center;
+      border-radius: 0.2rem;
+      color: ${palette.regular.css};
+      cursor: pointer;
       display: flex;
       font-weight: 400;
       justify-content: center;
       padding: 0.4rem 1rem;
       text-shadow: 0 0 0 transparent;
-      transition: border 0.1s, box-shadow 0.1s, text-shadow 0.1s;
 
-      &:hover,
-      &:focus {
-        border: ${disabled ? '' : `0.05rem solid ${palette.ash.css}`};
-        box-shadow: ${disabled
-          ? `0 0 0 ${palette.transparent.css}`
-          : `0 0 0.3rem ${palette.ash.darker.css}`};
-        text-shadow: 0 0 0 transparent;
-        outline: 0;
-      }
+      ${!disabled &&
+      css`
+        box-shadow: 0 0.05rem 0.1rem ${palette.ash.darker.css};
+        transition: background-color 150ms, border 150ms, box-shadow 150ms, text-shadow 150ms;
 
-      &:active {
-        border: ${disabled ? '' : `0.05rem solid ${palette.ash.css}`};
-        box-shadow: ${disabled ? '' : `0 0.02rem 0.15rem ${palette.ash.darker.css}`};
-        outline: none;
-        transform: ${disabled ? 'none' : 'translateY(0.05rem)'};
-      }
+        &:hover,
+        &:focus {
+          box-shadow: 0 0.15rem 0.5rem ${palette.ash.darker.css};
+          text-shadow: 0 0 0 transparent;
+          outline: 0;
+        }
+
+        &:active {
+          background-color: ${palette.ash.lighter.css};
+          border-color: ${palette.ash.lighter.css};
+          box-shadow: 0 0.25rem 0.65rem ${palette.ash.darker.css};
+          outline: none;
+        }
+      `}
+
+      ${disabled &&
+      css`
+        color: ${palette.grey.css};
+        cursor: default;
+      `}
     `}
 `;
 
 const PrimaryButton = styled(BaseButton)`
-  ${({ disabled, theme: { palette } }) => css`
-    background-color: ${disabled ? palette.sun.lighter.css : palette.sun.css};
-    border-color: ${disabled ? palette.sun.lighter.css : palette.sun.css};
-    color: ${disabled ? palette.ash.lighter.css : palette.white.css};
-    text-shadow: 0 0 0.01rem ${palette.grey.darker.css};
+  ${({ disabled, theme: { palette } }) => {
+    return css`
+      background-color: ${palette.sun.css};
+      border-color: ${palette.sun.css};
 
-    &:hover,
-    &:focus {
-      border-color: ${palette.sun.lighter.css};
-      box-shadow: ${disabled
-        ? `0 0 0 ${palette.transparent.css}`
-        : `0 0 0.3rem ${palette.sun.lighter.css}`};
-    }
+      color: ${palette.white.css};
+      text-shadow: 0 0 0.01rem ${palette.grey.darker.css};
 
-    &:active {
-      border-color: ${disabled ? palette.sun.lighter.css : palette.sun.css};
-      box-shadow: ${disabled
-        ? `0 0 0 ${palette.transparent.css}`
-        : `0 0.02rem 0.15rem ${palette.sun}`};
-    }
-  `}
+      ${!disabled &&
+      css`
+        &:active {
+          background-color: ${palette.sun.lighter.css};
+          border-color: ${palette.sun.lighter.css};
+        }
+      `}
+
+      ${disabled &&
+      css`
+        background-color: ${palette.sun.lighter.css};
+        border-color: ${palette.sun.lighter.css};
+        color: ${palette.ash.lighter.css};
+      `}
+    `;
+  }}
 `;
 
 const TransparentButton = styled(BaseButton)`
   ${({ disabled, theme: { palette } }) => css`
     background-color: ${palette.transparent.css};
-    border: none;
+    border-color: ${palette.transparent.css};
     box-shadow: 0 0 0 ${palette.transparent.css};
-    color: ${disabled ? palette.ash.darker.css : palette.grey.darker.darker.css};
-    padding: 0;
+    color: ${palette.asphalt.css};
+    padding: 0.25rem;
 
-    &:hover,
-    &:focus {
-      border: none;
-      box-shadow: 0 0 0 ${palette.transparent.css};
-      text-shadow: 0 0 0.1rem ${disabled ? palette.transparent.css : palette.ash.darker.css};
-    }
+    ${!disabled &&
+    css`
+      &:hover,
+      &:focus {
+        box-shadow: 0 0 0 ${palette.transparent.css};
+        background-color: ${palette.transparent.css};
+        color: ${palette.black.darker.css};
+        text-shadow: 0 0 0.02rem ${palette.grey.darker.css};
+      }
+
+      &:active {
+        border-color: ${palette.transparent.css};
+        color: ${palette.grey.lighter.css};
+        text-shadow: 0 0 0.02rem ${palette.grey.lighter.css};
+      }
+    `}
+
+    ${disabled &&
+    css`
+      color: ${palette.ash.darker.css};
+    `}
   `}
 `;
 

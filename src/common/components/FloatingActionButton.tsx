@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { IconType } from 'react-icons';
-import styled, { css } from 'styled-components';
 import { mixins } from '../styles/Theme';
+import styled, { css } from 'styled-components';
 
 import Button from './Button';
 import Tooltip from './Tooltip';
@@ -32,34 +32,20 @@ const BaseFab = styled(Button)<{ disabled: boolean }>`
     height: 4rem;
     justify-content: center;
     width: 4rem;
-    transition: box-shadow 150ms, transform 150ms;
+
     ${!disabled &&
     css`
-      box-shadow: 0 0 0.35rem ${palette.grey.css};
+      box-shadow: 0 0.15rem 0.35rem ${palette.ash.darker.css};
+
+      &:hover,
+      &:focus {
+        box-shadow: 0 0.2rem 0.55rem ${palette.ash.darker.css};
+      }
+
+      &:active {
+        box-shadow: 0 0.4rem 0.85rem ${palette.ash.darker.css};
+      }
     `}
-
-    &:hover,
-    &:focus {
-      ${disabled
-        ? css`
-            box-shadow: 0 0 0 ${palette.transparent.css};
-          `
-        : css`
-            box-shadow: 0 0.05rem 0.25rem ${palette.grey.css};
-            transform: translateY(-0.05rem) scale(1.025);
-          `}
-    }
-
-    &:active {
-      ${disabled
-        ? css`
-            box-shadow: 0 0 0 ${palette.transparent.css};
-          `
-        : css`
-            box-shadow: 0 0 0.35rem ${palette.grey.css};
-            transform: translateY(0) scale(1);
-          `}
-    }
   `}
 `;
 
