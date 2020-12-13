@@ -3,15 +3,13 @@ import { RouteComponentProps } from '@reach/router';
 import styled from 'styled-components';
 
 import { getTrip } from './common/api';
-import { remToPx } from '../../common/dimensions';
 import { SearchResult } from '../../common/components/search/SearchResultItem';
 import { Trip } from './common/types';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
-import Button, { ButtonRow } from '../../common/components/Button';
-import Card, { CardFooter, CardHeader } from '../../common/components/Card';
 import IMap from '../../common/components/IMap';
 import LayoutContainer from '../../common/components/LayoutContainer';
 import MapContext from '../../common/contexts/MapContext';
+import PendingPlaceCard from './components/PendingPlaceCard';
 import routes from '../../routes';
 import Search from '../../common/components/search/Search';
 
@@ -42,7 +40,8 @@ type Props = RouteComponentProps & {
 };
 
 function TripEdit({ tripId }: Props) {
-  const [pendingPlace, setPendingPlace] = useState<google.maps.places.PlaceResult | null>(null);
+  const [pendingPlace, setPendingPlace] = useState<google.maps.places.PlaceResult | null>();
+
   const [edittingTrip, setEdittingTrip] = useState<Trip | null>(null);
 
   const { signedIn } = useAuthentication();
@@ -64,7 +63,7 @@ function TripEdit({ tripId }: Props) {
     routes.tripList.navigator();
   }
 
-  async function handleResultSelected(searchResult: SearchResult) {
+  async function handleAutoCompleteResultSelected(searchResult: SearchResult) {
     if (mapAdaptor && mapInstance && searchResult.key) {
       if (pendingPlace) {
         mapAdaptor.removeMarkers(pendingPlace);
@@ -89,25 +88,11 @@ function TripEdit({ tripId }: Props) {
     console.log(searchResults);
   }
 
-  let imageConfig;
-  if (pendingPlace?.photos) {
-    const cardImageHeight = remToPx(15);
-    const { photos } = pendingPlace;
-    const firstPhoto =
-      photos.find(({ width, height }) => height < width && height > cardImageHeight) || photos[0];
-
-    imageConfig = {
-      url: firstPhoto.getUrl({ maxHeight: cardImageHeight }),
-      cssHeight: `${cardImageHeight}px`,
-    };
-  }
-
-  function addPendingPlaceHandler() {
-    console.log('added to trip!');
+  function handleAddToTripClick() {
     setPendingPlace(null);
   }
 
-  function cancelPendingPlaceHandler() {
+  function handleCancelAddToTripClick() {
     if (pendingPlace) {
       mapAdaptor?.removeMarkers(pendingPlace);
     }
@@ -123,29 +108,17 @@ function TripEdit({ tripId }: Props) {
               hasLogo
               placeholder='Search cities, attractions, or keywords'
               dataSource={mapSearchDataSource}
-              onSelectAutocompleteResult={handleResultSelected}
+              onSelectAutocompleteResult={handleAutoCompleteResultSelected}
               onFullSearchResult={handleFullSearch}
             />
           </SearchHeader>
 
           {pendingPlace && (
-            <Card>
-              <CardHeader
-                image={imageConfig}
-                title={pendingPlace.name}
-                subtitle={pendingPlace.vicinity}
-              />
-              <CardFooter>
-                <ButtonRow>
-                  <Button onClick={cancelPendingPlaceHandler} transparent>
-                    Cancel
-                  </Button>
-                  <Button onClick={addPendingPlaceHandler} isPrimary>
-                    Add to trip
-                  </Button>
-                </ButtonRow>
-              </CardFooter>
-            </Card>
+            <PendingPlaceCard
+              pendingPlace={pendingPlace}
+              onAddToTrip={handleAddToTripClick}
+              onCancelAddToTrip={handleCancelAddToTripClick}
+            />
           )}
         </PlaceList>
 
