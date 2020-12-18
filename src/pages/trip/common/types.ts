@@ -1,9 +1,23 @@
+/**
+ * Client models.
+ */
 export interface Trip {
   id: string;
   name: string;
   description: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface TripPlace {
+  id: string;
+  name: string;
+  location: google.maps.LatLng;
+  placeId: string;
+  creator: {
+    id: string;
+    email: string;
+  };
 }
 
 /**

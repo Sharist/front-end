@@ -13,7 +13,7 @@ export async function getTrips(): Promise<Trip[]> {
 
   return tripsResponse
     .map(convertToClientModel)
-    .sort((t1, t2) => t2.createdAt.valueOf() - t1.createdAt.valueOf());
+    .sort((t1, t2) => t2.createdAt.getTime() - t1.createdAt.getTime());
 }
 
 export async function deleteTrip(toDelete: Trip) {
@@ -34,6 +34,10 @@ export async function replaceTrip(
 
   return convertToClientModel(data);
 }
+
+export async function getTripPlaces(tripId: string) {}
+
+// export async function addPlaceToTrip(tripId) {}
 
 function convertToClientModel(tripServerResponse: GetTripResponse): Trip {
   return {
