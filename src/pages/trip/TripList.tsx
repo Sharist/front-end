@@ -91,15 +91,11 @@ function TripList(_: RouteComponentProps) {
   const hiddenSubmitRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    refreshTrips();
+    getTrips().then(setTrips);
   }, []);
 
   if (!signedIn) {
     return null;
-  }
-
-  async function refreshTrips() {
-    setTrips(await getTrips());
   }
 
   function openTripModal(editTrip?: Trip) {
@@ -114,11 +110,21 @@ function TripList(_: RouteComponentProps) {
 
   async function onTripModalSubmit({ name, description }: CreateTripFormData) {
     try {
-      tripModalSettings.editTrip
+      const result = tripModalSettings.editTrip
         ? await replaceTrip(tripModalSettings.editTrip.clone({ name, description }))
         : await createTrip(new Trip(name, description));
 
-      await refreshTrips();
+      if (result) {
+        const index = trips.findIndex(({ id }) => id === result.id);
+        if (index >= 0) {
+          const replica = [...trips];
+          replica[index] = result;
+          setTrips(replica);
+        } else {
+          setTrips([result, ...trips]);
+        }
+      }
+
       closeCreateTripModal();
     } catch (error) {
       console.error(`Error creating trip: ${error.message}. Please try again later.`);
@@ -144,10 +150,7 @@ function TripList(_: RouteComponentProps) {
               <TripCard
                 key={trip.id}
                 trip={trip}
-                onDelete={async () => {
-                  deleteTrip(trip);
-                  await refreshTrips();
-                }}
+                onDelete={() => deleteTrip(trip)}
                 onEdit={() => openTripModal(trip)}
               />
             ))}
