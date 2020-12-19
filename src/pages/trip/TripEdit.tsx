@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { getTrip } from './common/api';
 import { SearchResult } from '../../common/components/search/SearchResultItem';
-import { Trip } from './common/types';
+import { Trip } from './common/models/Trip';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import IMap from '../../common/components/IMap';
 import LayoutContainer from '../../common/components/LayoutContainer';

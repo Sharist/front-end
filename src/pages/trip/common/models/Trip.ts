@@ -10,18 +10,31 @@ export interface TripServerModel {
 
 export class Trip extends ApiModel<TripServerModel> {
   constructor(
-    readonly id: string,
+    /** Name of the trip */
     readonly name: string,
-    readonly description?: string,
+    /** Description of the trip */
+    readonly description: string = '',
+    /** Server ID for this trip */
+    readonly id?: string,
+    /** Date this trip was create. thius is only updated on server. */
     readonly createdAt?: Date,
+    /** Date this trip was last updated. This is only updated on server. */
     readonly lastUpdatedAt?: Date
   ) {
     super();
   }
 
+  clone(updatedValue: Partial<Trip>): Trip {
+    const { name, description } = {
+      ...this,
+      ...updatedValue,
+    };
+
+    return new Trip(name, description, this.id, this.createdAt, this.lastUpdatedAt);
+  }
+
   toServerModel(): Partial<TripServerModel> {
     return {
-      'sharist.trip/id': this.id,
       'sharist.trip/name': this.name,
       'sharist.trip/description': this.description,
     };
@@ -39,9 +52,9 @@ export class Trip extends ApiModel<TripServerModel> {
     }
 
     return new Trip(
-      id,
       name,
       description,
+      id,
       createdAt ? new Date(createdAt) : undefined,
       lastUpdatedAt ? new Date(lastUpdatedAt) : undefined
     );

@@ -7,7 +7,7 @@ import styled, { css } from 'styled-components';
 import { CardList } from '../../common/components/Card';
 import { createTrip, deleteTrip, replaceTrip, getTrips } from './common/api';
 import { mixins } from '../../common/styles/Theme';
-import { Trip } from './common/types';
+import { Trip } from './common/models/Trip';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import { useForm } from '../../common/hooks/useForm';
 import EmptyState from '../../common/components/EmptyState';
@@ -114,11 +114,9 @@ function TripList(_: RouteComponentProps) {
 
   async function onTripModalSubmit({ name, description }: CreateTripFormData) {
     try {
-      const tripId = tripModalSettings.editTrip?.id;
-
-      tripId
-        ? await replaceTrip(tripId, { name, description })
-        : await createTrip({ name, description });
+      tripModalSettings.editTrip
+        ? await replaceTrip(tripModalSettings.editTrip.clone({ name, description }))
+        : await createTrip(new Trip(name, description));
 
       await refreshTrips();
       closeCreateTripModal();

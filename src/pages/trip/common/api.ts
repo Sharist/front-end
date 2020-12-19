@@ -1,57 +1,45 @@
 import { get, post, put } from '../../../common/http';
-import { UpsertTripRequest, GetTripResponse, GetTripsResponse, Trip } from './types';
+import { notNullish } from '../../../common/assert';
+import { Trip, TripServerModel } from './models/Trip';
 
-export async function getTrip(tripId: string): Promise<Trip> {
-  const tripResponse: GetTripResponse = (await get(`/trips/${tripId}`)).data;
+export async function getTrip(tripId: string): Promise<Trip | null> {
+  const tripResponse: TripServerModel = (await get(`/trips/${tripId}`)).data;
 
-  return convertToClientModel(tripResponse);
+  return Trip.fromServerModel(tripResponse);
 }
 
 export async function getTrips(): Promise<Trip[]> {
-  // const tripsResponse: GetTripsResponse = await Promise.resolve(fakeTripsData);
-  const tripsResponse: GetTripsResponse = (await get('/trips')).data;
+  const tripsResponse: TripServerModel[] = (await get('/trips')).data;
 
   return tripsResponse
-    .map(convertToClientModel)
-    .sort((t1, t2) => t2.createdAt.getTime() - t1.createdAt.getTime());
+    .map(Trip.fromServerModel)
+    .filter(notNullish)
+    .sort((t1, t2) => {
+      if (t2.createdAt) {
+        return t1.createdAt ? t2.createdAt.getTime() - t1.createdAt.getTime() : 1;
+      }
+      return t1.createdAt ? -1 : 0;
+    });
 }
 
 export async function deleteTrip(toDelete: Trip) {
   // TODO: Implement when backend is ready
 }
 
-export async function createTrip(trip: Pick<Trip, 'name' | 'description'>): Promise<Trip> {
-  const { data } = await post('/trips', convertToServerModel(trip));
+export async function createTrip(trip: Trip): Promise<Trip | null> {
+  const { data } = await post('/trips', trip.toServerModel());
 
-  return convertToClientModel(data);
+  return Trip.fromServerModel(data);
 }
 
-export async function replaceTrip(
-  id: string,
-  trip: Pick<Trip, 'name' | 'description'>
-): Promise<Trip> {
-  const { data } = await put(`/trips/${id}`, convertToServerModel(trip));
+export async function replaceTrip(trip: Trip): Promise<Trip | null> {
+  if (!trip.id) {
+    throw new Error(`Trip id not found.`);
+  }
 
-  return convertToClientModel(data);
+  const { data } = await put(`/trips/${trip.id}`, trip.toServerModel());
+
+  return Trip.fromServerModel(data);
 }
 
 export async function getTripPlaces(tripId: string) {}
-
-// export async function addPlaceToTrip(tripId) {}
-
-function convertToClientModel(tripServerResponse: GetTripResponse): Trip {
-  return {
-    id: tripServerResponse['sharist.trip/id'],
-    name: tripServerResponse['sharist.trip/name'],
-    description: tripServerResponse['sharist.trip/description'],
-    createdAt: new Date(tripServerResponse['sharist.trip/created-at']),
-    updatedAt: new Date(tripServerResponse['sharist.trip/last-updated-at']),
-  };
-}
-
-function convertToServerModel(trip: Pick<Trip, 'name' | 'description'>): UpsertTripRequest {
-  return {
-    'sharist.trip/name': trip.name,
-    'sharist.trip/description': trip.description,
-  };
-}

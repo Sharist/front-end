@@ -3,7 +3,7 @@ import { IoMdCreate, IoMdTrash } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
 import { remToPx } from '../../../common/dimensions';
-import { Trip } from '../common/types';
+import { Trip } from '../common/models/Trip';
 import Card, { CardFooter, CardHeader } from '../../../common/components/Card';
 import routes from '../../../routes';
 

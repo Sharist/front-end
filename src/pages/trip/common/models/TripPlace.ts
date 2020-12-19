@@ -12,10 +12,15 @@ export interface TripPlaceServerModel {
 
 export class TripPlace extends ApiModel<TripPlaceServerModel> {
   constructor(
+    /** Place ID that uniquely identifies this place on Google Maps */
     readonly placeId: string,
+    /** Name of this place, typically from Google Maps */
     readonly name: string,
+    /** Google Maps LatLng model */
     readonly location: google.maps.LatLng,
+    /** Server ID for this TripPlace */
     readonly id?: string,
+    /** The user who created this TripPlace */
     readonly creator?: User
   ) {
     super();
@@ -53,9 +58,7 @@ export class TripPlace extends ApiModel<TripPlaceServerModel> {
       return null;
     }
 
-    const location = geometry.location;
-
-    return new TripPlace(place_id, name, location);
+    return new TripPlace(place_id, name, geometry.location);
   }
 
   /**
