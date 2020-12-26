@@ -29,7 +29,7 @@ const Palette = {
 };
 
 enum Typography {
-  SMALL = '0.8rem',
+  SMALL = '0.85rem',
   REGULAR = '1rem',
   MEDIUM = '1.2rem',
   LARGE = '1.5rem',

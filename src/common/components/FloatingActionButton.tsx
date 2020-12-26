@@ -52,6 +52,10 @@ const BaseFab = styled(Button)<{ disabled: boolean }>`
 type Props = {
   disabled?: boolean;
   icon: IconType;
+  /**
+   * If true, the button will delegate positioning to the parent.
+   * Otherwise, it'll be placed according to the browser window.
+   */
   isContextual?: boolean;
   isPrimary?: boolean;
   label?: string;
@@ -70,7 +74,7 @@ function FloatingActionButton({
   const buttonRef = useRef<HTMLButtonElement>(null);
   return (
     <Wrapper isContextual={isContextual}>
-      {label && <Tooltip anchor={buttonRef} text={label} />}
+      {label && <Tooltip anchor={buttonRef} text={label} position='left' />}
       <BaseFab disabled={disabled} buttonRef={buttonRef} isPrimary={isPrimary} onClick={onClick}>
         <Icon size='2.25rem' />
       </BaseFab>
