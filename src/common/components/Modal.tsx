@@ -1,4 +1,4 @@
-import React, { createRef, ReactNode, useEffect, useState } from 'react';
+import React, { createRef, ReactNode } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 
@@ -73,6 +73,7 @@ type Props = {
   cancelButtonText?: string;
   children: ReactNode;
   confirmAction: () => void;
+  confirmActionLoading?: boolean;
   confirmButtonText?: string;
   hasCloseButton?: boolean;
   hide?: () => void;
@@ -86,21 +87,14 @@ function Modal({
   cancelButtonText = 'Cancel',
   children,
   confirmAction,
+  confirmActionLoading = false,
   confirmButtonText = 'Confirm',
   isVisible,
   hasCloseButton = false,
   title,
   hide,
 }: Props) {
-  const [confirmActionLoading, setConfirmActionLoading] = useState(false);
   const backdropRef = createRef<HTMLDivElement>();
-
-  useEffect(() => {
-    // Set not loading every time the modal's opened
-    if (!isVisible) {
-      setConfirmActionLoading(false);
-    }
-  }, [isVisible]);
 
   document.body.style.overflow = isVisible ? 'hidden' : 'visible';
 
@@ -142,10 +136,7 @@ function Modal({
               key={generateRandomKey({ prefix: confirmButtonText })}
               isLoading={confirmActionLoading}
               isPrimary
-              onClick={() => {
-                setConfirmActionLoading(true);
-                confirmAction();
-              }}
+              onClick={() => confirmAction()}
             >
               {confirmButtonText}
             </Button>

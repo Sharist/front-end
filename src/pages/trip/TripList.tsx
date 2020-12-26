@@ -81,6 +81,8 @@ function TripList(_: RouteComponentProps) {
     { visible: false }
   );
 
+  const [createTripModalSubmitting, setCreateTripModalSubmitting] = useState(false);
+
   const [trips, setTrips] = useState<Trip[]>([]);
 
   const { errors, handleSubmit, register, reset: resetForm } = useForm<CreateTripFormData>({
@@ -100,6 +102,7 @@ function TripList(_: RouteComponentProps) {
 
   function openTripModal(editTrip?: Trip) {
     resetForm(editTrip);
+    setCreateTripModalSubmitting(false);
     setTripModalSettings({ editTrip, visible: true });
   }
 
@@ -110,6 +113,7 @@ function TripList(_: RouteComponentProps) {
 
   async function onTripModalSubmit({ name, description }: CreateTripFormData) {
     try {
+      setCreateTripModalSubmitting(true);
       const result = tripModalSettings.editTrip
         ? await replaceTrip(tripModalSettings.editTrip.clone({ name, description }))
         : await createTrip(new Trip(name, description));
@@ -168,13 +172,17 @@ function TripList(_: RouteComponentProps) {
       <Modal
         cancelAction={closeCreateTripModal}
         confirmAction={() => hiddenSubmitRef.current?.click()}
+        confirmActionLoading={createTripModalSubmitting}
         confirmButtonText={tripModalSettings.editTrip ? 'Update' : 'Create'}
         hasCloseButton
         hide={closeCreateTripModal}
         isVisible={tripModalSettings.visible}
         title='Create trip'
       >
-        <Form onSubmit={handleSubmit(onTripModalSubmit)} hiddenSubmitRef={hiddenSubmitRef}>
+        <Form
+          onSubmit={handleSubmit(onTripModalSubmit, () => setCreateTripModalSubmitting(false))}
+          hiddenSubmitRef={hiddenSubmitRef}
+        >
           <CreateTripWrapper>
             <TextInput
               inputRef={register}
