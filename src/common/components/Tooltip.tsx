@@ -27,7 +27,7 @@ const Wrapper = styled.div<TooltipWrapperProps>`
 `;
 
 // Gap with anchor in pixels
-const gapWithAnchor = 15;
+const gapWithAnchor = 10;
 
 type Props = {
   text: string;
