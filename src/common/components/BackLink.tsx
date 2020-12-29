@@ -10,7 +10,8 @@ const BackArrow = styled(IoChevronBackSharp)`
     border-radius: 50%;
     color: ${palette.asphalt.lighter.css};
     cursor: pointer;
-    padding: 0.5rem;
+    margin-left: -0.685rem;
+    padding: 0.25rem;
 
     &:hover {
       background-color: ${palette.ash.css};
@@ -29,7 +30,7 @@ function BackLink({ routeLink, tooltipLabel }: Props) {
   return (
     <div ref={backIconRef} onClick={routeLink}>
       {tooltipLabel && <Tooltip anchor={backIconRef} text={tooltipLabel} />}
-      <BackArrow size='2.5rem' />
+      <BackArrow size='2rem' />
     </div>
   );
 }

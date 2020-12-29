@@ -13,11 +13,10 @@ const SearchWrapper = styled.div`
 
 const SearchBox = styled.input<{ hasLogo: boolean }>`
   ${({ hasLogo, theme: { palette } }) => css`
-    border-radius: 1rem;
-    border: 0.05rem solid ${palette.ash.darker.css};
+    border-radius: 0.75rem;
+    border: 0.05rem solid ${palette.white.darker.css};
     box-shadow: 0 0 0.25rem ${palette.ash.lighter.css};
-    padding: 1rem 1.25rem;
-    padding-left: ${hasLogo ? '3.5rem' : ''};
+    padding: 0.65rem 1rem;
     width: 100%;
     transition: box-shadow 200ms;
 
@@ -25,6 +24,12 @@ const SearchBox = styled.input<{ hasLogo: boolean }>`
       box-shadow: 0 0.05rem 0.3rem ${palette.ash.darker.css};
       outline-width: 0;
     }
+
+    ${hasLogo &&
+    css`
+      padding: 1rem 1.25rem 1rem 3.5rem;
+      border-radius: 1rem;
+    `}
   `}
 `;
 

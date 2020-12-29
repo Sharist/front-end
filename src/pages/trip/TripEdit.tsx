@@ -6,6 +6,7 @@ import { getTrip } from './common/api';
 import { SearchResult } from '../../common/components/search/SearchResultItem';
 import { Trip } from './common/models/Trip';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
+import BackLink from '../../common/components/BackLink';
 import IMap from '../../common/components/IMap';
 import LayoutContainer from '../../common/components/LayoutContainer';
 import MapContext from '../../common/contexts/MapContext';
@@ -32,7 +33,21 @@ const PlaceList = styled.div`
 `;
 
 const SearchHeader = styled.div`
-  padding: 0.75rem 0;
+  display: flex;
+  align-items: center;
+  padding: 0 0rem 0 0;
+  margin: 1rem 0rem;
+
+  & > * {
+    margin: 0 0.15rem;
+    :first-child {
+      margin-left: 0;
+    }
+
+    :last-child {
+      margin-right: 0;
+    }
+  }
 `;
 
 type Props = RouteComponentProps & {
@@ -104,8 +119,8 @@ function TripEdit({ tripId }: Props) {
       <Content>
         <PlaceList>
           <SearchHeader>
+            <BackLink routeLink={routes.tripList.navigator} tooltipLabel='Back to trips' />
             <Search
-              hasLogo
               placeholder='Search cities, attractions, or keywords'
               dataSource={mapSearchDataSource}
               onSelectAutocompleteResult={handleAutoCompleteResultSelected}
