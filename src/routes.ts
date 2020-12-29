@@ -8,10 +8,12 @@ import TripEdit from './pages/trip/TripEdit';
 import TripList from './pages/trip/TripList';
 import VerifyEmail from './pages/auth/VerifyEmail';
 
+export type RouteNavigator = (param?: any) => Promise<void>;
+
 interface RouteSpec {
   pageComponent: ComponentType<RouteComponentProps>;
   path: string;
-  navigator: (param?: any) => Promise<void>;
+  navigator: RouteNavigator;
 }
 
 interface RouteMap {
