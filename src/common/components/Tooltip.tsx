@@ -2,6 +2,7 @@ import React, { RefObject, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import { pxToRem } from '../dimensions';
+import { useDimensions } from '../hooks/useDimensions';
 
 interface TooltipWrapperProps {
   visible: boolean;
@@ -44,6 +45,8 @@ function Tooltip({ anchor, text, position = 'bottom' }: Props) {
 
   const tooltipRef = useRef<HTMLDivElement>(null);
 
+  const windowDimensions = useDimensions();
+
   useEffect(() => {
     function showTooltip() {
       if (tooltipRef.current && anchor.current) {
@@ -61,26 +64,41 @@ function Tooltip({ anchor, text, position = 'bottom' }: Props) {
       if (anchorElement && tooltipRef.current) {
         const anchorRect = anchorElement.getBoundingClientRect();
         const tooltipRect = tooltipRef.current.getBoundingClientRect();
+
+        let top = 0;
+        let left = 0;
+
         if (position === 'left' || position === 'right') {
-          setTop(pxToRem(anchorRect.y + (anchorRect.height - tooltipRect.height) / 2));
+          top = anchorRect.y + (anchorRect.height - tooltipRect.height) / 2;
         } else {
-          setLeft(pxToRem(anchorRect.x + (anchorRect.width / 2 - tooltipRect.width / 2)));
+          left = anchorRect.x + (anchorRect.width / 2 - tooltipRect.width / 2);
         }
 
         switch (position) {
           case 'left':
-            setLeft(pxToRem(anchorRect.x - tooltipRect.width - gapWithAnchor));
+            left = anchorRect.x - tooltipRect.width - gapWithAnchor;
             break;
           case 'bottom':
-            setTop(pxToRem(anchorRect.y + anchorRect.height + gapWithAnchor));
+            top = anchorRect.y + anchorRect.height + gapWithAnchor;
             break;
           case 'top':
-            setTop(pxToRem(anchorRect.y - tooltipRect.height - gapWithAnchor));
+            top = anchorRect.y - tooltipRect.height - gapWithAnchor;
             break;
           case 'right':
-            setLeft(pxToRem(anchorRect.x + anchorRect.width + gapWithAnchor));
+            left = anchorRect.x + anchorRect.width + gapWithAnchor;
             break;
         }
+
+        // Now, correct tooltip to make sure it's within window.
+        const { height: winHeight, width: winWidth } = windowDimensions;
+
+        left = Math.max(gapWithAnchor, left);
+        left = Math.min(winWidth - gapWithAnchor - tooltipRect.width, left);
+        top = Math.max(gapWithAnchor, top);
+        top = Math.min(winHeight - gapWithAnchor - tooltipRect.height, top);
+
+        setTop(pxToRem(top));
+        setLeft(pxToRem(left));
       }
     }
 
@@ -97,7 +115,7 @@ function Tooltip({ anchor, text, position = 'bottom' }: Props) {
       anchorElement?.removeEventListener('mouseout', hideTooltip);
       window.removeEventListener('resize', handleWindowResize);
     };
-  }, [anchor, position]);
+  }, [anchor, position, windowDimensions]);
 
   return (
     <Wrapper ref={tooltipRef} visible={visible} top={top} left={left}>
