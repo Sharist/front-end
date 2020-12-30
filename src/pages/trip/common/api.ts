@@ -1,17 +1,42 @@
 import { get, post, put } from '../../../common/http';
 import { notNullish } from '../../../common/assert';
 import { Trip, TripServerModel } from './models/Trip';
+import { TripPlace, TripPlaceServerModel } from './models/TripPlace';
 
 export async function getTrip(tripId: string): Promise<Trip | null> {
-  const tripResponse: TripServerModel = (await get(`/trips/${tripId}`)).data;
+  const fetchResponse = await get<TripServerModel>(`/trips/${tripId}`);
+  if (fetchResponse.status === 404) {
+    throw Error('Could not find trip');
+  }
 
+  const tripResponse = fetchResponse.data;
   return Trip.fromServerModel(tripResponse);
 }
 
-export async function getTrips(): Promise<Trip[]> {
-  const tripsResponse: TripServerModel[] = (await get('/trips')).data;
+export async function getTripPlaces(tripId: string): Promise<TripPlace[]> {
+  const { data } = await get<TripPlaceServerModel[]>(`/trips/${tripId}/places`);
 
-  return tripsResponse
+  return data.map(TripPlace.fromServerModel).filter(notNullish);
+}
+
+export async function addPlaceToTrip(trip: Trip, tripPlace: TripPlace): Promise<TripPlace | null> {
+  const { data } = await post<TripPlaceServerModel>(
+    `/trips/${trip.id}/places`,
+    tripPlace.toServerModel()
+  );
+
+  let createdTripPlace = TripPlace.fromServerModel(data);
+  if (tripPlace.placeResult) {
+    createdTripPlace?.attachPlaceResult(tripPlace.placeResult);
+  }
+
+  return createdTripPlace;
+}
+
+export async function getTrips(): Promise<Trip[]> {
+  const { data } = await get<TripServerModel[]>('/trips');
+
+  return data
     .map(Trip.fromServerModel)
     .filter(notNullish)
     .sort((t1, t2) => {
@@ -27,7 +52,7 @@ export async function deleteTrip(toDelete: Trip) {
 }
 
 export async function createTrip(trip: Trip): Promise<Trip | null> {
-  const { data } = await post('/trips', trip.toServerModel());
+  const { data } = await post<TripServerModel>('/trips', trip.toServerModel());
 
   return Trip.fromServerModel(data);
 }
@@ -37,9 +62,7 @@ export async function replaceTrip(trip: Trip): Promise<Trip | null> {
     throw new Error(`Trip id not found.`);
   }
 
-  const { data } = await put(`/trips/${trip.id}`, trip.toServerModel());
+  const { data } = await put<TripServerModel>(`/trips/${trip.id}`, trip.toServerModel());
 
   return Trip.fromServerModel(data);
 }
-
-export async function getTripPlaces(tripId: string) {}

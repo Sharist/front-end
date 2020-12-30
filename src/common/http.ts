@@ -39,24 +39,24 @@ function resolveUrl(endpoint: string): string {
   return new URL(endpoint, apiHost).toString();
 }
 
-export function get(endpoint: string, config?: AxiosRequestConfig) {
-  return axios.get(resolveUrl(endpoint), setupConfig(config));
+export function get<T>(endpoint: string, config?: AxiosRequestConfig) {
+  return axios.get<T>(resolveUrl(endpoint), setupConfig(config));
 }
 
-export function post(endpoint: string, data?: any, config?: AxiosRequestConfig) {
-  return axios.post(resolveUrl(endpoint), data, setupConfig(config));
+export function post<T>(endpoint: string, data?: any, config?: AxiosRequestConfig) {
+  return axios.post<T>(resolveUrl(endpoint), data, setupConfig(config));
 }
 
-export function put(endpoint: string, data?: any, config?: AxiosRequestConfig) {
-  return axios.put(resolveUrl(endpoint), data, setupConfig(config));
+export function put<T>(endpoint: string, data?: any, config?: AxiosRequestConfig) {
+  return axios.put<T>(resolveUrl(endpoint), data, setupConfig(config));
 }
 
-export function patch(endpoint: string, data?: any, config?: AxiosRequestConfig) {
-  return axios.patch(resolveUrl(endpoint), data, setupConfig(config));
+export function patch<T>(endpoint: string, data?: any, config?: AxiosRequestConfig) {
+  return axios.patch<T>(resolveUrl(endpoint), data, setupConfig(config));
 }
 
-export function del(endpoint: string, config?: AxiosRequestConfig) {
-  return axios.delete(resolveUrl(endpoint), setupConfig(config));
+export function del<T>(endpoint: string, config?: AxiosRequestConfig) {
+  return axios.delete<T>(resolveUrl(endpoint), setupConfig(config));
 }
 
 /**

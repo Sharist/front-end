@@ -1,8 +1,16 @@
 import React from 'react';
+import styled, { css } from 'styled-components';
 
 import { remToPx } from '../../../common/dimensions';
 import Button, { ButtonRow } from '../../../common/components/Button';
 import Card, { CardFooter, CardHeader } from '../../../common/components/Card';
+
+const PendingPlaceCardWrapper = styled(Card)`
+  ${({ theme: { palette } }) => css`
+    box-shadow: 0 0.05rem 0.25rem ${palette.grey.css};
+    z-index: 10;
+  `}
+`;
 
 type Props = {
   pendingPlace: google.maps.places.PlaceResult;
@@ -26,7 +34,7 @@ function PendingPlaceCard({ onAddToTrip, onCancelAddToTrip, pendingPlace }: Prop
   }
 
   return (
-    <Card>
+    <PendingPlaceCardWrapper>
       <CardHeader image={imageConfig} title={name} subtitle={vicinity} />
       <CardFooter>
         <ButtonRow>
@@ -38,7 +46,7 @@ function PendingPlaceCard({ onAddToTrip, onCancelAddToTrip, pendingPlace }: Prop
           </Button>
         </ButtonRow>
       </CardFooter>
-    </Card>
+    </PendingPlaceCardWrapper>
   );
 }
 

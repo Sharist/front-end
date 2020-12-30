@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { getTrip } from './common/api';
+import { addPlaceToTrip, getTrip, getTripPlaces } from './common/api';
 import { SearchResult } from '../../common/components/search/SearchResultItem';
 import { Trip } from './common/models/Trip';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
@@ -13,6 +13,7 @@ import MapContext from '../../common/contexts/MapContext';
 import PendingPlaceCard from './components/PendingPlaceCard';
 import routes from '../../routes';
 import Search from '../../common/components/search/Search';
+import { TripPlace } from './common/models/TripPlace';
 
 const Content = styled.div`
   display: flex;
@@ -30,6 +31,18 @@ const PlaceList = styled.div`
   padding: 0.5rem 1.5rem;
   width: 30rem;
   z-index: 1;
+`;
+
+const PlaceListShade = styled.div`
+  ${({ theme: { palette } }) => css`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: ${palette.asphalt.alpha(0.35).css};
+    z-index: 1;
+  `}
 `;
 
 const SearchHeader = styled.div`
@@ -57,16 +70,31 @@ type Props = RouteComponentProps & {
 function TripEdit({ tripId }: Props) {
   const [pendingPlace, setPendingPlace] = useState<google.maps.places.PlaceResult | null>();
 
-  const [edittingTrip, setEdittingTrip] = useState<Trip | null>(null);
+  const [trip, setTrip] = useState<Trip | null>(null);
+  const [tripPlaces, setTripPlaces] = useState<TripPlace[]>([]);
 
   const { signedIn } = useAuthentication();
   const { mapAdaptor, mapInstance, mapSearchDataSource } = useContext(MapContext);
 
   useEffect(() => {
-    if (tripId && !edittingTrip) {
-      getTrip(tripId).then(setEdittingTrip);
+    if (tripId && !trip) {
+      getTrip(tripId)
+        .then(setTrip)
+        .catch((error) => {
+          // TODO: error message
+          alert(`Failed to fetch trip ID ${tripId}; reason: ${error.message}.`);
+          routes.tripList.navigator();
+        })
+        .then(() => getTripPlaces(tripId))
+        .then(setTripPlaces)
+        .catch((error) => {
+          // TODO: error message
+          alert(`Failed to fetch places for trip ID ${tripId}; reason: ${error.message}.`);
+          routes.tripList.navigator();
+        })
+        .finally(() => console.log(`trip places: ${tripPlaces}`));
     }
-  }, [edittingTrip, tripId]);
+  }, [trip, tripId]);
 
   // Do not render if not signed in
   if (!signedIn) {
@@ -104,7 +132,10 @@ function TripEdit({ tripId }: Props) {
   }
 
   function handleAddToTripClick() {
-    setPendingPlace(null);
+    if (pendingPlace) {
+      addPlaceToTrip(trip!, TripPlace.fromPlaceResult(pendingPlace)!);
+      setPendingPlace(null);
+    }
   }
 
   function handleCancelAddToTripClick() {
@@ -129,11 +160,14 @@ function TripEdit({ tripId }: Props) {
           </SearchHeader>
 
           {pendingPlace && (
-            <PendingPlaceCard
-              pendingPlace={pendingPlace}
-              onAddToTrip={handleAddToTripClick}
-              onCancelAddToTrip={handleCancelAddToTripClick}
-            />
+            <>
+              <PlaceListShade onClick={handleCancelAddToTripClick} />
+              <PendingPlaceCard
+                pendingPlace={pendingPlace}
+                onAddToTrip={handleAddToTripClick}
+                onCancelAddToTrip={handleCancelAddToTripClick}
+              />
+            </>
           )}
         </PlaceList>
 

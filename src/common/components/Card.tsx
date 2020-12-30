@@ -55,13 +55,18 @@ const ClickableCard = styled(RegularCard)`
 
 type CardProps = {
   onClick?: () => void;
+  className?: string;
   children: ReactNode;
 };
 
-export default function Card({ children, onClick }: CardProps) {
+export default function Card({ className, children, onClick }: CardProps) {
   const CardComponent = onClick ? ClickableCard : RegularCard;
 
-  return <CardComponent onClick={onClick}>{children}</CardComponent>;
+  return (
+    <CardComponent className={className} onClick={onClick}>
+      {children}
+    </CardComponent>
+  );
 }
 
 type CardListProps = {
