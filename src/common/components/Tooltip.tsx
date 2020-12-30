@@ -19,6 +19,7 @@ const Wrapper = styled.div<TooltipWrapperProps>`
     font-size: ${typography.SMALL};
     padding: 0.3rem 0.5rem;
     position: fixed;
+    z-index: 100;
 
     ${top && `top: ${top}rem;`}
     ${left && `left: ${left}rem;`}
