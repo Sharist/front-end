@@ -21,11 +21,20 @@ export class TripPlace extends ApiModel<TripPlaceServerModel> {
     /** Server ID for this TripPlace */
     readonly id?: string,
     /** The user who created this TripPlace */
-    readonly creator?: User
+    readonly creator?: User,
+    /** Place result that maps to this trip place */
+    readonly placeResult?: google.maps.places.PlaceResult
   ) {
     super();
+
+    if (placeResult?.place_id !== placeId) {
+      throw new Error(
+        `The supplied placeId "${placeId}" is not the same as placeResult.place_id "${placeResult?.place_id}"`
+      );
+    }
   }
 
+  /** Make a copy of this TripPlace with updated value. */
   clone(valuesToUpdate: Partial<TripPlace>): TripPlace {
     const { placeId, name, location, id }: TripPlace = {
       ...this,
@@ -33,6 +42,15 @@ export class TripPlace extends ApiModel<TripPlaceServerModel> {
     };
 
     return new TripPlace(placeId, name, location, id, this.creator);
+  }
+
+  /**
+   * Attach Google Maps PlaceResult to this trip place when available.
+   *
+   * This method creates a clone for immutability.
+   */
+  attachPlaceResult(placeResult: google.maps.places.PlaceResult): TripPlace {
+    return this.clone({ placeResult });
   }
 
   /**
@@ -58,7 +76,7 @@ export class TripPlace extends ApiModel<TripPlaceServerModel> {
       return null;
     }
 
-    return new TripPlace(place_id, name, geometry.location);
+    return new TripPlace(place_id, name, geometry.location, undefined, undefined, place);
   }
 
   /**
