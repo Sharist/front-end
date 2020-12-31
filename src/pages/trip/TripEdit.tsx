@@ -71,7 +71,7 @@ function TripEdit({ tripId }: Props) {
         mapAdaptor?.removeMarkers(pendingPlace);
       }
     };
-  }, [pendingPlace]);
+  }, [pendingPlace, mapAdaptor]);
 
   useEffect(() => {
     if (tripId && !trip) {
@@ -91,7 +91,7 @@ function TripEdit({ tripId }: Props) {
         })
         .finally(() => console.log(`trip places: ${tripPlaces}`));
     }
-  }, [trip, tripId]);
+  }, [trip, tripId, tripPlaces]);
 
   // Do not render if not signed in
   if (!signedIn) {
