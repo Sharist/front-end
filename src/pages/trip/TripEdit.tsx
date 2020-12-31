@@ -65,6 +65,15 @@ function TripEdit({ tripId }: Props) {
   const { mapAdaptor, mapInstance, mapSearchDataSource } = useContext(MapContext);
 
   useEffect(() => {
+    // Cleanup the map if navigated away.
+    return function cleanUp() {
+      if (pendingPlace) {
+        mapAdaptor?.removeMarkers(pendingPlace);
+      }
+    };
+  }, [pendingPlace]);
+
+  useEffect(() => {
     if (tripId && !trip) {
       getTrip(tripId)
         .then(setTrip)
