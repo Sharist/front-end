@@ -1,13 +1,19 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { remToPx } from '../../../common/dimensions';
 import Button, { ButtonRow } from '../../../common/components/Button';
-import Card, { CardFooter, CardHeader } from '../../../common/components/Card';
+import Card, {
+  CardContent,
+  CardFooter,
+  CardHeading,
+  CardImage,
+} from '../../../common/components/Card';
 
 const PendingPlaceCardWrapper = styled(Card)`
   ${({ theme: { palette } }) => css`
-    box-shadow: 0 0.05rem 0.25rem ${palette.grey.css};
+    border: 0;
+    box-shadow: 0 0.05rem 0.5rem ${palette.asphalt.css};
+    height: 13rem;
     z-index: 10;
   `}
 `;
@@ -20,32 +26,36 @@ type Props = {
 
 function PendingPlaceCard({ onAddToTrip, onCancelAddToTrip, pendingPlace }: Props) {
   const { name, vicinity, photos } = pendingPlace;
-  let imageConfig;
 
+  let imageConfig;
   if (photos) {
-    const cardImageHeight = remToPx(15);
+    const cardImageWidth = 500;
     const firstPhoto =
-      photos.find(({ width, height }) => height < width && height > cardImageHeight) || photos[0];
+      photos.find(({ width, height }) => height < width && width > cardImageWidth) || photos[0];
 
     imageConfig = {
-      url: firstPhoto.getUrl({ maxHeight: cardImageHeight }),
-      cssHeight: `${cardImageHeight}px`,
+      url: firstPhoto.getUrl({ maxWidth: cardImageWidth }),
+      cssHeight: `100%`,
     };
   }
 
   return (
-    <PendingPlaceCardWrapper>
-      <CardHeader image={imageConfig} title={name} subtitle={vicinity} />
-      <CardFooter>
-        <ButtonRow>
-          <Button onClick={onCancelAddToTrip} transparent>
-            Cancel
-          </Button>
-          <Button onClick={onAddToTrip} isPrimary>
-            Add to trip
-          </Button>
-        </ButtonRow>
-      </CardFooter>
+    <PendingPlaceCardWrapper horizontal>
+      {imageConfig && <CardImage imageConfig={imageConfig} />}
+
+      <CardContent>
+        <CardHeading title={name} subtitle={vicinity} />
+        <CardFooter>
+          <ButtonRow>
+            <Button onClick={onCancelAddToTrip} transparent>
+              Cancel
+            </Button>
+            <Button onClick={onAddToTrip} isPrimary>
+              Add to trip
+            </Button>
+          </ButtonRow>
+        </CardFooter>
+      </CardContent>
     </PendingPlaceCardWrapper>
   );
 }

@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-
 import styled, { css } from 'styled-components';
+
 import { mixins } from '../styles/Theme';
 
 /**
@@ -8,22 +8,22 @@ import { mixins } from '../styles/Theme';
  *
  * @example
  * <Card>
- *   // Optional header
- *   <CardHeader title={[REQUIRED]} subtitle={OPTIONAL} image={OPTIONAL} />
+ *   // Optional image; see ImageConfig interface for the prop
+ *   <CardImage imageConfig={config} />
  *
- *   // Optional content
  *   <CardContent>
- *     Whatever content this card has
- *   </CardContent>
+ *     // Optional heading
+ *     <CardHeading title={[REQUIRED]} subtitle={OPTIONAL} />
  *
- *   // Optional footer
- *   <CardFooter>
- *     Footer items or card buttons
- *   </CardFooter>
+ *     // Anything here
+ *
+ *     // Optional footer
+ *     <CardFooter>Footer items or card buttons</CardFooter>
+ *   </CardContent>
  * </Card>
  */
-const RegularCard = styled.div`
-  ${({ theme: { palette } }) => css`
+const RegularCard = styled.div<{ horizontal: boolean }>`
+  ${({ horizontal, theme: { palette } }) => css`
     background-color: ${palette.white.css};
     border: 0.05rem solid ${palette.white.darker.css};
     box-shadow: 0 0.05rem 0.1rem ${palette.ash.darker.css};
@@ -32,6 +32,16 @@ const RegularCard = styled.div`
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+
+    ${horizontal &&
+    css`
+      flex-direction: row;
+
+      & ${CardImage} {
+        border-radius: 0.5rem 0 0 0.5rem;
+        width: 65%;
+      }
+    `}
   `}
 `;
 
@@ -57,13 +67,18 @@ type CardProps = {
   onClick?: () => void;
   className?: string;
   children: ReactNode;
+  /**
+   * If `true`, display card image on the left and content and footer on the right.
+   * Default is `false`.
+   */
+  horizontal?: boolean;
 };
 
-export default function Card({ className, children, onClick }: CardProps) {
+export default function Card({ className, children, onClick, horizontal = false }: CardProps) {
   const CardComponent = onClick ? ClickableCard : RegularCard;
 
   return (
-    <CardComponent className={className} onClick={onClick}>
+    <CardComponent className={className} onClick={onClick} horizontal={horizontal}>
       {children}
     </CardComponent>
   );
@@ -98,9 +113,7 @@ export const CardList = styled.div<CardListProps>`
 `;
 
 /**
- * Optional content for the card.
- *
- * Should be placed between `<CardHeader />` and `<CardFooter />` (if either exists).
+ * Card content wrapper. Should wrap everything other than <CardImage />.
  *
  * See `<Card />` for example.
  */
@@ -108,7 +121,6 @@ export const CardContent = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 1.5rem;
   width: 100%;
 `;
 
@@ -134,7 +146,7 @@ export const CardFooter = styled.div<{ noSeparator?: boolean }>`
   `}
 `;
 
-const CardHeaderWrapper = styled.div`
+const CardHeadingWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
@@ -147,7 +159,7 @@ export interface CardImageConfig {
   cssHeight?: string;
 }
 
-const CardImage = styled.div<{
+export const CardImage = styled.div<{
   imageConfig: CardImageConfig;
 }>`
   ${({ imageConfig = { cssHeight: '15rem' } }) => css`
@@ -174,7 +186,6 @@ const CardSubtitle = styled.div`
 `;
 
 type CardHeaderProps = {
-  image?: CardImageConfig;
   title: string;
   subtitle?: string;
 };
@@ -186,14 +197,11 @@ type CardHeaderProps = {
  *
  * See `<Card />` for example.
  */
-export function CardHeader({ image, title, subtitle }: CardHeaderProps) {
+export function CardHeading({ title, subtitle }: CardHeaderProps) {
   return (
-    <>
-      {image && <CardImage imageConfig={image} />}
-      <CardHeaderWrapper>
-        <CardTitle>{title}</CardTitle>
-        {subtitle && <CardSubtitle>{subtitle}</CardSubtitle>}
-      </CardHeaderWrapper>
-    </>
+    <CardHeadingWrapper>
+      <CardTitle>{title}</CardTitle>
+      {subtitle && <CardSubtitle>{subtitle}</CardSubtitle>}
+    </CardHeadingWrapper>
   );
 }

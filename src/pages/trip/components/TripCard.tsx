@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 
 import { remToPx } from '../../../common/dimensions';
 import { Trip } from '../common/models/Trip';
-import Card, { CardFooter, CardHeader } from '../../../common/components/Card';
+import Card, { CardContent, CardFooter, CardHeading } from '../../../common/components/Card';
 import routes from '../../../routes';
 import Tooltip from '../../../common/components/Tooltip';
 
@@ -49,31 +49,33 @@ function TripCard({ trip, onDelete, onEdit }: Props) {
         routes.tripEdit.navigator({ tripId: trip.id });
       }}
     >
-      <CardHeader title={trip.name} subtitle={trip.description} />
-      <CardFooter noSeparator>
-        <ActionRow>
-          <ActionIcon
-            ref={editIconRef}
-            onClick={(e) => {
-              onEdit();
-              e.stopPropagation();
-            }}
-          >
-            <Tooltip anchor={editIconRef} text='Edit trip' />
-            <IoMdCreate size={remToPx(1.25)} />
-          </ActionIcon>
-          <ActionIcon
-            ref={deleteIconRef}
-            onClick={(e) => {
-              onDelete();
-              e.stopPropagation();
-            }}
-          >
-            <Tooltip anchor={deleteIconRef} text='Delete trip' />
-            <IoMdTrash size={remToPx(1.25)} />
-          </ActionIcon>
-        </ActionRow>
-      </CardFooter>
+      <CardContent>
+        <CardHeading title={trip.name} subtitle={trip.description} />
+        <CardFooter noSeparator>
+          <ActionRow>
+            <ActionIcon
+              ref={editIconRef}
+              onClick={(e) => {
+                onEdit();
+                e.stopPropagation();
+              }}
+            >
+              <Tooltip anchor={editIconRef} text='Edit trip' />
+              <IoMdCreate size={remToPx(1.25)} />
+            </ActionIcon>
+            <ActionIcon
+              ref={deleteIconRef}
+              onClick={(e) => {
+                onDelete();
+                e.stopPropagation();
+              }}
+            >
+              <Tooltip anchor={deleteIconRef} text='Delete trip' />
+              <IoMdTrash size={remToPx(1.25)} />
+            </ActionIcon>
+          </ActionRow>
+        </CardFooter>
+      </CardContent>
     </Card>
   );
 }

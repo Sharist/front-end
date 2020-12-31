@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { addPlaceToTrip, getTrip, getTripPlaces } from './common/api';
 import { SearchResult } from '../../common/components/search/SearchResultItem';
 import { Trip } from './common/models/Trip';
+import { TripPlace } from './common/models/TripPlace';
 import { useAuthentication } from '../../common/hooks/useAuthentication';
 import BackLink from '../../common/components/BackLink';
 import IMap from '../../common/components/IMap';
@@ -13,7 +14,6 @@ import MapContext from '../../common/contexts/MapContext';
 import PendingPlaceCard from './components/PendingPlaceCard';
 import routes from '../../routes';
 import Search from '../../common/components/search/Search';
-import { TripPlace } from './common/models/TripPlace';
 
 const Content = styled.div`
   display: flex;
@@ -31,18 +31,6 @@ const PlaceList = styled.div`
   padding: 0.5rem 1.5rem;
   width: 30rem;
   z-index: 1;
-`;
-
-const PlaceListShade = styled.div`
-  ${({ theme: { palette } }) => css`
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: ${palette.asphalt.alpha(0.35).css};
-    z-index: 1;
-  `}
 `;
 
 const SearchHeader = styled.div`
@@ -159,7 +147,7 @@ function TripEdit({ tripId }: Props) {
             />
           </SearchHeader>
 
-          {pendingPlace && (
+          {/* {pendingPlace && (
             <>
               <PlaceListShade onClick={handleCancelAddToTripClick} />
               <PendingPlaceCard
@@ -168,10 +156,20 @@ function TripEdit({ tripId }: Props) {
                 onCancelAddToTrip={handleCancelAddToTripClick}
               />
             </>
-          )}
+          )} */}
         </PlaceList>
 
-        <IMap />
+        <IMap
+          topOverlay={
+            pendingPlace && (
+              <PendingPlaceCard
+                pendingPlace={pendingPlace}
+                onAddToTrip={handleAddToTripClick}
+                onCancelAddToTrip={handleCancelAddToTripClick}
+              />
+            )
+          }
+        />
       </Content>
     </LayoutContainer>
   );

@@ -1,14 +1,26 @@
-import React, { useCallback, useEffect, useContext } from 'react';
+import React, { useCallback, useEffect, useContext, ReactNode } from 'react';
 import styled from 'styled-components';
 
 import MapContext from '../contexts/MapContext';
 
 const MapContainer = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
 `;
 
-function IMap() {
+const TopOverlayContainer = styled.div`
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  left: 0.75rem;
+`;
+
+type Props = {
+  topOverlay: ReactNode;
+};
+
+function IMap({ topOverlay }: Props) {
   const mapContext = useContext(MapContext);
 
   const initMapCallback = useCallback(
@@ -37,7 +49,11 @@ function IMap() {
     }
   }, [mapContext]);
 
-  return <MapContainer ref={initMapCallback} />;
+  return (
+    <MapContainer ref={initMapCallback}>
+      {topOverlay && <TopOverlayContainer>{topOverlay}</TopOverlayContainer>}
+    </MapContainer>
+  );
 }
 
 export default IMap;
