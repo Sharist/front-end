@@ -155,17 +155,6 @@ function TripEdit({ tripId }: Props) {
               onFullSearchResult={handleFullSearch}
             />
           </SearchHeader>
-
-          {/* {pendingPlace && (
-            <>
-              <PlaceListShade onClick={handleCancelAddToTripClick} />
-              <PendingPlaceCard
-                pendingPlace={pendingPlace}
-                onAddToTrip={handleAddToTripClick}
-                onCancelAddToTrip={handleCancelAddToTripClick}
-              />
-            </>
-          )} */}
         </PlaceList>
 
         <IMap

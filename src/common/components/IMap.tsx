@@ -9,18 +9,19 @@ const MapContainer = styled.div`
   height: 100%;
 `;
 
-const TopOverlayContainer = styled.div`
+const MapOverlayContainer = styled.div`
   position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
+  max-width: 35rem;
   left: 0.75rem;
+  right: 0.75rem;
+  top: 0.75rem;
 `;
 
 type Props = {
   topOverlay: ReactNode;
 };
 
-function IMap({ topOverlay }: Props) {
+function IMap({ topOverlay: mapOverlay }: Props) {
   const mapContext = useContext(MapContext);
 
   const initMapCallback = useCallback(
@@ -51,7 +52,7 @@ function IMap({ topOverlay }: Props) {
 
   return (
     <MapContainer ref={initMapCallback}>
-      {topOverlay && <TopOverlayContainer>{topOverlay}</TopOverlayContainer>}
+      {mapOverlay && <MapOverlayContainer>{mapOverlay}</MapOverlayContainer>}
     </MapContainer>
   );
 }
