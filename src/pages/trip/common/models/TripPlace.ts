@@ -111,6 +111,6 @@ export class TripPlace extends ApiModel<TripPlaceServerModel> {
 
     const location = new google.maps.LatLng(lat, lng);
 
-    return new TripPlace(placeId, name, location, id, creator, undefined, ofTrip);
+    return new TripPlace(placeId, name, location, id, creator, ofTrip, undefined);
   }
 }

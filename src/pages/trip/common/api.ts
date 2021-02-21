@@ -3,6 +3,8 @@ import { notNullish } from '../../../common/assert';
 import { Trip, TripServerModel } from './models/Trip';
 import { TripPlace, TripPlaceServerModel } from './models/TripPlace';
 
+// Get trip APIs for `TripEdit.tsx`
+
 export async function getTrip(tripId: string): Promise<Trip | null> {
   const fetchResponse = await get<TripServerModel>(`/trips/${tripId}`);
   if (fetchResponse.status === 404) {
@@ -32,6 +34,8 @@ export async function addPlaceToTrip(trip: Trip, tripPlace: TripPlace): Promise<
 
   return createdTripPlace;
 }
+
+// Trip list APIs for `TripList.tsx`
 
 export async function getTrips(): Promise<Trip[]> {
   const { data } = await get<TripServerModel[]>('/trips');
