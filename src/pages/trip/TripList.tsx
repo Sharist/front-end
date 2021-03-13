@@ -18,6 +18,7 @@ import Modal from '../../common/components/Modal';
 import TextAreaInput from '../../common/components/forms/TextArea';
 import TextInput from '../../common/components/forms/TextInput';
 import TripCard from './components/TripCard';
+import routes from '../../routes';
 
 const Wrapper = styled.div`
   display: flex;
@@ -116,18 +117,22 @@ function TripList(_: RouteComponentProps) {
   async function onTripModalSubmit({ name, description }: CreateTripFormData) {
     try {
       setCreateTripModalSubmitting(true);
-      const result = tripModalSettings.editTrip
-        ? await replaceTrip(tripModalSettings.editTrip.clone({ name, description }))
+      const isEdittingTrip = tripModalSettings.editTrip;
+      const result = isEdittingTrip
+        ? await replaceTrip(tripModalSettings.editTrip!.clone({ name, description }))
         : await createTrip(new Trip(name, description));
 
       if (result) {
         const replica = trips ? [...trips] : [];
         const index = replica.findIndex(({ id }) => id === result.id);
         if (index >= 0) {
+          // This is the edit trip handler
           replica[index] = result;
           setTrips(replica);
         } else {
+          // This is the create trip handler
           setTrips([result, ...replica]);
+          routes.tripEdit.navigator({ tripId: result.id });
         }
       }
 
