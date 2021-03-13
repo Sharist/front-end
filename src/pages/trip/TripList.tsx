@@ -83,7 +83,7 @@ function TripList(_: RouteComponentProps) {
 
   const [createTripModalSubmitting, setCreateTripModalSubmitting] = useState(false);
 
-  const [trips, setTrips] = useState<Trip[]>([]);
+  const [trips, setTrips] = useState<Trip[] | undefined>(undefined);
 
   const { errors, handleSubmit, register, reset: resetForm } = useForm<CreateTripFormData>({
     name: Joi.string().label('Name').required(),
@@ -93,10 +93,12 @@ function TripList(_: RouteComponentProps) {
   const hiddenSubmitRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    getTrips().then(setTrips);
+    getTrips()
+      .then(setTrips)
+      .catch((error) => console.log(error));
   }, []);
 
-  if (!signedIn) {
+  if (!signedIn || !trips) {
     return null;
   }
 
@@ -119,13 +121,13 @@ function TripList(_: RouteComponentProps) {
         : await createTrip(new Trip(name, description));
 
       if (result) {
-        const index = trips.findIndex(({ id }) => id === result.id);
+        const replica = trips ? [...trips] : [];
+        const index = replica.findIndex(({ id }) => id === result.id);
         if (index >= 0) {
-          const replica = [...trips];
           replica[index] = result;
           setTrips(replica);
         } else {
-          setTrips([result, ...trips]);
+          setTrips([result, ...replica]);
         }
       }
 
